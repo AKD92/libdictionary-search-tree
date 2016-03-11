@@ -123,7 +123,7 @@ int bst_isRoot(const BST *tree, const BNode *v);
 	returns: 0 for successful
 */
 
-int bst_inorder(BST *tree, BNode *v, Queue *out);
+int bst_inorder(const BST *tree, BNode *v, Queue *out);
 
 
 /*	Pre Order traversal
@@ -131,7 +131,7 @@ int bst_inorder(BST *tree, BNode *v, Queue *out);
 	if visit return -1, this algorithms haults immediately & terminate
 */
 
-int bst_preorder(BST *tree, BNode *v, Queue *out);
+int bst_preorder(const BST *tree, BNode *v, Queue *out);
 
 
 /*	Post Order traversal
@@ -139,7 +139,7 @@ int bst_preorder(BST *tree, BNode *v, Queue *out);
 	if visit return -1, this algorithms haults immediately & terminate
 */
 
-int bst_postorder(BST *tree, BNode *v, Queue *out);
+int bst_postorder(const BST *tree, BNode *v, Queue *out);
 
 
 
@@ -148,25 +148,25 @@ int bst_postorder(BST *tree, BNode *v, Queue *out);
 /*******************************************************************************/
 
 
-BNode * bst_treeSearch(BST *tree, void *key, BNode *startNode);
+BNode * bst_treeSearch(const BST *tree, const void *key, BNode *startNode);
 
 
 /*	Searches for a given key in the BST
 	Return 0 if successful, -1 otherwise
 */
 
-int bst_findElement(BST *tree, void *key, void **elem);
+int bst_findElement(const BST *tree, const void *key, void **elem);
 
-int bst_insert(BST *tree, void *key, void *elem);
+int bst_insert(BST *tree, const void *key, void *elem);
 
-int bst_changeElement(BST *tree, void *key, void *elem);
+int bst_changeElement(BST *tree, const void *key, void *elem, void **old_elem);
 
 int bst_remove(BST *tree, void *key, void **elem);
 
 
-int bst_keys(BST *tree, List *keyList);
+int bst_keys(const BST *tree, List *keyList);
 
-int bst_elements(BST *tree, List *elementList);
+int bst_elements(const BST *tree, List *elementList);
 
 
 

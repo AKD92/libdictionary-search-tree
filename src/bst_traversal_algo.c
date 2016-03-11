@@ -25,7 +25,7 @@ int bst_cmp_byNode(const void *key1, const void *key2) {
 
 
 
-int bst_postorder(BST *tree, BNode *v, Queue *out) {
+int bst_postorder(const BST *tree, BNode *v, Queue *out) {
 	
 	BNode *n;
 	BNode *n_left, *n_right;
@@ -65,7 +65,7 @@ int bst_postorder(BST *tree, BNode *v, Queue *out) {
 
 
 
-int bst_inorder(BST *tree, BNode *v, Queue *out) {
+int bst_inorder(const BST *tree, BNode *v, Queue *out) {
 	
 	BNode *n;
 	BNode *n_left, *n_right;
@@ -85,7 +85,7 @@ int bst_inorder(BST *tree, BNode *v, Queue *out) {
 		n_left = bst_leftChild(n);
 		n_right = bst_rightChild(n);
 		
-		cmpres = queue_contains(out, (void*) n_left, bst_cmp_byNode);
+		cmpres = queue_linearSearch(out, (void*) n_left, bst_cmp_byNode);
 		
 		if (n_left != 0 && cmpres == 0) {
 			stack_push(&st, n);

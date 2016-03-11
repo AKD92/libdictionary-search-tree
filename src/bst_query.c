@@ -60,7 +60,6 @@ BNode * bst_sibling(const BNode *v) {
 		else if (v == bst_rightChild(parent)) {
 			sibling = bst_leftChild(parent);
 		}
-		
 	}
 	
 	return sibling;
@@ -75,7 +74,7 @@ int bst_isExternal(const BNode *v) {
 	left = bst_leftChild(v);
 	right = bst_rightChild(v);
 	
-	if ((left || right) == 0) {
+	if (((int)left | (int)right) == 0) {
 		return 1;
 	}
 	else {
@@ -92,7 +91,7 @@ int bst_isInternal(const BNode *v) {
 	left = bst_leftChild(v);
 	right = bst_rightChild(v);
 	
-	if ((left || right) == 1) {
+	if (((int)left | (int)right) != 0) {
 		return 1;
 	}
 	else {

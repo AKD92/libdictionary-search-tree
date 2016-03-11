@@ -11,7 +11,7 @@
 
 
 
-int bst_keys(BST *tree, List *keyList) {
+int bst_keys(const BST *tree, List *keyList) {
 	
 	ListElem *n;
 	BNode *node;
@@ -21,6 +21,7 @@ int bst_keys(BST *tree, List *keyList) {
 	list_init(keyList, 0);
 	n = list_head(keyList);
 	
+	/* Use Inorder algorithm to get a Sorted Key sequence (might be convenient) */
 	bst_inorder(tree, bst_root(tree), &nodeQ);
 	
 	while (queue_size(&nodeQ) > 0) {
@@ -41,7 +42,7 @@ int bst_keys(BST *tree, List *keyList) {
 
 
 
-int bst_elements(BST *tree, List *elementList) {
+int bst_elements(const BST *tree, List *elementList) {
 	
 	ListElem *n;
 	BNode *node;
@@ -51,6 +52,7 @@ int bst_elements(BST *tree, List *elementList) {
 	list_init(elementList, 0);
 	n = list_tail(elementList);
 	
+	/* Use Inorder algorithm to get a Sorted Element sequence (According to Keys) */
 	bst_inorder(tree, bst_root(tree), &nodeQ);
 	
 	while (queue_size(&nodeQ) > 0) {
