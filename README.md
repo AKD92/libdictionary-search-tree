@@ -19,10 +19,12 @@ The key and the value objects are stored in BST by supplying <b>generic pointers
   * void (*destroy_key) (void *key) : For destroying keys on the time of destruction of the BST itself.
   * void (*destroy_data) (void *data) : For destroying user data objects on the time of destruction of the BST itself.
 
-### Performance Analysis
-  * Insertion : O(log n)         [Average Case]
-  * Deletion  : O(log n)         [Average Case]
-  * Look-up   : O(log n)         [Average Case]
+### Performance Analysis (n is number of keys in BST)
+  * Insertion : O(lg n)         [Average Case]
+  * Deletion  : O(lg n)         [Average Case]
+  * Look-up   : O(lg n)         [Average Case]
+ 
+Space complexity is O(n)
 
 
 ### Reference Book:
