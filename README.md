@@ -10,12 +10,12 @@ The design of good Dictionary data structure means good algorithmic performance 
   * Search    : Efficiently search for a given key in Dictionary, and if found, return its corresponding value object to the caller.
 
 ### About This Implementation
-This Dictionary ADT is implemented using Binary Search Tree (BST). BST is implemented internally using Nodes and Links. Because of using C language, memory allocation and clran-up is necessary. We should typically create a Dictionary by calling <b>bst_init()</b> function while passing a comparing function pointer on it. After we are done with it, we should destroy it with <b>bst_destroy()</b> function.
+This Dictionary ADT is implemented using <b>Binary Search Tree</b> (BST). BST is implemented internally using Nodes and Links. Because of using C language, memory allocation and clran-up is necessary. We should typically create an instance of BST Dictionary by calling <b>bst_init()</b> function while passing a function pointer on it as an argument. After we are done with our BST, we should destroy it with <b>bst_destroy()</b> function.
 
-The key and the value objects are stored in BST by supplying <b>generic void * pointers</b> of those objects. User should take care about allocation and destruction of key and value objects.
+The key and the value objects are stored in BST by supplying <b>generic void * pointers</b> of those objects. User should take care about allocation and destruction of key and value objects. More information related to interfaces can be found in <b>bst.h</b> header file.
 
 ### Signatures of some function pointers:
-  * void (*compare) (const void *key1, const void *key2) : For comparing two keys, which are stored on this BST.
+  * int (*compare_key) (const void *key1, const void *key2) : For comparing two keys, which are stored on this BST.
   * void (*destroy_key) (void *key) : For destroying keys on the time of destruction of the BST itself.
   * void (*destroy_data) (void *data) : For destroying user data objects on the time of destruction of the BST itself.
 
