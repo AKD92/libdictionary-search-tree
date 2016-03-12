@@ -20,9 +20,9 @@ The key and the value objects are stored in BST by supplying <b>generic void * p
   * void (*destroy_data) (void *data) : For destroying user data objects on the time of destruction of the BST itself.
 
 ### Performance Analysis
-  * Insertion : O(n)            [Worst Case]
-  * Deletion  : O(n)            [Worst Case]
-  * Search    : O(logn)         [Average Case]
+  * Insertion : O(log n)         [Average Case]
+  * Deletion  : O(log n)         [Average Case]
+  * Search    : O(log n)         [Average Case]
 
 
 ### Reference Book:
