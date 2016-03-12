@@ -1,35 +1,42 @@
 
 
+/************************************************************************************
+	Implementation of BST Initialization and Destruction Functions
+	Author:             Ashis Kumar Das
+	Email:              akd.bracu@gmail.com
+*************************************************************************************/
+
+
+
+
+
 
 #include "bst.h"
 #include <queue.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 
 
 
 
 
-int bst_destroy_node(BST *tree, BNode *node);
+int bst_freeNode(BST *tree, BNode *node);
 
 
 
 
 
-int bst_destroy_node(BST *tree, BNode *node) {
-	/*	int ext;*/
-	/*	ext = bst_isExternal(node);*/
+int bst_freeNode(BST *tree, BNode *node) {
+	
 	if (tree->destroy_data != 0) {
 		tree->destroy_data((void *) node->element);
-		/*		printf("Value destroyed\n");*/
 	}
 	if (tree->destroy_key != 0) {
 		tree->destroy_key((void *) node->key);
-		/*		printf("Key destroyed\n");*/
 	}
 	free((void *) node);
-	/*	printf("Node destroyed, external? %d\n\n", ext);*/
 	
 	return 0;
 	
@@ -53,20 +60,24 @@ int bst_init(BST *tree, int (*compare_key) (const void *k1, const void *k2)) {
 
 void bst_destroy(BST *tree) {
 	
-	Queue nodes;										/* Queue for holding all BNode objects */
 	BNode *node;
+	Queue nodeList;													/* Queue for holding all BNode objects */
 	
-	queue_init(&nodes, 0);								/* Initialize queue with no destructor function */
-	bst_postorder(tree, bst_root(tree), &nodes);		/* Collect all BNodes on the Queue in Postorder */
+	queue_init(&nodeList, 0);										/* Initialize queue with no destructor function */
+	bst_postorder((const BST *) tree, bst_root(tree), &nodeList);	/* Collect all BNodes on the Queue in Postorder */
 	
-	while (queue_size(&nodes) > 0) {
-		
-		queue_dequeue(&nodes, (void **) &node);			/* Acquire pointer of each BNode */
-		bst_destroy_node(tree, node);					/* Destroy the acquired BNode */
+	if (bst_size((const BST *) tree) != queue_size(&nodeList)) {
+		fputs("At bst_destroy(): Post-order list size NOT EQUAL to bst_size()", stderr);
 	}
 	
-	queue_destroy(&nodes);								/* Destroy temporary queue */
-	memset((void *) tree, 0, sizeof(BST));				/* Clear the memory of BST object */
+	while (queue_size(&nodeList) > 0) {
+		
+		queue_dequeue(&nodeList, (void **) &node);					/* Acquire pointer of each BNode */
+		bst_freeNode(tree, node);									/* Destroy the acquired BNode */
+	}
+	
+	queue_destroy(&nodeList);										/* Destroy temporary queue */
+	memset((void *) tree, 0, sizeof(BST));							/* Clear the memory of BST object */
 	
 	return;
 }

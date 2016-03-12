@@ -1,5 +1,15 @@
 
 
+/************************************************************************************
+	Implementation of BST Mutation Functions (Insertion, Deletion)
+	Author:             Ashis Kumar Das
+	Email:              akd.bracu@gmail.com
+*************************************************************************************/
+
+
+
+
+
 
 #include "bst.h"
 #include <queue.h>
@@ -34,10 +44,11 @@ int bst_expandExternal(BNode *nodeExternal) {
 	
 	BNode *leftChild, *rightChild;
 	
-	if (bst_isExternal(nodeExternal) == 0) return -1;
+	if (bst_isExternal((const BNode *) nodeExternal) == 0)
+		return -1;
 	
-	leftChild = (BNode*) malloc(sizeof(BNode));
-	rightChild = (BNode*) malloc(sizeof(BNode));
+	leftChild = (BNode *) malloc(sizeof(BNode));
+	rightChild = (BNode *) malloc(sizeof(BNode));
 	
 	memset((void *) leftChild, 0, sizeof(BNode));
 	memset((void *) rightChild, 0, sizeof(BNode));
@@ -59,16 +70,18 @@ int bst_removeAboveExternal(BST *tree, BNode *nodeExternal) {
 	BNode *nodeParent, *nodeHigherParent;			/* v = parent(w), u = parent(v) */
 	BNode *nodeSibling;								/* z = sibling(w)				*/
 	
-	if (bst_isExternal(nodeExternal) == 0) return -1;
-	if (bst_parent(nodeExternal) == 0) return -1;
+	if (bst_isExternal((const BNode *) nodeExternal) == 0)
+		return -1;
+	if (bst_parent((const BNode *) nodeExternal) == 0)
+		return -1;
 	
-	nodeParent = bst_parent(nodeExternal);			/* Parent BNode of specified external BNode */
-	nodeHigherParent = bst_parent(nodeParent);		/* Grand parent BNode of specified BNode */
-	nodeSibling = bst_sibling(nodeExternal);		/* Sibling or Brother BNode of specified BNode */
+	nodeParent = bst_parent((const BNode *) nodeExternal);			/* Parent BNode of specified external BNode */
+	nodeHigherParent = bst_parent((const BNode *) nodeParent);		/* Grand parent BNode of specified BNode */
+	nodeSibling = bst_sibling((const BNode *) nodeExternal);		/* Sibling or Brother BNode of specified BNode */
 	
 	
 	/* Determine if nodeParent is the Left Child of its parent (nodeHigherParent) */
-	isLeftChild = bst_leftChild(nodeHigherParent) == nodeParent ? 1 : 0;
+	isLeftChild = bst_leftChild((const BNode *) nodeHigherParent) == nodeParent ? 1 : 0;
 	
 	if (tree->destroy_key != 0) {
 		tree->destroy_key((void *) nodeParent->key);
@@ -104,21 +117,19 @@ int bst_removeAboveExternal(BST *tree, BNode *nodeExternal) {
 
 
 
-int bst_changeElement(BST *tree, const void *key, void *elem, void **old_elem) {
+int bst_changeElement(BST *tree, const void *key, const void *elem, void **old_elem) {
 	
 	int res;
 	BNode *v;
 	
-	v = bst_treeSearch((const BST *) tree, key, bst_root(tree));
+	v = bst_binarySearch((const BST *) tree, key, bst_root(tree));
 	
 	if (bst_isExternal((const BNode *) v) == 1) {
-		
 		res = -1;
 	}
 	else {
-		
 		if (old_elem != 0) *old_elem = v->element;
-		v->element = elem;
+		v->element = (void *) elem;
 		res = 0;
 	}
 	
@@ -127,21 +138,21 @@ int bst_changeElement(BST *tree, const void *key, void *elem, void **old_elem) {
 
 
 
-int bst_insert(BST *tree, const void *key, void *elem) {
+int bst_insert(BST *tree, const void *key, const void *elem) {
 	
 	int res;
 	BNode *targetNode;
 	
 	/* Search for the key in our BST */
-	targetNode = bst_treeSearch(tree, key, bst_root(tree));
+	targetNode = bst_binarySearch((const BST *) tree, key, bst_root(tree));
 	
 	/* Key not found, we have got an External BNode */
 	/* So make it Internal and assing this Key and Elem to it */
-	if (bst_isExternal(targetNode) == 1) {
+	if (bst_isExternal((const BNode *) targetNode) == 1) {
 		
 		bst_expandExternal(targetNode);
 		targetNode->key = (void *) key;
-		targetNode->element = elem;
+		targetNode->element = (void *) elem;
 		tree->size++;
 		
 		res = 0;
@@ -158,7 +169,7 @@ int bst_insert(BST *tree, const void *key, void *elem) {
 
 
 
-int bst_remove(BST *tree, void *key, void **elem) {
+int bst_remove(BST *tree, const void *key, void **elem) {
 	
 	int res;
 	int left_external, right_external;
@@ -172,19 +183,19 @@ int bst_remove(BST *tree, void *key, void **elem) {
 	
 	z = 0;
 	queue_init(&order, 0);
-	targetNode = bst_treeSearch(tree, key, bst_root(tree));
+	targetNode = bst_binarySearch((const BST *) tree, key, bst_root(tree));
 	
-	if (bst_isExternal(targetNode) == 1) {
+	if (bst_isExternal((const BNode *) targetNode) == 1) {
 		
 		res = -1;
 	}
-	else if (bst_isInternal(targetNode) == 1) {
+	else if (bst_isInternal((const BNode *) targetNode) == 1) {
 		
-		leftChild = bst_leftChild(targetNode);
-		rightChild = bst_rightChild(targetNode);
+		leftChild = bst_leftChild((const BNode *) targetNode);
+		rightChild = bst_rightChild((const BNode *) targetNode);
 		
-		left_external = bst_isExternal(leftChild);
-		right_external = bst_isExternal(rightChild);
+		left_external = bst_isExternal((const BNode *) leftChild);
+		right_external = bst_isExternal((const BNode *) rightChild);
 		
 		/* Both childs are internal if Left And Right childs are NOT External */
 		both_internal = !(left_external | right_external);
@@ -202,7 +213,7 @@ int bst_remove(BST *tree, void *key, void **elem) {
 		else if (both_internal == 1) {
 			
 			if (elem != 0) *elem = targetNode->element;
-			bst_inorder(tree, rightChild, &order);
+			bst_inorder((const BST *) tree, rightChild, &order);
 			
 			/* Find two External Node from Inorder sequence */
 			/* More information about this operation on the Book */
