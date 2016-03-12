@@ -7,7 +7,7 @@ The main application of a Dictionary is to look-up (search) for a specific key s
 The design of good Dictionary data structure means good algorithmic performance in 3 general areas:
   * Insertion : Insert a key and a value to Dictionary
   * Deletion  : Delete a key and its corresponding value from Dictionary
-  * Search    : Efficiently search for a given key in Dictionary, and if found, return its corresponding value object to the caller.
+  * Look-up   : Efficiently search for a given key in Dictionary, and if found, return its corresponding value object to the caller.
 
 ### About This Implementation
 This Dictionary ADT is implemented using <b>Binary Search Tree (BST).</b> Internally we have implemented BST through using Nodes and Links (pointers). Because of using C language, memory allocation and clean-up is necessary. We should typically create an instance of BST Dictionary by calling <b>bst_init()</b> function while passing a function pointer on it as an argument. After we are done with our BST, we should destroy it with <b>bst_destroy()</b> function.
@@ -22,7 +22,7 @@ The key and the value objects are stored in BST by supplying <b>generic pointers
 ### Performance Analysis
   * Insertion : O(log n)         [Average Case]
   * Deletion  : O(log n)         [Average Case]
-  * Search    : O(log n)         [Average Case]
+  * Look-up   : O(log n)         [Average Case]
 
 
 ### Reference Book:
