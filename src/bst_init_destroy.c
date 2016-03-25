@@ -22,26 +22,6 @@
 
 
 
-int bst_freeNode(BST *tree, BNode *node);
-
-
-
-
-
-int bst_freeNode(BST *tree, BNode *node) {
-	
-	if (tree->destroy_data != 0) {
-		tree->destroy_data((void *) node->element);
-	}
-	if (tree->destroy_key != 0) {
-		tree->destroy_key((void *) node->key);
-	}
-	free((void *) node);
-	
-	return 0;
-	
-}
-
 
 
 
@@ -51,33 +31,46 @@ int bst_init(BST *tree, int (*compare_key) (const void *k1, const void *k2)) {
 	tree->destroy_key = 0;								/* No destructor function for Keys */
 	tree->destroy_data = 0;								/* No destructor function for User Data */
 	tree->compare_key = compare_key;					/* Use User-defined comparing function */
-	tree->root = (BNode*) malloc(sizeof(BNode));		/* Create an empty BNode object as Root */
-	memset((void *) tree->root, 0, sizeof(BNode));		/* Root BNode object is zerowed */
+	tree->root = 0;
+	tree->root = (BNode *) malloc(sizeof(BNode));		/* Create an empty BNode object as Root */
+	if (tree->root == 0)
+		return -1;
+	memset((void *) tree->root, 0, sizeof(BNode));		/* Initialize Root BNode object */
 	
 	return 0;
 }
 
 
+
 void bst_destroy(BST *tree) {
 	
-	BNode *node;
-	Queue nodeList;													/* Queue for holding all BNode objects */
+	BNode *pNode;
+	Queue allNodes;													/* Queue for holding all BNode objects */
+	unsigned int calculatedNodeCount;								/* Number of BNode objects to be */
 	
-	queue_init(&nodeList, 0);										/* Initialize queue with no destructor function */
-	bst_postorder((const BST *) tree, bst_root(tree), &nodeList);	/* Collect all BNodes on the Queue in Postorder */
+	queue_init(&allNodes, 0);										/* Initialize Queue with no destructor function */
+	bst_preOrder((const BST *) tree, bst_root(tree), &allNodes);	/* Collect all BNode objects on the Queue */
+	calculatedNodeCount = 2 * bst_size((const BST *) tree) + 1;		/* Node Count = 2 X (Internals) + 1 */
 	
-	if (bst_size((const BST *) tree) != queue_size(&nodeList)) {
-		fputs("At bst_destroy(): Post-order list size NOT EQUAL to bst_size()", stderr);
+	if (calculatedNodeCount != queue_size(&allNodes)) {
+		printf("bst_destroy() : Post-order queue_size() NOT EQUAL to bst_size()\n");
+		printf("bst_destroy() : bst_size(): %u, queue_size(): %u\n",
+						bst_size((const BST *) tree), queue_size(&allNodes));
 	}
 	
-	while (queue_size(&nodeList) > 0) {
+	while (queue_size(&allNodes) > 0) {
+		queue_dequeue(&allNodes, (void **) &pNode);					/* Acquire pointer of each BNode */
 		
-		queue_dequeue(&nodeList, (void **) &node);					/* Acquire pointer of each BNode */
-		bst_freeNode(tree, node);									/* Destroy the acquired BNode */
+		if (tree->destroy_key != 0) {
+			tree->destroy_key((void *) pNode->key);
+		}
+		if (tree->destroy_data != 0) {
+			tree->destroy_data((void *) pNode->element);
+		}
+		free((void *) pNode);
 	}
 	
-	queue_destroy(&nodeList);										/* Destroy temporary queue */
+	queue_destroy(&allNodes);										/* Destroy temporary queue */
 	memset((void *) tree, 0, sizeof(BST));							/* Clear the memory of BST object */
-	
 	return;
 }
