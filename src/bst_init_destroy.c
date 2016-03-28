@@ -25,12 +25,18 @@
 
 
 
-int bst_init(BST *tree, int (*compare_key) (const void *k1, const void *k2)) {
+int bst_init (
+			BST *tree,
+			int (*compare_key) (const void *k1, const void *k2),
+			void (*destroy_key) (void *key),
+			void (*destroy_data) (void *data)
+			)
+{
 	
 	tree->size = 0;										/* Initially size must be Zero */
-	tree->destroy_key = 0;								/* No destructor function for Keys */
-	tree->destroy_data = 0;								/* No destructor function for User Data */
 	tree->compare_key = compare_key;					/* Use User-defined comparing function */
+	tree->destroy_key = destroy_key;					/* No destructor function for Keys */
+	tree->destroy_data = destroy_data;					/* No destructor function for User Data */
 	tree->root = 0;
 	tree->root = (BNode *) malloc(sizeof(BNode));		/* Create an empty BNode object as Root */
 	if (tree->root == 0)
@@ -74,3 +80,4 @@ void bst_destroy(BST *tree) {
 	memset((void *) tree, 0, sizeof(BST));							/* Clear the memory of BST object */
 	return;
 }
+
