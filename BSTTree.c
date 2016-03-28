@@ -25,6 +25,7 @@ void bst_destroy(BSTTree *tree) {
 	BNode *n;
 	
 	queue_init(&nodes, 0);
+	
 	bst_postorder(tree, bst_root(tree), &nodes);
 	
 	while (queue_size(&nodes) > 0) {
