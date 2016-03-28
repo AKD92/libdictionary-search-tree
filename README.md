@@ -16,12 +16,12 @@ This Dictionary ADT is implemented using <b>Binary Search Tree (BST).</b> Intern
 
 The key and the value objects are stored in BST by supplying <b>generic pointers (void *)</b> of actual objects. User should take care about <i>allocation and destruction</i> of key and value objects. More information related to interfaces can be found in <b>bst.h</b> header file.
 
-<img align="right" height="400" width="310" src="https://github.com/AKD92/Tree-Based-Dictionary-ADT/raw/master/book_ds_mtrt.jpg">
-
 ### Signatures of some function pointers:
   * int (*compare_key) (const void *key1, const void *key2) : For comparing two keys, which are stored on this BST.
   * void (*destroy_key) (void *key) : For destroying keys on the time of destruction of the BST itself.
   * void (*destroy_data) (void *data) : For destroying user data objects on the time of destruction of the BST itself.
+
+<img align="right" height="400" width="310" src="https://github.com/AKD92/Tree-Based-Dictionary-ADT/raw/master/book_ds_mtrt.jpg">
 
 ### Performance Analysis
 Assuming n and h as numbers, where n = Total number of keys in BST, h = Height of BST
