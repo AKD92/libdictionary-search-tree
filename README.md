@@ -1,4 +1,4 @@
-# Dictionary ADT
+# Tree Based Dictionary ADT
 
 <img align="right" src="https://github.com/AKD92/Tree-Based-Dictionary-ADT/raw/master/bst.png">
 
