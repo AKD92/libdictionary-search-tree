@@ -9,7 +9,7 @@ The design of good Dictionary data structure means good algorithmic performance 
   * Deletion  : Delete a key and its corresponding value from Dictionary
   * Look-up   : Efficiently search for a given key in Dictionary, and if found, return its corresponding value object to the caller.
 
-<img align="right" src="https://github.com/AKD92/Tree-Based-Dictionary-ADT/raw/master/book_ds_mtrt.jpg">
+<img align="right" height="400" width="150" src="https://github.com/AKD92/Tree-Based-Dictionary-ADT/raw/master/book_ds_mtrt.jpg">
 
 ### About This Implementation
 This Dictionary ADT is implemented using <b>Binary Search Tree (BST).</b> Internally we have implemented BST through using Nodes and Links (pointers). Because of using C language, memory allocation and clean-up is necessary. We should typically create an instance of BST Dictionary by calling <b>bst_init()</b> function while passing a function pointer on it as an argument. After we are done with our BST, we should destroy it with <b>bst_destroy()</b> function.
