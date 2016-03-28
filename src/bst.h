@@ -64,7 +64,12 @@ typedef struct BST_ BST;
 /* Function Prototypes */
 
 
-int bst_init (BST *tree, int (*compare_key) (const void *k1, const void *k2));
+int bst_init (
+			BST *tree,
+			int (*compare_key) (const void *k1, const void *k2),
+			void (*destroy_key) (void *key),
+			void (*destroy_data) (void *data)
+			);
 
 
 void bst_destroy(BST *tree);
