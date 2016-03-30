@@ -12,7 +12,7 @@ The design of good Dictionary data structure means good algorithmic performance 
   * <b>Look-up</b>   : Efficiently search for a given key in Dictionary, and if found, return its corresponding value object to the caller.
 
 ### About This Implementation
-This Dictionary ADT is implemented using <b>Binary Search Tree (BST).</b> Internally we have implemented a Binary Search Tree through using Nodes and Links (pointers). Because of using C language, memory allocation and clean-up is necessary. We should typically create an instance of BST Dictionary by calling <b>bst_init()</b> function while passing some function pointers on it as arguments. After we are done with our BST, we should destroy it with <b>bst_destroy()</b> function.
+This Dictionary ADT is implemented using <b>Binary Search Tree (BST).</b> This data structure allows very efficient look-up through using <i>Binary Search algorithm</i>. Internally we have implemented a Binary Search Tree through using Nodes and Links (pointers). Because of using C language, memory allocation and clean-up is necessary. We should typically create an instance of BST Dictionary by calling <b>bst_init()</b> function while passing some function pointers on it as arguments. After we are done with our BST, we should destroy it with <b>bst_destroy()</b> function.
 
 The key and the value objects are stored in BST by supplying <b>generic pointers (void *)</b> of actual objects. User should take care about <i>allocation and destruction</i> of key and value objects. More information related to interfaces can be found in <b>bst.h</b> header file.
 
@@ -37,9 +37,9 @@ Space complexity is O(2n + 1)
   * After creating an instance of BST, initialize it using bst_init() function, before exit call bst_destroy() function to clear memory resources.
   * All the tree traversal algorithms are implemented, they are: PreOrder, InOrder, PostOrder and LevelOrder.
   * Algorithms for obtaining Depth and Height of a specific BNode are implemented.
-  * All the algorithms implemented so far are all Iterative. Taditional Recursve algorithms are converted to iterative algorthms by using Stack and Queue.
-  * This project is built as a Static C library.
-  * To build from the source, linking to dependency libraries is necessary, link order is: -lstq -llinkedlist
+  * All the algorithms implemented so far are all Iterative. Traditional Recursve algorithms are converted to iterative algorithms by using Stack and Queue.
+  * This project is built as a 32-bit Static C library, so that any C application program can use this data structure very easily.
+  * To build from the source, linking to dependent libraries is necessary. Link order for GCC is: -lstq -llinkedlist
 
 ### Reference Book:
 Implementation follows from the principles of the book <a href="http://ww3.algorithmdesign.net/">Algorithm Design</a> by Michael T. Goodrich and Roberto Tamassia.
