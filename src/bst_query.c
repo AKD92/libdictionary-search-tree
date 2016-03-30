@@ -151,19 +151,21 @@ unsigned int bst_depth(const BST *tree, const BNode *v) {
 
 
 
-unsigned int bst_height(const BST *tree, const BNode *v) {
+unsigned int bst_height(const BST *tree, const BNode *node) {
 	
-	unsigned int nodeHeight;
 	int isExternal;
 	Queue postOrder;
-	Stack stHeight;
-	unsigned int *heightN;
-	const unsigned int *heightR, *heightL;
+	register unsigned int iCount;
+	unsigned int nExternal;
+	unsigned int heightR, heightL, heightN;
 	const BNode *currentNode;
+	unsigned int *tmpHeightData;
 	
+	iCount = 0;
+	nExternal = bst_size(tree) + 1;
 	queue_init(&postOrder, 0);
-	stack_init(&stHeight, free);
-	bst_postOrder(tree, (BNode *) v, &postOrder);
+	bst_postOrder(tree, (BNode *) node, &postOrder);
+	tmpHeightData = (unsigned int *) malloc(sizeof(unsigned int) * nExternal);
 	
 	while (queue_size(&postOrder) > 0) {
 		
@@ -171,30 +173,26 @@ unsigned int bst_height(const BST *tree, const BNode *v) {
 		isExternal = bst_isExternal(currentNode);
 		
 		if (isExternal == 1) {
-			heightN = (unsigned int *) malloc(sizeof(unsigned int));
-			*heightN = 0;
-			stack_push(&stHeight, (const void *) heightN);
+			*(tmpHeightData + iCount) = 0;
+			iCount = iCount + 1;
 		}
 		else {
-			stack_pop(&stHeight, (void **) &heightR);
-			stack_pop(&stHeight, (void **) &heightL);
+			iCount = iCount - 1;
+			heightR = *(tmpHeightData + iCount);
 			
-			heightN = (unsigned int *) malloc(sizeof(unsigned int));
-			*heightN = 1 + maxu(*heightL, *heightR);
-			stack_push(&stHeight, (const void *) heightN);
+			iCount = iCount - 1;
+			heightL = *(tmpHeightData + iCount);
 			
-			free((void *) heightR);
-			free((void *) heightL);
+			heightN = 1 + maxu(heightL, heightR);
+			*(tmpHeightData + iCount) = heightN;
+			iCount = iCount + 1;
 		}
 	}
 	
-	stack_pop(&stHeight, (void **) &heightN);
-	nodeHeight = *heightN;
-	
-	stack_destroy(&stHeight);
+	heightN = *(tmpHeightData + iCount - 1);
 	queue_destroy(&postOrder);
-	free((void *) heightN);
+	free((void *) tmpHeightData);
 	
-	return nodeHeight;
+	return heightN;
 }
 
