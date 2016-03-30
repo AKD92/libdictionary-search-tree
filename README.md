@@ -42,5 +42,5 @@ Space complexity is O(2n + 1)
   * To build from the source, linking to dependent libraries is necessary. Link order for GCC is: -lstq -llinkedlist
 
 ### Reference Book:
-Implementation follows from the principles of the book <a href="http://ww3.algorithmdesign.net/">Algorithm Design</a> by Michael T. Goodrich and Roberto Tamassia.
+Implementation techniques follow the principles from the book <a href="http://ww3.algorithmdesign.net/">Algorithm Design</a> by Michael T. Goodrich and Roberto Tamassia.
 
