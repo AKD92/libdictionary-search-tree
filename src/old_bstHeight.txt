@@ -1,0 +1,48 @@
+
+
+unsigned int bst_height(const BST *tree, const BNode *node) {
+	
+	unsigned int nodeHeight;
+	int isExternal;
+	Queue postOrder;
+	Stack stHeight;
+	unsigned int *heightN;
+	const unsigned int *heightR, *heightL;
+	const BNode *currentNode;
+	
+	queue_init(&postOrder, 0);
+	stack_init(&stHeight, free);
+	bst_postOrder(tree, (BNode *) node, &postOrder);
+	
+	while (queue_size(&postOrder) > 0) {
+		
+		queue_dequeue(&postOrder, (void **) &currentNode);
+		isExternal = bst_isExternal(currentNode);
+		
+		if (isExternal == 1) {
+			heightN = (unsigned int *) malloc(sizeof(unsigned int));
+			*heightN = 0;
+			stack_push(&stHeight, (const void *) heightN);
+		}
+		else {
+			stack_pop(&stHeight, (void **) &heightR);
+			stack_pop(&stHeight, (void **) &heightL);
+			
+			heightN = (unsigned int *) malloc(sizeof(unsigned int));
+			*heightN = 1 + maxu(*heightL, *heightR);
+			stack_push(&stHeight, (const void *) heightN);
+			
+			free((void *) heightR);
+			free((void *) heightL);
+		}
+	}
+	
+	stack_pop(&stHeight, (void **) &heightN);
+	nodeHeight = *heightN;
+	
+	stack_destroy(&stHeight);
+	queue_destroy(&postOrder);
+	free((void *) heightN);
+	
+	return nodeHeight;
+}
