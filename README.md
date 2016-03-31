@@ -4,7 +4,7 @@
 
 Dictionary or Map is an Abstract Data Type that stores a collection of two cohesive elements: <i>a key and a value</i>. The key must be unique and camparable on its own domain, and the value that is being mapped can be anything: a sting, a block of memory, an integer, an array, or even user-defined data structures containing thousands of other data structures.
 
-The primary application of Dictionary ADT is to facilitate a fast and efficient <b>look-up (search)</b> operation for a specific key stored on it <i>efficiently.</i> Generally this look-up relys on the key, and that is why all the keys must be unique and comparable.
+The primary application of Dictionary ADT is to facilitate a fast and efficient <b>look-up (search)</b> operation for a specific key among the others. Generally this look-up operation relys on the comparability and uniqueness of the key.
 
 The design of good Dictionary data structure means good algorithmic performance in 3 general areas:
   * <b>Insertion</b> : Insert a key and a value to Dictionary
