@@ -2,7 +2,7 @@
 
 <img align="right" src="https://github.com/AKD92/Tree-Based-Dictionary-ADT/raw/master/bst.png">
 
-Dictionary or Map is an Abstract Data Type where we store a collection of two cohesive elements: <i>a key and a value</i>. The key must be unique and camparable on its own domain, and the value that is being mapped can be anything: a sting, a block of memory, an integer, an array, or even user-defined data structures containing thousands of other data structures.
+Dictionary or Map is an Abstract Data Type that stores a collection of two cohesive elements: <i>a key and a value</i>. The key must be unique and camparable on its own domain, and the value that is being mapped can be anything: a sting, a block of memory, an integer, an array, or even user-defined data structures containing thousands of other data structures.
 
 The main application of a Dictionary is to <b>look-up (search)</b> for a specific key stored on it <i>efficiently.</i> Generally this look-up relys on the key, and that is why all the keys must be unique and comparable.
 
