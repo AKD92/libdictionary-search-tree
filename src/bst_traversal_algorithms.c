@@ -206,18 +206,17 @@ int bst_eraseExternalLinks(Queue *qNodes) {
 	
 	int isInternal;
 	const BNode *pNode;
-	unsigned int size;
+	unsigned int qSize;
 	register unsigned int index;
 	
 	if (qNodes == 0)
 		return -1;
 	
 	index = 0;
-	size = queue_size(qNodes);
-	while (index < size) {
-		
+	qSize = queue_size(qNodes);
+	
+	while (index < qSize) {
 		queue_dequeue(qNodes, (void **) &pNode);
-		
 		isInternal = bst_isInternal(pNode);
 		if (isInternal == 1) {
 			queue_enqueue(qNodes, (const void *) pNode);

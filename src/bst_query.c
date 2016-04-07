@@ -35,41 +35,41 @@ BNode * bst_root(const BisTree *pTree) {
 
 
 
-BNode * bst_parent(const BNode *v) {
+BNode * bst_parent(const BNode *pNode) {
 	
-	return (v == 0 ? 0 : v->parent);
+	return (pNode == 0 ? 0 : pNode->parent);
 }
 
 
 
-BNode * bst_leftChild(const BNode *v) {
+BNode * bst_leftChild(const BNode *pNode) {
 	
-	return (v == 0 ? 0 : v->leftChild);
+	return (pNode == 0 ? 0 : pNode->leftChild);
 }
 
 
 
-BNode * bst_rightChild(const BNode *v) {
+BNode * bst_rightChild(const BNode *pNode) {
 	
-	return (v == 0 ? 0 : v->rightChild);
+	return (pNode == 0 ? 0 : pNode->rightChild);
 }
 
 
 
-BNode * bst_sibling(const BNode *v) {
+BNode * bst_sibling(const BNode *pNode) {
 	
 	BNode *sibling;
 	BNode *parent;
 	
-	parent = bst_parent(v);
+	parent = bst_parent(pNode);
 	if (parent == 0) {
 		sibling = 0;
 	}
 	else {
-		if (v == bst_leftChild(parent)) {
+		if (pNode == bst_leftChild(parent)) {
 			sibling = bst_rightChild(parent);
 		}
-		else if (v == bst_rightChild(parent)) {
+		else if (pNode == bst_rightChild(parent)) {
 			sibling = bst_leftChild(parent);
 		}
 	}
@@ -79,12 +79,12 @@ BNode * bst_sibling(const BNode *v) {
 
 
 
-int bst_isExternal(const BNode *v) {
+int bst_isExternal(const BNode *pNode) {
 	
 	unsigned int left, right;
 	
-	left = (unsigned int) bst_leftChild(v);
-	right = (unsigned int) bst_rightChild(v);
+	left = (unsigned int) bst_leftChild(pNode);
+	right = (unsigned int) bst_rightChild(pNode);
 	
 	if ((left | right) == 0) {
 	// if ((left == 0) & (right == 0)) {
@@ -97,12 +97,12 @@ int bst_isExternal(const BNode *v) {
 
 
 
-int bst_isInternal(const BNode *v) {
+int bst_isInternal(const BNode *pNode) {
 	
 	unsigned int left, right;
 	
-	left = (unsigned int) bst_leftChild(v);
-	right = (unsigned int) bst_rightChild(v);
+	left = (unsigned int) bst_leftChild(pNode);
+	right = (unsigned int) bst_rightChild(pNode);
 	
 	if ((left | right) != 0) {
 	// if ((left != 0) | (right != 0)) {
@@ -115,26 +115,26 @@ int bst_isInternal(const BNode *v) {
 
 
 
-int bst_isRoot(const BisTree *pTree, const BNode *v) {
+int bst_isRoot(const BisTree *pTree, const BNode *pNode) {
 	
 	int retVal;
 	
-	retVal = bst_root(pTree) == v ? 1 : 0;
+	retVal = bst_root(pTree) == pNode ? 1 : 0;
 	return retVal;
 }
 
 
 
-unsigned int bst_depth(const BisTree *pTree, const BNode *v) {
+unsigned int bst_depth(const BisTree *pTree, const BNode *pNode) {
 	
 	register unsigned int iDepth;
-	register const BNode *nodeCurrent;
+	register const BNode *pCurrent;
 	
 	iDepth = 0;
-	nodeCurrent = v;
+	pCurrent = pNode;
 	
-	while (nodeCurrent != bst_root(pTree)) {
-		nodeCurrent = bst_parent(nodeCurrent);
+	while (pCurrent != bst_root(pTree)) {
+		pCurrent = bst_parent(pCurrent);
 		iDepth = iDepth + 1;
 	}
 	
@@ -143,26 +143,34 @@ unsigned int bst_depth(const BisTree *pTree, const BNode *v) {
 
 
 
-unsigned int bst_height(const BisTree *pTree, const BNode *node) {
+unsigned int bst_height(const BisTree *pTree, const BNode *pNode) {
 	
 	int isExternal;
 	Queue qPostorder;
 	register unsigned int iCount;
 	unsigned int nExternal;
 	unsigned int heightR, heightL, heightN;
-	const BNode *pNode;
+	const BNode *pCurrent;
 	unsigned int *pTmpHeight;
 	
 	iCount = 0;
+	pCurrent = 0;
+	pTmpHeight = 0;
 	nExternal = bst_size(pTree) + 1;
-	queue_init(&qPostorder, 0);
-	bst_postOrder(pTree, (BNode *) node, &qPostorder);
 	pTmpHeight = (unsigned int *) malloc(sizeof(unsigned int) * nExternal);
+	
+	if (pTmpHeight == 0)
+		return 0;
+	
+	
+	/* Initialize the Queue and store PostOrder nodes on it */
+	queue_init(&qPostorder, 0);
+	bst_postOrder(pTree, (BNode *) pNode, &qPostorder);
 	
 	while (queue_size(&qPostorder) > 0) {
 		
-		queue_dequeue(&qPostorder, (void **) &pNode);
-		isExternal = bst_isExternal(pNode);
+		queue_dequeue(&qPostorder, (void **) &pCurrent);
+		isExternal = bst_isExternal(pCurrent);
 		
 		if (isExternal == 1) {
 			*(pTmpHeight + iCount) = 0;

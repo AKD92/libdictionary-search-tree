@@ -90,35 +90,35 @@ void bst_destroy(BisTree *pTree);
 BNode * bst_root(const BisTree *pTree);
 
 
-BNode * bst_parent(const BNode *v);
+BNode * bst_parent(const BNode *pNode);
 
 
 
 
-/*	bst_leftChild(BNode *v)
+/*	bst_leftChild(BNode *pNode)
 	Returns the address (pointer) of the left child of v, if it exist
 	Else return 0, if v does not have a left child (v is external)
 */
-BNode * bst_leftChild(const BNode *v);
+BNode * bst_leftChild(const BNode *pNode);
 
 
 
 
 
-/*	bst_rightChild(BNode *v)
+/*	bst_rightChild(BNode *pNode)
 	Returns the address (pointer) of the right child of v, if it exist
 	Else return 0, if v does not have a right child (v is external)
 */
-BNode * bst_rightChild(const BNode *v);
+BNode * bst_rightChild(const BNode *pNode);
 
 
 
 
 
-/*	bst_sibling(BNode *v)
+/*	bst_sibling(BNode *pNode)
 	Returns the address (pointer) of the sibling of v, if it exist
 */
-BNode * bst_sibling(const BNode *v);
+BNode * bst_sibling(const BNode *pNode);
 
 
 
@@ -128,7 +128,7 @@ BNode * bst_sibling(const BNode *v);
 	Returns 1 if true, v is an external node
 	Else return 0, v is not an external node
 */
-int bst_isExternal(const BNode *v);
+int bst_isExternal(const BNode *pNode);
 
 
 
@@ -138,7 +138,7 @@ int bst_isExternal(const BNode *v);
 	Returns 1 if true, v is an internal node
 	Else return 0, v is not an internal node
 */
-int bst_isInternal(const BNode *v);
+int bst_isInternal(const BNode *pNode);
 
 
 
@@ -149,7 +149,7 @@ int bst_isInternal(const BNode *v);
 	Else return 0, v is not the r
 	oot node
 */
-int bst_isRoot(const BisTree *pTree, const BNode *v);
+int bst_isRoot(const BisTree *pTree, const BNode *pNode);
 
 
 
@@ -159,7 +159,7 @@ int bst_isRoot(const BisTree *pTree, const BNode *v);
 	Returns 1 if true, v is the root node
 	Else return 0, v is not the root node
 */
-unsigned int bst_depth(const BisTree *pTree, const BNode *v);
+unsigned int bst_depth(const BisTree *pTree, const BNode *pNode);
 
 
 
@@ -169,7 +169,7 @@ unsigned int bst_depth(const BisTree *pTree, const BNode *v);
 	Returns 1 if true, v is the root node
 	Else return 0, v is not the root node
 */
-unsigned int bst_height(const BisTree *pTree, const BNode *v);
+unsigned int bst_height(const BisTree *pTree, const BNode *pNode);
 
 
 
@@ -251,9 +251,9 @@ int bst_remove(BisTree *pTree, const void *pKey, void **pRemovedKey, void **pRem
 
 
 
-int bst_pKeys(const BisTree *pTree, List *lstKeys);
+int bst_keys(const BisTree *pTree, List *lstKeys);
 
-int bst_pElements(const BisTree *pTree, List *lstElements);
+int bst_elements(const BisTree *pTree, List *lstElements);
 
 
 
