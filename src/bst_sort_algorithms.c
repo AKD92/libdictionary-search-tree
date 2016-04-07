@@ -62,6 +62,9 @@ int bst_sortAscending(List *list, int (*compare) (const void *arg1, const void *
 	BisTree bTree;
 	Queue qInorder;
 	
+	if (list_size(list) < 2)
+		return -1;
+	
 	fpCmpUserElem = compare;
 	queue_init(&qInorder, 0);
 	bst_init(&bTree, bst_cmpWrapper, 0, 0);
@@ -106,6 +109,9 @@ int bst_sortDescending(List *list, int (*compare) (const void *arg1, const void 
 	BisTree bTree;
 	Stack stReverse;
 	Queue qInorder;
+	
+	if (list_size(list) < 2)
+		return -1;
 	
 	fpCmpUserElem = compare;
 	stack_init(&stReverse, 0);
@@ -167,6 +173,9 @@ int bst_sortAscendingDlist(DList *dlist, int (*compare) (const void *arg1, const
 	BisTree bTree;
 	Queue qInorder;
 	
+	if (dlist_size(dlist) < 2)
+		return -1;
+	
 	fpCmpUserElem = compare;
 	queue_init(&qInorder, 0);
 	bst_init(&bTree, bst_cmpWrapper, 0, 0);
@@ -211,6 +220,9 @@ int bst_sortDescendingDlist(DList *dlist, int (*compare) (const void *arg1, cons
 	BisTree bTree;
 	Stack stReverse;
 	Queue qInorder;
+	
+	if (dlist_size(dlist) < 2)
+		return -1;
 	
 	fpCmpUserElem = compare;
 	stack_init(&stReverse, 0);
