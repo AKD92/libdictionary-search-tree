@@ -46,7 +46,6 @@ int bst_init (BisTree *pTree, int (*fpCompareKey) (const void *k1, const void *k
 	pTree->fpCompareKey = fpCompareKey;						/* Use User-defined comparing function */
 	pTree->fpDestroyKey = fpDestroyKey;						/* No destructor function for Keys */
 	pTree->fpDestroyData = fpDestroyData;					/* No destructor function for User Data */
-	pTree->root = 0;
 	pTree->root = pRoot;									/* Create an empty BNode object as Root */
 	memset((void *) pTree->root, 0, sizeof(BNode));			/* Initialize Root BNode object */
 	
