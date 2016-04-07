@@ -62,8 +62,10 @@ int bst_sortAscending(List *list, int (*compare) (const void *arg1, const void *
 	BisTree bTree;
 	Queue qInorder;
 	
-	if (list_size(list) < 2)
+	if (list == 0 || compare == 0)
 		return -1;
+	if (list_size(list) < 2)
+		return -2;
 	
 	fpCmpUserElem = compare;
 	queue_init(&qInorder, 0);
@@ -92,9 +94,9 @@ int bst_sortAscending(List *list, int (*compare) (const void *arg1, const void *
 		pLstElem = list_next(pLstElem);
 	}
 	
-	fpCmpUserElem = 0;
 	queue_destroy(&qInorder);
 	bst_destroy(&bTree);
+	fpCmpUserElem = 0;
 	
 	return 0;
 }
@@ -110,8 +112,10 @@ int bst_sortDescending(List *list, int (*compare) (const void *arg1, const void 
 	Stack stReverse;
 	Queue qInorder;
 	
-	if (list_size(list) < 2)
+	if (list == 0 || compare == 0)
 		return -1;
+	if (list_size(list) < 2)
+		return -2;
 	
 	fpCmpUserElem = compare;
 	stack_init(&stReverse, 0);
@@ -149,10 +153,10 @@ int bst_sortDescending(List *list, int (*compare) (const void *arg1, const void 
 		pLstElem = list_next(pLstElem);
 	}
 	
-	fpCmpUserElem = 0;
 	stack_destroy(&stReverse);
 	queue_destroy(&qInorder);
 	bst_destroy(&bTree);
+	fpCmpUserElem = 0;
 	
 	return 0;
 }
@@ -173,8 +177,10 @@ int bst_sortAscendingDList(DList *dlist, int (*compare) (const void *arg1, const
 	BisTree bTree;
 	Queue qInorder;
 	
-	if (dlist_size(dlist) < 2)
+	if (dlist == 0 || compare == 0)
 		return -1;
+	if (dlist_size(dlist) < 2)
+		return -2;
 	
 	fpCmpUserElem = compare;
 	queue_init(&qInorder, 0);
@@ -203,9 +209,9 @@ int bst_sortAscendingDList(DList *dlist, int (*compare) (const void *arg1, const
 		pLstElem = dlist_next(pLstElem);
 	}
 	
-	fpCmpUserElem = 0;
 	queue_destroy(&qInorder);
 	bst_destroy(&bTree);
+	fpCmpUserElem = 0;
 	
 	return 0;
 }
@@ -221,8 +227,10 @@ int bst_sortDescendingDList(DList *dlist, int (*compare) (const void *arg1, cons
 	Stack stReverse;
 	Queue qInorder;
 	
-	if (dlist_size(dlist) < 2)
+	if (dlist == 0 || compare == 0)
 		return -1;
+	if (dlist_size(dlist) < 2)
+		return -2;
 	
 	fpCmpUserElem = compare;
 	stack_init(&stReverse, 0);
@@ -260,10 +268,10 @@ int bst_sortDescendingDList(DList *dlist, int (*compare) (const void *arg1, cons
 		pLstElem = dlist_next(pLstElem);
 	}
 	
-	fpCmpUserElem = 0;
 	stack_destroy(&stReverse);
 	queue_destroy(&qInorder);
 	bst_destroy(&bTree);
+	fpCmpUserElem = 0;
 	
 	return 0;
 }

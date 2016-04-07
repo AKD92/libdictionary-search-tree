@@ -28,14 +28,14 @@
 	Returns 0 if successful, -1 if fails
 */
 
-static int bst_expandExternal(BNode *nodeExternal);
+static int bst_expandExternal(BNode *pExternal);
 
 
 /*	bst_removeAboveExternal(BisTree *pTree, BNode *w)
 	Returns 0 if successful, -1 if fails
 */
 
-static int bst_removeAboveExternal(BisTree *pTree, BNode *nodeExternal);
+static int bst_removeAboveExternal(BisTree *pTree, BNode *pExternal);
 
 
 
@@ -43,18 +43,18 @@ static int bst_removeAboveExternal(BisTree *pTree, BNode *nodeExternal);
 
 
 
-static int bst_expandExternal(BNode *nodeExternal) {
+static int bst_expandExternal(BNode *pExternal) {
 	
 	BNode *pLeftChild, *pRightChild;
 	
-	if (bst_isInternal((const BNode *) nodeExternal) == 1)
+	if (bst_isInternal((const BNode *) pExternal) == 1)
 		return -1;
 	
 	pLeftChild = pRightChild = 0;
 	pLeftChild = (BNode *) malloc(sizeof(BNode));
 	pRightChild = (BNode *) malloc(sizeof(BNode));
 	
-	if (((unsigned int)pLeftChild & (unsigned int)pRightChild) == 0)
+	if (pLeftChild == 0 || pRightChild == 0)
 	{
 		free((void *) pLeftChild);
 		free((void *) pRightChild);
@@ -64,12 +64,12 @@ static int bst_expandExternal(BNode *nodeExternal) {
 	memset((void *) pLeftChild, 0, sizeof(BNode));
 	memset((void *) pRightChild, 0, sizeof(BNode));
 	
-	/* Actually, nodeExternal bocomes an Internal by executing the following codes */
-	nodeExternal->leftChild = pLeftChild;
-	nodeExternal->rightChild = pRightChild;
+	/* Actually, pExternal bocomes an Internal by executing the following codes */
+	pExternal->leftChild = pLeftChild;
+	pExternal->rightChild = pRightChild;
 	
-	pLeftChild->parent = nodeExternal;
-	pRightChild->parent = nodeExternal;
+	pLeftChild->parent = pExternal;
+	pRightChild->parent = pExternal;
 	
 	return 0;
 }
@@ -127,71 +127,71 @@ static int bst_removeAboveExternal(BisTree *pTree, BNode *pExternal) {
 
 int bst_changeElement(BisTree *pTree, const void *pKey, const void *pElem, void **pOldelem) {
 	
-	int res;
-	BNode *targetNode;
+	int retVal;
+	BNode *pTarget;
 	
 	if (pTree == 0 || pKey == 0)
 		return -1;
 	
-	targetNode = bst_binarySearch((const BisTree *) pTree, pKey, bst_root(pTree));
+	pTarget = bst_binarySearch((const BisTree *) pTree, pKey, bst_root(pTree));
 	
-	if (bst_isExternal((const BNode *) targetNode) == 1) {
-		res = -1;
+	if (bst_isExternal((const BNode *) pTarget) == 1) {
+		retVal = -1;
 	}
 	else {
-		if (pOldelem != 0) *pOldelem = targetNode->pElement;
-		targetNode->pElement = (void *) pElem;
-		res = 0;
+		if (pOldelem != 0) *pOldelem = pTarget->pElement;
+		pTarget->pElement = (void *) pElem;
+		retVal = 0;
 	}
 	
-	return res;
+	return retVal;
 }
 
 
 
 int bst_insert(BisTree *pTree, const void *pKey, const void *pElem) {
 	
-	int res;
+	int retVal;
 	int opExpand;
-	BNode *targetNode;
+	BNode *pTarget;
 	
 	if (pTree == 0 || pKey == 0)
 		return -1;
 	
 	/* Search for the pKey in our BisTree */
-	targetNode = bst_binarySearch((const BisTree *) pTree, pKey, bst_root(pTree));
+	pTarget = bst_binarySearch((const BisTree *) pTree, pKey, bst_root(pTree));
 	
 	/* Key not found, we have got an External BNode */
 	/* So make it Internal and assing this Key and Elem to it */
-	if (bst_isExternal((const BNode *) targetNode) == 1) {
+	if (bst_isExternal((const BNode *) pTarget) == 1) {
 		
-		opExpand = bst_expandExternal(targetNode);
+		opExpand = bst_expandExternal(pTarget);
 		if (opExpand != 0)
 			return -1;
 		
-		targetNode->pKey = (void *) pKey;
-		targetNode->pElement = (void *) pElem;
-		pTree->size++;
-		res = 0;
+		pTarget->pKey = (void *) pKey;
+		pTarget->pElement = (void *) pElem;
+		pTree->size = pTree->size + 1;
+		retVal = 0;
 	}
 	else {
 		
 		/* We have got an Internal BNode, it means Key already exist */
 		/* In this situation we cannot insert the given Key into our BisTree */
-		res = -1;
+		retVal = -1;
 	}
 	
-	return res;
+	return retVal;
 }
 
 
 
 int bst_remove(BisTree *pTree, const void *pKey, void **pRemovedKey, void **pRemovedElem) {
 	
-	int res;
-	int targetExternal;
-	int left_external, right_external;
-	int both_internal;
+	int retVal;
+	int isTargetExternal;
+	int isLeftExternal, isRightExternal;
+	int isBothInternal;
 	
 	BNode *pTarget;
 	BNode *pLeftChild, *pRightChild;
@@ -205,10 +205,10 @@ int bst_remove(BisTree *pTree, const void *pKey, void **pRemovedKey, void **pRem
 	pChildExternal = 0;
 	queue_init(&qInorder, 0);
 	pTarget = bst_binarySearch((const BisTree *) pTree, pKey, bst_root(pTree));
-	targetExternal = bst_isExternal((const BNode *) pTarget);
+	isTargetExternal = bst_isExternal((const BNode *) pTarget);
 	
-	if (targetExternal == 1) {
-		res = -1;
+	if (isTargetExternal == 1) {
+		retVal = -1;
 	}
 	else {
 		
@@ -218,21 +218,21 @@ int bst_remove(BisTree *pTree, const void *pKey, void **pRemovedKey, void **pRem
 		pLeftChild = bst_leftChild((const BNode *) pTarget);
 		pRightChild = bst_rightChild((const BNode *) pTarget);
 		
-		left_external = bst_isExternal((const BNode *) pLeftChild);
-		right_external = bst_isExternal((const BNode *) pRightChild);
+		isLeftExternal = bst_isExternal((const BNode *) pLeftChild);
+		isRightExternal = bst_isExternal((const BNode *) pRightChild);
 		
 		/* Both childs are internal if Left And Right childs are NOT External */
-		both_internal = !(left_external | right_external);
+		isBothInternal = !(isLeftExternal | isRightExternal);
 		
-		if (both_internal == 0) {
+		if (isBothInternal == 0) {
 			
 			/* Find the External child of pTarget and pChildExternal will be the External one */
-			if (left_external == 1) pChildExternal = pLeftChild;
-			if (right_external == 1) pChildExternal = pRightChild;
+			if (isLeftExternal == 1) pChildExternal = pLeftChild;
+			if (isRightExternal == 1) pChildExternal = pRightChild;
 			
 			bst_removeAboveExternal(pTree, pChildExternal);
 		}
-		else if (both_internal == 1) {
+		else if (isBothInternal == 1) {
 			
 			bst_inOrder((const BisTree *) pTree, pRightChild, &qInorder);
 			
@@ -251,11 +251,11 @@ int bst_remove(BisTree *pTree, const void *pKey, void **pRemovedKey, void **pRem
 			bst_removeAboveExternal(pTree, pInorderExternal);
 		}
 		
-		pTree->size--;
-		res = 0;
+		pTree->size = pTree->size - 1;
+		retVal = 0;
 	}
 	
 	queue_destroy(&qInorder);
-	return res;
+	return retVal;
 }
 

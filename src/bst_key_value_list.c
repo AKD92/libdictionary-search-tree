@@ -39,7 +39,7 @@ int bst_keys(const BisTree *pTree, List *lstKeys) {
 	
 	while (queue_size(&qNodes) > 0) {
 		queue_dequeue(&qNodes, (void **) &pNode);
-		if (bst_isInternal((const BNode *) pNode)) {
+		if (bst_isInternal((const BNode *) pNode) == 1) {
 			list_ins_next(lstKeys, pLstElem, (const void *) pNode->pKey);
 			pLstElem = list_tail(lstKeys);
 		}
@@ -69,7 +69,7 @@ int bst_elements(const BisTree *pTree, List *lstElements) {
 	
 	while (queue_size(&qNodes) > 0) {
 		queue_dequeue(&qNodes, (void **) &pNode);
-		if (bst_isInternal((const BNode *) pNode)) {
+		if (bst_isInternal((const BNode *) pNode) == 1) {
 			list_ins_next(lstElements, pLstElem, (const void *) pNode->pElement);
 			pLstElem = list_tail(lstElements);
 		}

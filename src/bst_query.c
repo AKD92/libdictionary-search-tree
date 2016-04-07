@@ -117,12 +117,10 @@ int bst_isInternal(const BNode *v) {
 
 int bst_isRoot(const BisTree *pTree, const BNode *v) {
 	
-	if (v == bst_root(pTree)) {
-		return 1;
-	}
-	else {
-		return 0;
-	}
+	int retVal;
+	
+	retVal = bst_root(pTree) == v ? 1 : 0;
+	return retVal;
 }
 
 
