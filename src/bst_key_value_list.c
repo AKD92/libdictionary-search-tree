@@ -28,8 +28,10 @@ int bst_keys(const BisTree *pTree, List *lstKeys) {
 	Queue qNodes;
 	ListElem *pLstElem;
 	
-	if (bst_size(pTree) == 0 || lstKeys == 0)
+	if (pTree == 0 || lstKeys == 0)
 		return -1;
+	if (bst_size(pTree) == 0)
+		return -2;
 	
 	queue_init(&qNodes, 0);
 	pLstElem = list_head(lstKeys);
@@ -58,8 +60,10 @@ int bst_elements(const BisTree *pTree, List *lstElements) {
 	Queue qNodes;
 	ListElem *pLstElem;
 	
-	if (bst_size(pTree) == 0 || lstElements == 0)
+	if (pTree == 0 || lstElements == 0)
 		return -1;
+	if (bst_size(pTree) == 0)
+		return -2;
 	
 	queue_init(&qNodes, 0);
 	pLstElem = list_tail(lstElements);

@@ -82,7 +82,7 @@ int bst_sortAscending(List *list, int (*compare) (const void *arg1, const void *
 	
 	
 	/* bst_inOrder() returns objects in Ascending Order */
-	bst_inOrder((const BisTree *) &bTree, bst_root(&bTree), &qInorder);
+	bst_inOrder((const BisTree *) &bTree, bst_root((const BisTree *) &bTree), &qInorder);
 	bst_eraseExternalLinks(&qInorder);
 	
 	
@@ -133,7 +133,7 @@ int bst_sortDescending(List *list, int (*compare) (const void *arg1, const void 
 	
 	
 	/* bst_inOrder() returns objects in Ascending Order */
-	bst_inOrder((const BisTree *) &bTree, bst_root(&bTree), &qInorder);
+	bst_inOrder((const BisTree *) &bTree, bst_root((const BisTree *) &bTree), &qInorder);
 	
 	
 	/* Using a Stack for reversing all objects (Descending Order) */
@@ -197,7 +197,7 @@ int bst_sortAscendingDList(DList *dlist, int (*compare) (const void *arg1, const
 	
 	
 	/* bst_inOrder() returns objects in Ascending Order */
-	bst_inOrder((const BisTree *) &bTree, bst_root(&bTree), &qInorder);
+	bst_inOrder((const BisTree *) &bTree, bst_root((const BisTree *) &bTree), &qInorder);
 	bst_eraseExternalLinks(&qInorder);
 	
 	
@@ -248,7 +248,7 @@ int bst_sortDescendingDList(DList *dlist, int (*compare) (const void *arg1, cons
 	
 	
 	/* bst_inOrder() returns objects in Ascending Order */
-	bst_inOrder((const BisTree *) &bTree, bst_root(&bTree), &qInorder);
+	bst_inOrder((const BisTree *) &bTree, bst_root((const BisTree *) &bTree), &qInorder);
 	
 	
 	/* Using a Stack for reversing all objects (Descending Order) */

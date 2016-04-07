@@ -68,7 +68,7 @@ void bst_destroy(BisTree *pTree) {
 	
 	/* Collect all BNode objects on the Queue */
 	/* This MUST be TRUE: Node Count = 2 * (Internals) + 1 */
-	bst_preOrder((const BisTree *) pTree, bst_root(pTree), &qNodes);
+	bst_preOrder((const BisTree *) pTree, bst_root((const BisTree *) pTree), &qNodes);
 	iNodeCount = 2 * bst_size(pTree) + 1;
 	
 	
