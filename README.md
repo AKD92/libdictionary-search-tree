@@ -32,9 +32,9 @@ Assuming n and h as numbers, where n = Total number of keys in BST, h = Height o
 Space complexity is O(2n + 1)
 
 ### Some Notes
-  * An instance of this dictionary implementation is identified by a BST structure, define in bst.h
+  * An instance of this dictionary implementation is identified by a BisTree structure, define in bst.h
   * An instance of tree node in this implementation is identified by a BNode structure, also define in bst.h
-  * After creating an instance of BST, initialize it using bst_init() function, before exit call bst_destroy() function to clear memory resources.
+  * After creating an instance of BisTree, initialize it using bst_init() function, before exit call bst_destroy() function to clear memory resources.
   * All the tree traversal algorithms are implemented, they are: PreOrder, InOrder, PostOrder and LevelOrder.
   * Algorithms for obtaining Depth and Height of a specific BNode are implemented.
   * All the algorithms implemented so far are all Iterative. Traditional recursive algorithms are converted to iterative algorithms by using Stack and Queue.
@@ -42,7 +42,7 @@ Space complexity is O(2n + 1)
   * To build from the source, linking to dependent libraries is necessary. Link order for GCC is: -lstq -llinkedlist
 
 ### Reference Book:
-Implementation techniques follow the principles from the book <a href="http://ww3.algorithmdesign.net/">Algorithm Design</a> by Michael T. Goodrich and Roberto Tamassia.
+Implementation follows the algorithms from the book <a href="http://ww3.algorithmdesign.net/">Algorithm Design</a> by Michael T. Goodrich and Roberto Tamassia.
 
 ### License
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This software is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
