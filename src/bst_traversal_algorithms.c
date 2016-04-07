@@ -43,8 +43,8 @@ int bst_preOrder(const BisTree *pTree, BNode *pStartNode, Queue *qPreorder) {
 		
 		stack_pop(&stNodes, (void **) &pNode);
 		queue_enqueue(qPreorder, (const void *) pNode);
-		
 		isInternal = bst_isInternal(pNode);
+		
 		if (isInternal == 1) {
 			pRightChild = bst_rightChild(pNode);
 			pLeftChild = bst_leftChild(pNode);
@@ -151,8 +151,8 @@ int bst_levelOrderLR(const BisTree *pTree, BNode *pStartNode, Queue *qLRorder) {
 		
 		queue_dequeue(&qNodes, (void **) &pNode);
 		queue_enqueue(qLRorder, (const void *) pNode);
-		
 		isInternal = bst_isInternal(pNode);
+		
 		if (isInternal == 1) {
 			pLeftChild = bst_leftChild(pNode);
 			pRightChild = bst_rightChild(pNode);
@@ -185,8 +185,8 @@ int bst_levelOrderRL(const BisTree *pTree, BNode *pStartNode, Queue *qRLorder) {
 		
 		queue_dequeue(&qNodes, (void **) &pNode);
 		queue_enqueue(qRLorder, (const void *) pNode);
-		
 		isInternal = bst_isInternal(pNode);
+		
 		if (isInternal == 1) {
 			pRightChild = bst_rightChild(pNode);
 			pLeftChild = bst_leftChild(pNode);
