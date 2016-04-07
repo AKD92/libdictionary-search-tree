@@ -130,6 +130,9 @@ unsigned int bst_depth(const BisTree *pTree, const BNode *pNode) {
 	register unsigned int iDepth;
 	register const BNode *pCurrent;
 	
+	if (pTree == 0 || pNode == 0)
+		return 0;
+	
 	iDepth = 0;
 	pCurrent = pNode;
 	
@@ -152,6 +155,9 @@ unsigned int bst_height(const BisTree *pTree, const BNode *pNode) {
 	unsigned int heightR, heightL, heightN;
 	const BNode *pCurrent;
 	unsigned int *pTmpHeight;
+	
+	if (pTree == 0 || pNode == 0)
+		return 0;
 	
 	iCount = 0;
 	pCurrent = 0;
