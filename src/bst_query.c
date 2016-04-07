@@ -28,16 +28,16 @@
 
 
 
-unsigned int bst_size(const BisTree *tree) {
+unsigned int bst_size(const BisTree *pTree) {
 	
-	return tree->size;
+	return pTree->size;
 }
 
 
 
-BNode * bst_root(const BisTree *tree) {
+BNode * bst_root(const BisTree *pTree) {
 	
-	return (tree == 0 ? 0 : tree->root);
+	return (pTree == 0 ? 0 : pTree->root);
 }
 
 
@@ -122,9 +122,9 @@ int bst_isInternal(const BNode *v) {
 
 
 
-int bst_isRoot(const BisTree *tree, const BNode *v) {
+int bst_isRoot(const BisTree *pTree, const BNode *v) {
 	
-	if (v == bst_root(tree)) {
+	if (v == bst_root(pTree)) {
 		return 1;
 	}
 	else {
@@ -134,7 +134,7 @@ int bst_isRoot(const BisTree *tree, const BNode *v) {
 
 
 
-unsigned int bst_depth(const BisTree *tree, const BNode *v) {
+unsigned int bst_depth(const BisTree *pTree, const BNode *v) {
 	
 	register unsigned int iDepth;
 	register const BNode *nodeCurrent;
@@ -142,7 +142,7 @@ unsigned int bst_depth(const BisTree *tree, const BNode *v) {
 	iDepth = 0;
 	nodeCurrent = v;
 	
-	while (nodeCurrent != bst_root(tree)) {
+	while (nodeCurrent != bst_root(pTree)) {
 		nodeCurrent = bst_parent(nodeCurrent);
 		iDepth = iDepth + 1;
 	}
@@ -152,7 +152,7 @@ unsigned int bst_depth(const BisTree *tree, const BNode *v) {
 
 
 
-unsigned int bst_height(const BisTree *tree, const BNode *node) {
+unsigned int bst_height(const BisTree *pTree, const BNode *node) {
 	
 	int isExternal;
 	Queue postOrder;
@@ -163,9 +163,9 @@ unsigned int bst_height(const BisTree *tree, const BNode *node) {
 	unsigned int *tmpHeightData;
 	
 	iCount = 0;
-	nExternal = bst_size(tree) + 1;
+	nExternal = bst_size(pTree) + 1;
 	queue_init(&postOrder, 0);
-	bst_postOrder(tree, (BNode *) node, &postOrder);
+	bst_postOrder(pTree, (BNode *) node, &postOrder);
 	tmpHeightData = (unsigned int *) malloc(sizeof(unsigned int) * nExternal);
 	
 	while (queue_size(&postOrder) > 0) {

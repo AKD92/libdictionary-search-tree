@@ -29,11 +29,11 @@
 static int bst_expandExternal(BNode *nodeExternal);
 
 
-/*	bst_removeAboveExternal(BisTree *tree, BNode *w)
+/*	bst_removeAboveExternal(BisTree *pTree, BNode *w)
 	Returns 0 if successful, -1 if fails
 */
 
-static int bst_removeAboveExternal(BisTree *tree, BNode *nodeExternal);
+static int bst_removeAboveExternal(BisTree *pTree, BNode *nodeExternal);
 
 
 
@@ -73,7 +73,7 @@ static int bst_expandExternal(BNode *nodeExternal) {
 }
 
 
-static int bst_removeAboveExternal(BisTree *tree, BNode *nodeExternal) {
+static int bst_removeAboveExternal(BisTree *pTree, BNode *nodeExternal) {
 	
 	int isLeftChild;
 	BNode *nodeParent, *nodeHigherParent;			/* v = parent(w), u = parent(v) */
@@ -112,10 +112,10 @@ static int bst_removeAboveExternal(BisTree *tree, BNode *nodeExternal) {
 			break;
 		}
 	}
-	/* If Grand Parent does not exist, make the sibling BNode as tree's Root BNode */
+	/* If Grand Parent does not exist, make the sibling BNode as pTree's Root BNode */
 	else {
 		nodeSibling->parent = 0;
-		tree->root = nodeSibling;
+		pTree->root = nodeSibling;
 	}
 	
 	return 0;
@@ -123,15 +123,15 @@ static int bst_removeAboveExternal(BisTree *tree, BNode *nodeExternal) {
 
 
 
-int bst_changeElement(BisTree *tree, const void *key, const void *elem, void **old_elem) {
+int bst_changeElement(BisTree *pTree, const void *key, const void *elem, void **old_elem) {
 	
 	int res;
 	BNode *targetNode;
 	
-	if (tree == 0 || key == 0)
+	if (pTree == 0 || key == 0)
 		return -1;
 	
-	targetNode = bst_binarySearch((const BisTree *) tree, key, bst_root(tree));
+	targetNode = bst_binarySearch((const BisTree *) pTree, key, bst_root(pTree));
 	
 	if (bst_isExternal((const BNode *) targetNode) == 1) {
 		res = -1;
@@ -147,17 +147,17 @@ int bst_changeElement(BisTree *tree, const void *key, const void *elem, void **o
 
 
 
-int bst_insert(BisTree *tree, const void *key, const void *elem) {
+int bst_insert(BisTree *pTree, const void *key, const void *elem) {
 	
 	int res;
 	int opExpand;
 	BNode *targetNode;
 	
-	if (tree == 0 || key == 0)
+	if (pTree == 0 || key == 0)
 		return -1;
 	
 	/* Search for the key in our BisTree */
-	targetNode = bst_binarySearch((const BisTree *) tree, key, bst_root(tree));
+	targetNode = bst_binarySearch((const BisTree *) pTree, key, bst_root(pTree));
 	
 	/* Key not found, we have got an External BNode */
 	/* So make it Internal and assing this Key and Elem to it */
@@ -169,7 +169,7 @@ int bst_insert(BisTree *tree, const void *key, const void *elem) {
 		
 		targetNode->key = (void *) key;
 		targetNode->element = (void *) elem;
-		tree->size++;
+		pTree->size++;
 		res = 0;
 	}
 	else {
@@ -184,7 +184,7 @@ int bst_insert(BisTree *tree, const void *key, const void *elem) {
 
 
 
-int bst_remove(BisTree *tree, const void *key, void **removedKey, void **removedElem) {
+int bst_remove(BisTree *pTree, const void *key, void **removedKey, void **removedElem) {
 	
 	int res;
 	int targetExternal;
@@ -197,12 +197,12 @@ int bst_remove(BisTree *tree, const void *key, void **removedKey, void **removed
 	
 	Queue inOrder;
 	
-	if (tree == 0 || key == 0)
+	if (pTree == 0 || key == 0)
 		return -1;
 	
 	externalChild = 0;
 	queue_init(&inOrder, 0);
-	targetNode = bst_binarySearch((const BisTree *) tree, key, bst_root(tree));
+	targetNode = bst_binarySearch((const BisTree *) pTree, key, bst_root(pTree));
 	targetExternal = bst_isExternal((const BNode *) targetNode);
 	
 	if (targetExternal == 1) {
@@ -228,11 +228,11 @@ int bst_remove(BisTree *tree, const void *key, void **removedKey, void **removed
 			if (left_external == 1) externalChild = leftChild;
 			if (right_external == 1) externalChild = rightChild;
 			
-			bst_removeAboveExternal(tree, externalChild);
+			bst_removeAboveExternal(pTree, externalChild);
 		}
 		else if (both_internal == 1) {
 			
-			bst_inOrder((const BisTree *) tree, rightChild, &inOrder);
+			bst_inOrder((const BisTree *) pTree, rightChild, &inOrder);
 			
 			/* Find two External Node from Inorder sequence */
 			/* More information about this operation on the Book */
@@ -246,10 +246,10 @@ int bst_remove(BisTree *tree, const void *key, void **removedKey, void **removed
 			inorderInternal->element = 0;
 			
 			/* Remove internal node inorderInternal */
-			bst_removeAboveExternal(tree, inorderExternal);
+			bst_removeAboveExternal(pTree, inorderExternal);
 		}
 		
-		tree->size--;
+		pTree->size--;
 		res = 0;
 	}
 	

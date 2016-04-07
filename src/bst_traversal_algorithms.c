@@ -21,95 +21,104 @@
 
 
 
-#define CMP_KEY_POINTER(k1, k2) ((k1) == (k2) ? 0 : 1)
 
 
 
-
-
-
-
-
-static int cmpKeyPointer(const void *key1, const void *key2);
-
-
-
-
-
-static int cmpKeyPointer(const void *key1, const void *key2) {
+int bst_preOrder(const BisTree *pTree, BNode *pStartNode, Queue *qPreorder) {
 	
-	if (key1 == key2) return 0;
-	else return 1;
-}
-
-
-
-
-int bst_preOrder(const BisTree *tree, BNode *startNode, Queue *out) {
-	
-	Stack tmpStack;
+	Stack stNodes;
 	int isInternal;
 	const BNode *pNode;
-	const BNode *leftChild, *rightChild;
+	const BNode *pLeftChild, *pRightChild;
 	
-	if (startNode == 0 || out == 0)
+	if (pStartNode == 0 || qPreorder == 0)
 		return -1;
 	
-	stack_init(&tmpStack, 0);
-	stack_push(&tmpStack, (const void *) startNode);
+	stack_init(&stNodes, 0);
+	stack_push(&stNodes, (const void *) pStartNode);
 	
-	while (stack_size(&tmpStack) > 0) {
+	while (stack_size(&stNodes) > 0) {
 		
-		stack_pop(&tmpStack, (void **) &pNode);
-		queue_enqueue(out, (const void *) pNode);
+		stack_pop(&stNodes, (void **) &pNode);
+		queue_enqueue(qPreorder, (const void *) pNode);
 		
 		isInternal = bst_isInternal(pNode);
 		if (isInternal == 1) {
-			rightChild = bst_rightChild(pNode);
-			leftChild = bst_leftChild(pNode);
-			stack_push(&tmpStack, (const void *) rightChild);
-			stack_push(&tmpStack, (const void *) leftChild);
+			pRightChild = bst_rightChild(pNode);
+			pLeftChild = bst_leftChild(pNode);
+			stack_push(&stNodes, (const void *) pRightChild);
+			stack_push(&stNodes, (const void *) pLeftChild);
 		}
 	}
 	
-	stack_destroy(&tmpStack);
+	stack_destroy(&stNodes);
 	return 0;
 }
 
 
 
-int bst_postOrder(const BisTree *tree, BNode *startNode, Queue *out) {
+int bst_inOrder(const BisTree *pTree, BNode *pStartNode, Queue *qInorder) {
 	
-	BNode *node;
-	BNode *nodeLeftChild, *nodeRightChild;
+	Stack stNodes;
+	BNode *pNode;
+	
+	if (pStartNode == 0 || qInorder == 0)
+		return -1;
+	
+	pNode = pStartNode;
+	stack_init(&stNodes, 0);
+	
+	REPEAT:
+	while (pNode != 0) {
+		stack_push(&stNodes, (const void *) pNode);
+		pNode = bst_leftChild((const BNode *) pNode);
+	}
+	
+	if (stack_size(&stNodes) > 0) {
+		stack_pop(&stNodes, (void **) &pNode);
+		queue_enqueue(qInorder, (const void *) pNode);
+		pNode = bst_rightChild((const BNode *) pNode);
+		goto REPEAT;
+	}
+	
+	stack_destroy(&stNodes);
+	return 0;
+}
+
+
+
+int bst_postOrder(const BisTree *pTree, BNode *pStartNode, Queue *qPostorder) {
+	
+	BNode *pNode;
+	BNode *pLeftChild, *pRightChild;
 	Stack st1, st2;
 	
-	if (startNode == 0 || out == 0)
+	if (pStartNode == 0 || qPostorder == 0)
 		return -1;
 	
 	stack_init(&st1, 0);
 	stack_init(&st2, 0);
-	stack_push(&st1, (const void *) startNode);
+	stack_push(&st1, (const void *) pStartNode);
 	
 	while (stack_size(&st1) > 0) {
 		
-		stack_pop(&st1, (void **) &node);
-		stack_push(&st2, (const void *) node);
+		stack_pop(&st1, (void **) &pNode);
+		stack_push(&st2, (const void *) pNode);
 		
-		nodeLeftChild = bst_leftChild((const BNode *) node);
-		nodeRightChild = bst_rightChild((const BNode *) node);
+		pLeftChild = bst_leftChild((const BNode *) pNode);
+		pRightChild = bst_rightChild((const BNode *) pNode);
 		
-		if (nodeLeftChild != 0) {
-			stack_push(&st1, (const void *) nodeLeftChild);
+		if (pLeftChild != 0) {
+			stack_push(&st1, (const void *) pLeftChild);
 		}
-		if (nodeRightChild != 0) {
-			stack_push(&st1, (const void *) nodeRightChild);
+		if (pRightChild != 0) {
+			stack_push(&st1, (const void *) pRightChild);
 		}
 	}
 	
 	while (stack_size(&st2) > 0) {
-		stack_pop(&st2, (void **) &node);
-		queue_enqueue(out, (const void *) node);
+		stack_pop(&st2, (void **) &pNode);
+		queue_enqueue(qPostorder, (const void *) pNode);
 	}
 	
 	stack_destroy(&st1);
@@ -119,134 +128,93 @@ int bst_postOrder(const BisTree *tree, BNode *startNode, Queue *out) {
 
 
 
-
-int bst_inOrder(const BisTree *tree, BNode *startNode, Queue *out) {
+int bst_levelOrderLR(const BisTree *pTree, BNode *pStartNode, Queue *qLRorder) {
 	
-	BNode *node;
-	BNode *nodeLeftChild, *nodeRightChild;
-	int opCompare;
-	Stack st;
-	
-	if (startNode == 0 || out == 0)
-		return -1;
-	
-	stack_init(&st, 0);
-	stack_push(&st, (const void *) startNode);
-	
-	while (stack_size(&st) > 0) {
-		
-		stack_pop(&st, (void **) &node);
-		
-		nodeLeftChild = bst_leftChild((const BNode *) node);
-		nodeRightChild = bst_rightChild((const BNode *) node);
-		
-		opCompare = queue_linearSearch(out, (void*) nodeLeftChild, cmpKeyPointer);
-		
-		if (nodeLeftChild != 0 && opCompare == 0) {
-			stack_push(&st, (const void *) node);
-			stack_push(&st, (const void *) nodeLeftChild);
-		}
-		else {
-			queue_enqueue(out, (const void *) node);
-			if (nodeRightChild != 0) {
-				stack_push(&st, (const void *) nodeRightChild);
-			}
-		}
-	}
-	
-	stack_destroy(&st);
-	return 0;
-}
-
-
-
-int bst_levelOrderLR(const BisTree *tree, BNode *startNode, Queue *out) {
-	
-	Queue tmpQueue;
+	Queue qNodes;
 	int isInternal;
 	const BNode *pNode;
-	const BNode *leftChild, *rightChild;
+	const BNode *pLeftChild, *pRightChild;
 	
-	if (startNode == 0 || out == 0)
+	if (pStartNode == 0 || qLRorder == 0)
 		return -1;
 	
-	queue_init(&tmpQueue, 0);
-	queue_enqueue(&tmpQueue, (const void *) startNode);
+	queue_init(&qNodes, 0);
+	queue_enqueue(&qNodes, (const void *) pStartNode);
 	
-	while (queue_size(&tmpQueue) > 0) {
+	while (queue_size(&qNodes) > 0) {
 		
-		queue_dequeue(&tmpQueue, (void **) &pNode);
-		queue_enqueue(out, (const void *) pNode);
+		queue_dequeue(&qNodes, (void **) &pNode);
+		queue_enqueue(qLRorder, (const void *) pNode);
 		
 		isInternal = bst_isInternal(pNode);
 		if (isInternal == 1) {
-			leftChild = bst_leftChild(pNode);
-			rightChild = bst_rightChild(pNode);
-			queue_enqueue(&tmpQueue, (const void *) leftChild);
-			queue_enqueue(&tmpQueue, (const void *) rightChild);
+			pLeftChild = bst_leftChild(pNode);
+			pRightChild = bst_rightChild(pNode);
+			queue_enqueue(&qNodes, (const void *) pLeftChild);
+			queue_enqueue(&qNodes, (const void *) pRightChild);
 		}
 	}
 	
-	queue_destroy(&tmpQueue);
+	queue_destroy(&qNodes);
 	return 0;
 }
 
 
 
 
-int bst_levelOrderRL(const BisTree *tree, BNode *startNode, Queue *out) {
+int bst_levelOrderRL(const BisTree *pTree, BNode *pStartNode, Queue *qRLorder) {
 	
-	Queue tmpQueue;
+	Queue qNodes;
 	int isInternal;
 	const BNode *pNode;
-	const BNode *leftChild, *rightChild;
+	const BNode *pLeftChild, *pRightChild;
 	
-	if (startNode == 0 || out == 0)
+	if (pStartNode == 0 || qRLorder == 0)
 		return -1;
 	
-	queue_init(&tmpQueue, 0);
-	queue_enqueue(&tmpQueue, (const void *) startNode);
+	queue_init(&qNodes, 0);
+	queue_enqueue(&qNodes, (const void *) pStartNode);
 	
-	while (queue_size(&tmpQueue) > 0) {
+	while (queue_size(&qNodes) > 0) {
 		
-		queue_dequeue(&tmpQueue, (void **) &pNode);
-		queue_enqueue(out, (const void *) pNode);
+		queue_dequeue(&qNodes, (void **) &pNode);
+		queue_enqueue(qRLorder, (const void *) pNode);
 		
 		isInternal = bst_isInternal(pNode);
 		if (isInternal == 1) {
-			rightChild = bst_rightChild(pNode);
-			leftChild = bst_leftChild(pNode);
-			queue_enqueue(&tmpQueue, (const void *) rightChild);
-			queue_enqueue(&tmpQueue, (const void *) leftChild);
+			pRightChild = bst_rightChild(pNode);
+			pLeftChild = bst_leftChild(pNode);
+			queue_enqueue(&qNodes, (const void *) pRightChild);
+			queue_enqueue(&qNodes, (const void *) pLeftChild);
 		}
 	}
 	
-	queue_destroy(&tmpQueue);
+	queue_destroy(&qNodes);
 	return 0;
 }
 
 
 
 
-int bst_eraseExternalLinks(Queue *nodeQueue) {
+int bst_eraseExternalLinks(Queue *qNodes) {
 	
 	int isInternal;
 	const BNode *pNode;
 	unsigned int size;
 	register unsigned int index;
 	
-	if (nodeQueue == 0)
+	if (qNodes == 0)
 		return -1;
 	
 	index = 0;
-	size = queue_size(nodeQueue);
+	size = queue_size(qNodes);
 	while (index < size) {
 		
-		queue_dequeue(nodeQueue, (void **) &pNode);
+		queue_dequeue(qNodes, (void **) &pNode);
 		
 		isInternal = bst_isInternal(pNode);
 		if (isInternal == 1) {
-			queue_enqueue(nodeQueue, (const void *) pNode);
+			queue_enqueue(qNodes, (const void *) pNode);
 		}
 		index = index + 1;
 	}

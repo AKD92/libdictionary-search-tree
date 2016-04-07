@@ -46,9 +46,9 @@ struct BisTree_ {
 	BNode *root;
 	unsigned int size;
 	
-	int (*compare_key) (const void *key1, const void *key2);
-	void (*destroy_key) (void *key);
-	void (*destroy_data) (void *data);
+	int (*fpCompareKey) (const void *key1, const void *key2);
+	void (*fpDestroyKey) (void *key);
+	void (*fpDestroyData) (void *data);
 	
 };
 typedef struct BisTree_ BisTree;
@@ -66,15 +66,11 @@ typedef struct BisTree_ BisTree;
 /* Function Prototypes */
 
 
-int bst_init (
-			BisTree *tree,
-			int (*compare_key) (const void *k1, const void *k2),
-			void (*destroy_key) (void *key),
-			void (*destroy_data) (void *data)
-			);
+int bst_init (BisTree *pTree, int (*fpCompareKey) (const void *k1, const void *k2),
+					void (*fpDestroyKey) (void *key), void (*fpDestroyData) (void *data));
 
 
-void bst_destroy(BisTree *tree);
+void bst_destroy(BisTree *pTree);
 
 
 
@@ -88,10 +84,10 @@ void bst_destroy(BisTree *tree);
 
 /*********	Accessor methods ****************/
 
-unsigned int bst_size(const BisTree *tree);
+unsigned int bst_size(const BisTree *pTree);
 
 
-BNode * bst_root(const BisTree *tree);
+BNode * bst_root(const BisTree *pTree);
 
 
 BNode * bst_parent(const BNode *v);
@@ -153,7 +149,7 @@ int bst_isInternal(const BNode *v);
 	Else return 0, v is not the r
 	oot node
 */
-int bst_isRoot(const BisTree *tree, const BNode *v);
+int bst_isRoot(const BisTree *pTree, const BNode *v);
 
 
 
@@ -163,7 +159,7 @@ int bst_isRoot(const BisTree *tree, const BNode *v);
 	Returns 1 if true, v is the root node
 	Else return 0, v is not the root node
 */
-unsigned int bst_depth(const BisTree *tree, const BNode *v);
+unsigned int bst_depth(const BisTree *pTree, const BNode *v);
 
 
 
@@ -173,7 +169,7 @@ unsigned int bst_depth(const BisTree *tree, const BNode *v);
 	Returns 1 if true, v is the root node
 	Else return 0, v is not the root node
 */
-unsigned int bst_height(const BisTree *tree, const BNode *v);
+unsigned int bst_height(const BisTree *pTree, const BNode *v);
 
 
 
@@ -188,24 +184,22 @@ unsigned int bst_height(const BisTree *tree, const BNode *v);
 
 
 
-/*	In Order traversal
-	Enqueues each BNode v to the queue "out", on "in-order" fashion
-	BNodes enqueued in the "out" includes all nodes (external + internal)
-	returns: 0 for successful
-*/
-int bst_inOrder(const BisTree *tree, BNode *startNode, Queue *out);
-
-
-
-
-
 /*	Pre Order traversal
 	Enqueues each BNode v to the queue "out", on "pre-order" fashion
 	BNodes enqueued in the "out" includes all nodes (external + internal)
 	returns: 0 for successful
 */
-int bst_preOrder(const BisTree *tree, BNode *startNode, Queue *out);
+int bst_preOrder(const BisTree *pTree, BNode *pStartNode, Queue *qPreorder);
 
+
+
+
+/*	In Order traversal
+	Enqueues each BNode v to the queue "out", on "in-order" fashion
+	BNodes enqueued in the "out" includes all nodes (external + internal)
+	returns: 0 for successful
+*/
+int bst_inOrder(const BisTree *pTree, BNode *pStartNode, Queue *qInorder);
 
 
 
@@ -215,13 +209,13 @@ int bst_preOrder(const BisTree *tree, BNode *startNode, Queue *out);
 	BNodes enqueued in the "out" includes all nodes (external + internal)
 	returns: 0 for successful
 */
-int bst_postOrder(const BisTree *tree, BNode *startNode, Queue *out);
+int bst_postOrder(const BisTree *pTree, BNode *pStartNode, Queue *qPostorder);
 
-int bst_levelOrderLR(const BisTree *tree, BNode *startNode, Queue *out);
+int bst_levelOrderLR(const BisTree *pTree, BNode *pStartNode, Queue *qLRorder);
 
-int bst_levelOrderRL(const BisTree *tree, BNode *startNode, Queue *out);
+int bst_levelOrderRL(const BisTree *pTree, BNode *pStartNode, Queue *qRLorder);
 
-int bst_eraseExternalLinks(Queue *nodeQueue);
+int bst_eraseExternalLinks(Queue *qNodes);
 
 
 
@@ -239,27 +233,27 @@ int bst_eraseExternalLinks(Queue *nodeQueue);
 
 
 
-BNode * bst_binarySearch(const BisTree *tree, const void *key, BNode *startNode);
+BNode * bst_binarySearch(const BisTree *pTree, const void *key, BNode *pStartNode);
 
 
 /*	Searches for a given key in the BisTree
 	Return 0 if successful, -1 otherwise
 */
 
-int bst_findElement(const BisTree *tree, const void *key, void **elem);
+int bst_findElement(const BisTree *pTree, const void *key, void **elem);
 
-int bst_insert(BisTree *tree, const void *key, const void *elem);
+int bst_insert(BisTree *pTree, const void *key, const void *elem);
 
-int bst_changeElement(BisTree *tree, const void *key, const void *elem, void **old_elem);
+int bst_changeElement(BisTree *pTree, const void *key, const void *elem, void **old_elem);
 
-int bst_remove(BisTree *tree, const void *key, void **removedKey, void **removedElem);
-
-
+int bst_remove(BisTree *pTree, const void *key, void **removedKey, void **removedElem);
 
 
-int bst_keys(const BisTree *tree, List *keyList);
 
-int bst_elements(const BisTree *tree, List *elementList);
+
+int bst_keys(const BisTree *pTree, List *keyList);
+
+int bst_elements(const BisTree *pTree, List *elementList);
 
 
 

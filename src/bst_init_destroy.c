@@ -23,62 +23,82 @@
 
 
 
+#define ERROR_MSG_1 "\n** bst_destroy() : Post-order queue_size() NOT EQUAL to bst_size()\n"
+#define ERROR_MSG_2 "** bst_destroy() : bst_size(): %u, queue_size(): %u\n\n"
 
 
 
-int bst_init (
-			BisTree *tree,
-			int (*compare_key) (const void *k1, const void *k2),
-			void (*destroy_key) (void *key),
-			void (*destroy_data) (void *data)
-			)
+
+
+
+int bst_init (BisTree *pTree, int (*fpCompareKey) (const void *k1, const void *k2),
+					void (*fpDestroyKey) (void *key), void (*fpDestroyData) (void *data))
 {
 	
-	tree->size = 0;										/* Initially size must be Zero */
-	tree->compare_key = compare_key;					/* Use User-defined comparing function */
-	tree->destroy_key = destroy_key;					/* No destructor function for Keys */
-	tree->destroy_data = destroy_data;					/* No destructor function for User Data */
-	tree->root = 0;
-	tree->root = (BNode *) malloc(sizeof(BNode));		/* Create an empty BNode object as Root */
-	if (tree->root == 0)
+	BNode *pRoot;
+	
+	pRoot = 0;
+	pRoot = (BNode *) malloc(sizeof(BNode));
+	if (pRoot == 0)
 		return -1;
-	memset((void *) tree->root, 0, sizeof(BNode));		/* Initialize Root BNode object */
+	
+	pTree->size = 0;										/* Initially size must be Zero */
+	pTree->fpCompareKey = fpCompareKey;						/* Use User-defined comparing function */
+	pTree->fpDestroyKey = fpDestroyKey;						/* No destructor function for Keys */
+	pTree->fpDestroyData = fpDestroyData;					/* No destructor function for User Data */
+	pTree->root = 0;
+	pTree->root = pRoot;									/* Create an empty BNode object as Root */
+	memset((void *) pTree->root, 0, sizeof(BNode));			/* Initialize Root BNode object */
 	
 	return 0;
 }
 
 
 
-void bst_destroy(BisTree *tree) {
+void bst_destroy(BisTree *pTree) {
 	
 	BNode *pNode;
-	Queue allNodes;													/* Queue for holding all BNode objects */
-	unsigned int calculatedNodeCount;								/* Number of BNode objects to be */
+	Queue qNodes;											/* Queue for holding all BNode objects */
+	unsigned int iNodeCount;								/* Number of BNode objects supposed to be */
 	
-	queue_init(&allNodes, 0);										/* Initialize Queue with no destructor function */
-	bst_preOrder((const BisTree *) tree, bst_root(tree), &allNodes);	/* Collect all BNode objects on the Queue */
-	calculatedNodeCount = 2 * bst_size((const BisTree *) tree) + 1;		/* Node Count = 2 X (Internals) + 1 */
 	
-	if (calculatedNodeCount != queue_size(&allNodes)) {
-		printf("bst_destroy() : Post-order queue_size() NOT EQUAL to bst_size()\n");
-		printf("bst_destroy() : bst_size(): %u, queue_size(): %u\n",
-						bst_size((const BisTree *) tree), queue_size(&allNodes));
+	/* Initialize Queue with no destructor function */
+	pNode = 0;
+	queue_init(&qNodes, 0);
+	
+	
+	/* Collect all BNode objects on the Queue */
+	/* This MUST be TRUE: Node Count = 2 * (Internals) + 1 */
+	bst_preOrder((const BisTree *) pTree, bst_root(pTree), &qNodes);
+	iNodeCount = 2 * bst_size((const BisTree *) pTree) + 1;
+	
+	
+	/* If our Node Count assert is FALSE, signal an error */
+	if (iNodeCount != queue_size(&qNodes)) {
+		printf(ERROR_MSG_1);
+		printf(ERROR_MSG_2, bst_size((const BisTree *) pTree), queue_size(&qNodes));
 	}
 	
-	while (queue_size(&allNodes) > 0) {
-		queue_dequeue(&allNodes, (void **) &pNode);					/* Acquire pointer of each BNode */
+	
+	/* Dequeue a BNode object one by one */
+	/* And de-allocate its memory by freeing it */
+	while (queue_size(&qNodes) > 0) {
+		queue_dequeue(&qNodes, (void **) &pNode);
 		
-		if (tree->destroy_key != 0) {
-			tree->destroy_key((void *) pNode->key);
+		if (pTree->fpDestroyKey != 0) {
+			pTree->fpDestroyKey((void *) pNode->key);
 		}
-		if (tree->destroy_data != 0) {
-			tree->destroy_data((void *) pNode->element);
+		if (pTree->fpDestroyData != 0) {
+			pTree->fpDestroyData((void *) pNode->element);
 		}
 		free((void *) pNode);
 	}
 	
-	queue_destroy(&allNodes);										/* Destroy temporary queue */
-	memset((void *) tree, 0, sizeof(BisTree));							/* Clear the memory of BisTree object */
+	
+	/* Destroy temporary Queue */
+	/* Clear the memory of BisTree structure */
+	queue_destroy(&qNodes);
+	memset((void *) pTree, 0, sizeof(BisTree));
 	return;
 }
 
