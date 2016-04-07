@@ -266,7 +266,7 @@ int bst_elements(const BisTree *tree, List *elementList);
 
 int bst_sort(List *list, int (*compare) (const void *arg1, const void *arg2));
 
-int bst_sortDlist(DList *dlist, int (*compare) (const void *arg1, const void *arg2));
+int bst_sortDList(DList *dlist, int (*compare) (const void *arg1, const void *arg2));
 
 
 int bst_sortAscending(List *list, int (*compare) (const void *arg1, const void *arg2));
@@ -274,9 +274,9 @@ int bst_sortAscending(List *list, int (*compare) (const void *arg1, const void *
 int bst_sortDescending(List *list, int (*compare) (const void *arg1, const void *arg2));
 
 
-int bst_sortAscendingDlist(DList *dlist, int (*compare) (const void *arg1, const void *arg2));
+int bst_sortAscendingDList(DList *dlist, int (*compare) (const void *arg1, const void *arg2));
 
-int bst_sortDescendingDlist(DList *dlist, int (*compare) (const void *arg1, const void *arg2));
+int bst_sortDescendingDList(DList *dlist, int (*compare) (const void *arg1, const void *arg2));
 
 
 
