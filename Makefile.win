@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = obj/bst_init_destroy.o obj/bst_key_value_list.o obj/bst_query.o obj/bst_search.o obj/bst_mutation.o obj/bst_traversal_algo.o
-LINKOBJ  = obj/bst_init_destroy.o obj/bst_key_value_list.o obj/bst_query.o obj/bst_search.o obj/bst_mutation.o obj/bst_traversal_algo.o
+OBJ      = obj/bst_init_destroy.o obj/bst_key_value_list.o obj/bst_query.o obj/bst_search.o obj/bst_mutation.o obj/bst_sort_algorithms.o obj/bst_traversal_algorithms.o
+LINKOBJ  = obj/bst_init_destroy.o obj/bst_key_value_list.o obj/bst_query.o obj/bst_search.o obj/bst_mutation.o obj/bst_sort_algorithms.o obj/bst_traversal_algorithms.o
 LIBS     = -L"C:/Dev-Cpp/MinGW32/lib" -L"C:/Dev-Cpp/MinGW32/mingw32/lib" -static-libstdc++ -static-libgcc -L"G:/Ashish Files/documents/Dev C++ Project Files/Stack and Queue/lib" -L"G:/Ashish Files/documents/Dev C++ Project Files/Linked List/lib" -lstq -llinkedlist -s
 INCS     = -I"C:/Dev-Cpp/MinGW32/include" -I"C:/Dev-Cpp/MinGW32/mingw32/include" -I"C:/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.8.1/include" -I"G:/Ashish Files/documents/Dev C++ Project Files/Stack and Queue/src" -I"G:/Ashish Files/documents/Dev C++ Project Files/Linked List/src"
 CXXINCS  = -I"C:/Dev-Cpp/MinGW32/include" -I"C:/Dev-Cpp/MinGW32/mingw32/include" -I"C:/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.8.1/include" -I"C:/Dev-Cpp/MinGW32/lib/gcc/mingw32/4.8.1/include/c++" -I"G:/Ashish Files/documents/Dev C++ Project Files/Stack and Queue/src" -I"G:/Ashish Files/documents/Dev C++ Project Files/Linked List/src"
@@ -40,5 +40,8 @@ obj/bst_search.o: src/bst_search.c
 obj/bst_mutation.o: src/bst_mutation.c
 	$(CC) -c src/bst_mutation.c -o obj/bst_mutation.o $(CFLAGS)
 
-obj/bst_traversal_algo.o: src/bst_traversal_algo.c
-	$(CC) -c src/bst_traversal_algo.c -o obj/bst_traversal_algo.o $(CFLAGS)
+obj/bst_sort_algorithms.o: src/bst_sort_algorithms.c
+	$(CC) -c src/bst_sort_algorithms.c -o obj/bst_sort_algorithms.o $(CFLAGS)
+
+obj/bst_traversal_algorithms.o: src/bst_traversal_algorithms.c
+	$(CC) -c src/bst_traversal_algorithms.c -o obj/bst_traversal_algorithms.o $(CFLAGS)
