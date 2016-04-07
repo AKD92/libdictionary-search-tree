@@ -41,9 +41,9 @@ int bst_sort(List *list, int (*compare) (const void *arg1, const void *arg2))
 }
 
 
-int bst_sortDlist(DList *dlist, int (*compare) (const void *arg1, const void *arg2))
+int bst_sortDList(DList *dlist, int (*compare) (const void *arg1, const void *arg2))
 {
-	return bst_sortAscendingDlist(dlist, compare);
+	return bst_sortAscendingDList(dlist, compare);
 }
 
 
@@ -164,7 +164,7 @@ int bst_sortDescending(List *list, int (*compare) (const void *arg1, const void 
 /************************************************************************************/
 
 
-int bst_sortAscendingDlist(DList *dlist, int (*compare) (const void *arg1, const void *arg2))
+int bst_sortAscendingDList(DList *dlist, int (*compare) (const void *arg1, const void *arg2))
 {
 	
 	void *pDataElem;
@@ -211,7 +211,7 @@ int bst_sortAscendingDlist(DList *dlist, int (*compare) (const void *arg1, const
 }
 
 
-int bst_sortDescendingDlist(DList *dlist, int (*compare) (const void *arg1, const void *arg2))
+int bst_sortDescendingDList(DList *dlist, int (*compare) (const void *arg1, const void *arg2))
 {
 	
 	void *pDataElem;
