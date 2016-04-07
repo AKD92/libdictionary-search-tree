@@ -28,13 +28,6 @@
 
 
 
-unsigned int bst_size(const BisTree *pTree) {
-	
-	return pTree->size;
-}
-
-
-
 BNode * bst_root(const BisTree *pTree) {
 	
 	return (pTree == 0 ? 0 : pTree->root);
@@ -155,44 +148,44 @@ unsigned int bst_depth(const BisTree *pTree, const BNode *v) {
 unsigned int bst_height(const BisTree *pTree, const BNode *node) {
 	
 	int isExternal;
-	Queue postOrder;
+	Queue qPostorder;
 	register unsigned int iCount;
 	unsigned int nExternal;
 	unsigned int heightR, heightL, heightN;
-	const BNode *currentNode;
-	unsigned int *tmpHeightData;
+	const BNode *pNode;
+	unsigned int *pTmpHeight;
 	
 	iCount = 0;
 	nExternal = bst_size(pTree) + 1;
-	queue_init(&postOrder, 0);
-	bst_postOrder(pTree, (BNode *) node, &postOrder);
-	tmpHeightData = (unsigned int *) malloc(sizeof(unsigned int) * nExternal);
+	queue_init(&qPostorder, 0);
+	bst_postOrder(pTree, (BNode *) node, &qPostorder);
+	pTmpHeight = (unsigned int *) malloc(sizeof(unsigned int) * nExternal);
 	
-	while (queue_size(&postOrder) > 0) {
+	while (queue_size(&qPostorder) > 0) {
 		
-		queue_dequeue(&postOrder, (void **) &currentNode);
-		isExternal = bst_isExternal(currentNode);
+		queue_dequeue(&qPostorder, (void **) &pNode);
+		isExternal = bst_isExternal(pNode);
 		
 		if (isExternal == 1) {
-			*(tmpHeightData + iCount) = 0;
+			*(pTmpHeight + iCount) = 0;
 			iCount = iCount + 1;
 		}
 		else {
 			iCount = iCount - 1;
-			heightR = *(tmpHeightData + iCount);
+			heightR = *(pTmpHeight + iCount);
 			
 			iCount = iCount - 1;
-			heightL = *(tmpHeightData + iCount);
+			heightL = *(pTmpHeight + iCount);
 			
 			heightN = 1 + maxu(heightL, heightR);
-			*(tmpHeightData + iCount) = heightN;
+			*(pTmpHeight + iCount) = heightN;
 			iCount = iCount + 1;
 		}
 	}
 	
-	heightN = *(tmpHeightData + iCount - 1);
-	queue_destroy(&postOrder);
-	free((void *) tmpHeightData);
+	heightN = *(pTmpHeight + iCount - 1);
+	queue_destroy(&qPostorder);
+	free((void *) pTmpHeight);
 	
 	return heightN;
 }

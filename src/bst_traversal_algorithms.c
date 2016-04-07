@@ -34,6 +34,8 @@ int bst_preOrder(const BisTree *pTree, BNode *pStartNode, Queue *qPreorder) {
 	if (pStartNode == 0 || qPreorder == 0)
 		return -1;
 	
+	pNode = 0;
+	pLeftChild = pRightChild = 0;
 	stack_init(&stNodes, 0);
 	stack_push(&stNodes, (const void *) pStartNode);
 	
@@ -91,38 +93,40 @@ int bst_postOrder(const BisTree *pTree, BNode *pStartNode, Queue *qPostorder) {
 	
 	BNode *pNode;
 	BNode *pLeftChild, *pRightChild;
-	Stack st1, st2;
+	Stack stNodes1, stNodes2;
 	
 	if (pStartNode == 0 || qPostorder == 0)
 		return -1;
 	
-	stack_init(&st1, 0);
-	stack_init(&st2, 0);
-	stack_push(&st1, (const void *) pStartNode);
+	pNode = 0;
+	pLeftChild = pRightChild = 0;
+	stack_init(&stNodes1, 0);
+	stack_init(&stNodes2, 0);
+	stack_push(&stNodes1, (const void *) pStartNode);
 	
-	while (stack_size(&st1) > 0) {
+	while (stack_size(&stNodes1) > 0) {
 		
-		stack_pop(&st1, (void **) &pNode);
-		stack_push(&st2, (const void *) pNode);
+		stack_pop(&stNodes1, (void **) &pNode);
+		stack_push(&stNodes2, (const void *) pNode);
 		
 		pLeftChild = bst_leftChild((const BNode *) pNode);
 		pRightChild = bst_rightChild((const BNode *) pNode);
 		
 		if (pLeftChild != 0) {
-			stack_push(&st1, (const void *) pLeftChild);
+			stack_push(&stNodes1, (const void *) pLeftChild);
 		}
 		if (pRightChild != 0) {
-			stack_push(&st1, (const void *) pRightChild);
+			stack_push(&stNodes1, (const void *) pRightChild);
 		}
 	}
 	
-	while (stack_size(&st2) > 0) {
-		stack_pop(&st2, (void **) &pNode);
+	while (stack_size(&stNodes2) > 0) {
+		stack_pop(&stNodes2, (void **) &pNode);
 		queue_enqueue(qPostorder, (const void *) pNode);
 	}
 	
-	stack_destroy(&st1);
-	stack_destroy(&st2);
+	stack_destroy(&stNodes1);
+	stack_destroy(&stNodes2);
 	return 0;
 }
 
@@ -138,6 +142,8 @@ int bst_levelOrderLR(const BisTree *pTree, BNode *pStartNode, Queue *qLRorder) {
 	if (pStartNode == 0 || qLRorder == 0)
 		return -1;
 	
+	pNode = 0;
+	pLeftChild = pRightChild = 0;
 	queue_init(&qNodes, 0);
 	queue_enqueue(&qNodes, (const void *) pStartNode);
 	

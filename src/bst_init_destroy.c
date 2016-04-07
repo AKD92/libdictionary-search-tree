@@ -32,7 +32,7 @@
 
 
 int bst_init (BisTree *pTree, int (*fpCompareKey) (const void *k1, const void *k2),
-					void (*fpDestroyKey) (void *key), void (*fpDestroyData) (void *data))
+					void (*fpDestroyKey) (void *key), void (*fpDestroyData) (void *pData))
 {
 	
 	BNode *pRoot;
@@ -69,13 +69,13 @@ void bst_destroy(BisTree *pTree) {
 	/* Collect all BNode objects on the Queue */
 	/* This MUST be TRUE: Node Count = 2 * (Internals) + 1 */
 	bst_preOrder((const BisTree *) pTree, bst_root(pTree), &qNodes);
-	iNodeCount = 2 * bst_size((const BisTree *) pTree) + 1;
+	iNodeCount = 2 * bst_size(pTree) + 1;
 	
 	
 	/* If our Node Count assert is FALSE, signal an error */
 	if (iNodeCount != queue_size(&qNodes)) {
 		printf(ERROR_MSG_1);
-		printf(ERROR_MSG_2, bst_size((const BisTree *) pTree), queue_size(&qNodes));
+		printf(ERROR_MSG_2, bst_size(pTree), queue_size(&qNodes));
 	}
 	
 	
@@ -85,10 +85,10 @@ void bst_destroy(BisTree *pTree) {
 		queue_dequeue(&qNodes, (void **) &pNode);
 		
 		if (pTree->fpDestroyKey != 0) {
-			pTree->fpDestroyKey((void *) pNode->key);
+			pTree->fpDestroyKey((void *) pNode->pKey);
 		}
 		if (pTree->fpDestroyData != 0) {
-			pTree->fpDestroyData((void *) pNode->element);
+			pTree->fpDestroyData((void *) pNode->pElement);
 		}
 		free((void *) pNode);
 	}

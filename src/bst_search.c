@@ -29,7 +29,7 @@ BNode * bst_binarySearch(const BisTree *pTree, const void *key, BNode *startNode
 	pNode = (const BNode *) startNode;
 	while (bst_isExternal(pNode) != 1) {
 		
-		opCompareKey = pTree->fpCompareKey((const void *) key, (const void *) pNode->key);
+		opCompareKey = pTree->fpCompareKey((const void *) key, (const void *) pNode->pKey);
 		if (opCompareKey == 0) {
 			break;
 		}
@@ -51,15 +51,15 @@ BNode * bst_binarySearch(const BisTree *pTree, const void *key, BNode *startNode
 int bst_findElement(const BisTree *pTree, const void *key, void **elem) {
 	
 	int res;
-	const BNode *pTargetNode;
+	const BNode *pTarget;
 	
-	pTargetNode = bst_binarySearch(pTree, key, bst_root(pTree));
+	pTarget = bst_binarySearch(pTree, key, bst_root(pTree));
 	
-	if (bst_isInternal(pTargetNode) == 1) {
-		if (elem != 0) *elem = pTargetNode->element;
+	if (bst_isInternal(pTarget) == 1) {
+		if (elem != 0) *elem = pTarget->pElement;
 		res = 0;
 	}
-	else if (bst_isExternal(pTargetNode) == 1) {
+	else if (bst_isExternal(pTarget) == 1) {
 		res = -1;
 	}
 	

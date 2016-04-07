@@ -30,8 +30,8 @@
 
 struct BNode_ {
 	
-	void *key;
-	void *element;
+	void *pKey;
+	void *pElement;
 	
 	struct BNode_ *parent;
 	struct BNode_ *leftChild;
@@ -46,9 +46,9 @@ struct BisTree_ {
 	BNode *root;
 	unsigned int size;
 	
-	int (*fpCompareKey) (const void *key1, const void *key2);
-	void (*fpDestroyKey) (void *key);
-	void (*fpDestroyData) (void *data);
+	int (*fpCompareKey) (const void *pKey1, const void *pKey2);
+	void (*fpDestroyKey) (void *pKey);
+	void (*fpDestroyData) (void *pData);
 	
 };
 typedef struct BisTree_ BisTree;
@@ -67,7 +67,7 @@ typedef struct BisTree_ BisTree;
 
 
 int bst_init (BisTree *pTree, int (*fpCompareKey) (const void *k1, const void *k2),
-					void (*fpDestroyKey) (void *key), void (*fpDestroyData) (void *data));
+					void (*fpDestroyKey) (void *pKey), void (*fpDestroyData) (void *pData));
 
 
 void bst_destroy(BisTree *pTree);
@@ -84,7 +84,7 @@ void bst_destroy(BisTree *pTree);
 
 /*********	Accessor methods ****************/
 
-unsigned int bst_size(const BisTree *pTree);
+#define bst_size(pTree) ((pTree)->size)
 
 
 BNode * bst_root(const BisTree *pTree);
@@ -233,27 +233,27 @@ int bst_eraseExternalLinks(Queue *qNodes);
 
 
 
-BNode * bst_binarySearch(const BisTree *pTree, const void *key, BNode *pStartNode);
+BNode * bst_binarySearch(const BisTree *pTree, const void *pKey, BNode *pStartNode);
 
 
-/*	Searches for a given key in the BisTree
+/*	Searches for a given pKey in the BisTree
 	Return 0 if successful, -1 otherwise
 */
 
-int bst_findElement(const BisTree *pTree, const void *key, void **elem);
+int bst_findElement(const BisTree *pTree, const void *pKey, void **pElem);
 
-int bst_insert(BisTree *pTree, const void *key, const void *elem);
+int bst_insert(BisTree *pTree, const void *pKey, const void *pElem);
 
-int bst_changeElement(BisTree *pTree, const void *key, const void *elem, void **old_elem);
+int bst_changeElement(BisTree *pTree, const void *pKey, const void *pElem, void **pOldelem);
 
-int bst_remove(BisTree *pTree, const void *key, void **removedKey, void **removedElem);
-
-
+int bst_remove(BisTree *pTree, const void *pKey, void **pRemovedKey, void **pRemovedElem);
 
 
-int bst_keys(const BisTree *pTree, List *keyList);
 
-int bst_elements(const BisTree *pTree, List *elementList);
+
+int bst_pKeys(const BisTree *pTree, List *lstKeys);
+
+int bst_pElements(const BisTree *pTree, List *lstElements);
 
 
 

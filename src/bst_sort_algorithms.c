@@ -88,7 +88,7 @@ int bst_sortAscending(List *list, int (*compare) (const void *arg1, const void *
 	pLstElem = list_head(list);
 	while (queue_size(&qInorder) > 0) {
 		queue_dequeue(&qInorder, (void **) &pNode);
-		list_data(pLstElem) = pNode->key;
+		list_data(pLstElem) = pNode->pKey;
 		pLstElem = list_next(pLstElem);
 	}
 	
@@ -145,7 +145,7 @@ int bst_sortDescending(List *list, int (*compare) (const void *arg1, const void 
 	pLstElem = list_head(list);
 	while (stack_size(&stReverse) > 0) {
 		stack_pop(&stReverse, (void **) &pNode);
-		list_data(pLstElem) = pNode->key;
+		list_data(pLstElem) = pNode->pKey;
 		pLstElem = list_next(pLstElem);
 	}
 	
@@ -199,7 +199,7 @@ int bst_sortAscendingDList(DList *dlist, int (*compare) (const void *arg1, const
 	pLstElem = dlist_head(dlist);
 	while (queue_size(&qInorder) > 0) {
 		queue_dequeue(&qInorder, (void **) &pNode);
-		dlist_data(pLstElem) = pNode->key;
+		dlist_data(pLstElem) = pNode->pKey;
 		pLstElem = dlist_next(pLstElem);
 	}
 	
@@ -256,7 +256,7 @@ int bst_sortDescendingDList(DList *dlist, int (*compare) (const void *arg1, cons
 	pLstElem = dlist_head(dlist);
 	while (stack_size(&stReverse) > 0) {
 		stack_pop(&stReverse, (void **) &pNode);
-		dlist_data(pLstElem) = pNode->key;
+		dlist_data(pLstElem) = pNode->pKey;
 		pLstElem = dlist_next(pLstElem);
 	}
 	
