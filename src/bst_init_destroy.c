@@ -1,7 +1,7 @@
 
 
 /************************************************************************************
-	Implementation of BST Initialization and Destruction Functions
+	Implementation of Binary Search Tree Initialization and Destruction Functions
 	Author:             Ashis Kumar Das
 	Email:              akd.bracu@gmail.com
 	GitHub:             https://github.com/AKD92
@@ -27,7 +27,7 @@
 
 
 int bst_init (
-			BST *tree,
+			BisTree *tree,
 			int (*compare_key) (const void *k1, const void *k2),
 			void (*destroy_key) (void *key),
 			void (*destroy_data) (void *data)
@@ -49,20 +49,20 @@ int bst_init (
 
 
 
-void bst_destroy(BST *tree) {
+void bst_destroy(BisTree *tree) {
 	
 	BNode *pNode;
 	Queue allNodes;													/* Queue for holding all BNode objects */
 	unsigned int calculatedNodeCount;								/* Number of BNode objects to be */
 	
 	queue_init(&allNodes, 0);										/* Initialize Queue with no destructor function */
-	bst_preOrder((const BST *) tree, bst_root(tree), &allNodes);	/* Collect all BNode objects on the Queue */
-	calculatedNodeCount = 2 * bst_size((const BST *) tree) + 1;		/* Node Count = 2 X (Internals) + 1 */
+	bst_preOrder((const BisTree *) tree, bst_root(tree), &allNodes);	/* Collect all BNode objects on the Queue */
+	calculatedNodeCount = 2 * bst_size((const BisTree *) tree) + 1;		/* Node Count = 2 X (Internals) + 1 */
 	
 	if (calculatedNodeCount != queue_size(&allNodes)) {
 		printf("bst_destroy() : Post-order queue_size() NOT EQUAL to bst_size()\n");
 		printf("bst_destroy() : bst_size(): %u, queue_size(): %u\n",
-						bst_size((const BST *) tree), queue_size(&allNodes));
+						bst_size((const BisTree *) tree), queue_size(&allNodes));
 	}
 	
 	while (queue_size(&allNodes) > 0) {
@@ -78,7 +78,7 @@ void bst_destroy(BST *tree) {
 	}
 	
 	queue_destroy(&allNodes);										/* Destroy temporary queue */
-	memset((void *) tree, 0, sizeof(BST));							/* Clear the memory of BST object */
+	memset((void *) tree, 0, sizeof(BisTree));							/* Clear the memory of BisTree object */
 	return;
 }
 

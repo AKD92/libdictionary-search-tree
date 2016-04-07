@@ -1,7 +1,7 @@
 
 
 /************************************************************************************
-	Implementation of BST Look-Up (Search) Algorithms
+	Implementation of Binary Search Tree Look-Up (Search) Algorithms
 	Author:             Ashis Kumar Das
 	Email:              akd.bracu@gmail.com
 	GitHub:             https://github.com/AKD92
@@ -21,7 +21,7 @@
 
 
 
-BNode * bst_binarySearch(const BST *tree, const void *key, BNode *startNode) {
+BNode * bst_binarySearch(const BisTree *tree, const void *key, BNode *startNode) {
 	
 	register int opCompareKey;
 	register const BNode *pNode;
@@ -48,7 +48,7 @@ BNode * bst_binarySearch(const BST *tree, const void *key, BNode *startNode) {
 
 
 
-int bst_findElement(const BST *tree, const void *key, void **elem) {
+int bst_findElement(const BisTree *tree, const void *key, void **elem) {
 	
 	int res;
 	const BNode *targetNode;

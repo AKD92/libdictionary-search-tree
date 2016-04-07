@@ -1,7 +1,7 @@
 
 
 /************************************************************************************
-	Implementation of BST Query Functions
+	Implementation of Binary Search Tree Query Functions
 	Author:             Ashis Kumar Das
 	Email:              akd.bracu@gmail.com
 	GitHub:             https://github.com/AKD92
@@ -28,14 +28,14 @@
 
 
 
-unsigned int bst_size(const BST *tree) {
+unsigned int bst_size(const BisTree *tree) {
 	
 	return tree->size;
 }
 
 
 
-BNode * bst_root(const BST *tree) {
+BNode * bst_root(const BisTree *tree) {
 	
 	return (tree == 0 ? 0 : tree->root);
 }
@@ -122,7 +122,7 @@ int bst_isInternal(const BNode *v) {
 
 
 
-int bst_isRoot(const BST *tree, const BNode *v) {
+int bst_isRoot(const BisTree *tree, const BNode *v) {
 	
 	if (v == bst_root(tree)) {
 		return 1;
@@ -134,7 +134,7 @@ int bst_isRoot(const BST *tree, const BNode *v) {
 
 
 
-unsigned int bst_depth(const BST *tree, const BNode *v) {
+unsigned int bst_depth(const BisTree *tree, const BNode *v) {
 	
 	register unsigned int iDepth;
 	register const BNode *nodeCurrent;
@@ -152,7 +152,7 @@ unsigned int bst_depth(const BST *tree, const BNode *v) {
 
 
 
-unsigned int bst_height(const BST *tree, const BNode *node) {
+unsigned int bst_height(const BisTree *tree, const BNode *node) {
 	
 	int isExternal;
 	Queue postOrder;

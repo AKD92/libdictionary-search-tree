@@ -1,7 +1,7 @@
 
 
 /************************************************************************************
-	Implementation of BST Key:Value List Generation Algorithms
+	Implementation of Binary Search Tree Key:Value List Generation Algorithms
 	Author:             Ashis Kumar Das
 	Email:              akd.bracu@gmail.com
 	GitHub:             https://github.com/AKD92
@@ -22,7 +22,7 @@
 
 
 
-int bst_keys(const BST *tree, List *keyList) {
+int bst_keys(const BisTree *tree, List *keyList) {
 	
 	ListElem *n;
 	BNode *node;
@@ -52,7 +52,7 @@ int bst_keys(const BST *tree, List *keyList) {
 
 
 
-int bst_elements(const BST *tree, List *elementList) {
+int bst_elements(const BisTree *tree, List *elementList) {
 	
 	ListElem *n;
 	BNode *node;

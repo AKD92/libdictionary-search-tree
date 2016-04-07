@@ -1,7 +1,7 @@
 
 
 /************************************************************************************
-	Implementation of BST Mutation Functions (Insertion, Deletion)
+	Implementation of Binary Search Tree Mutation Functions (Insertion, Deletion)
 	Author:             Ashis Kumar Das
 	Email:              akd.bracu@gmail.com
 	GitHub:             https://github.com/AKD92
@@ -29,11 +29,11 @@
 static int bst_expandExternal(BNode *nodeExternal);
 
 
-/*	bst_removeAboveExternal(BST *tree, BNode *w)
+/*	bst_removeAboveExternal(BisTree *tree, BNode *w)
 	Returns 0 if successful, -1 if fails
 */
 
-static int bst_removeAboveExternal(BST *tree, BNode *nodeExternal);
+static int bst_removeAboveExternal(BisTree *tree, BNode *nodeExternal);
 
 
 
@@ -73,7 +73,7 @@ static int bst_expandExternal(BNode *nodeExternal) {
 }
 
 
-static int bst_removeAboveExternal(BST *tree, BNode *nodeExternal) {
+static int bst_removeAboveExternal(BisTree *tree, BNode *nodeExternal) {
 	
 	int isLeftChild;
 	BNode *nodeParent, *nodeHigherParent;			/* v = parent(w), u = parent(v) */
@@ -123,7 +123,7 @@ static int bst_removeAboveExternal(BST *tree, BNode *nodeExternal) {
 
 
 
-int bst_changeElement(BST *tree, const void *key, const void *elem, void **old_elem) {
+int bst_changeElement(BisTree *tree, const void *key, const void *elem, void **old_elem) {
 	
 	int res;
 	BNode *targetNode;
@@ -131,7 +131,7 @@ int bst_changeElement(BST *tree, const void *key, const void *elem, void **old_e
 	if (tree == 0 || key == 0)
 		return -1;
 	
-	targetNode = bst_binarySearch((const BST *) tree, key, bst_root(tree));
+	targetNode = bst_binarySearch((const BisTree *) tree, key, bst_root(tree));
 	
 	if (bst_isExternal((const BNode *) targetNode) == 1) {
 		res = -1;
@@ -147,7 +147,7 @@ int bst_changeElement(BST *tree, const void *key, const void *elem, void **old_e
 
 
 
-int bst_insert(BST *tree, const void *key, const void *elem) {
+int bst_insert(BisTree *tree, const void *key, const void *elem) {
 	
 	int res;
 	int opExpand;
@@ -156,8 +156,8 @@ int bst_insert(BST *tree, const void *key, const void *elem) {
 	if (tree == 0 || key == 0)
 		return -1;
 	
-	/* Search for the key in our BST */
-	targetNode = bst_binarySearch((const BST *) tree, key, bst_root(tree));
+	/* Search for the key in our BisTree */
+	targetNode = bst_binarySearch((const BisTree *) tree, key, bst_root(tree));
 	
 	/* Key not found, we have got an External BNode */
 	/* So make it Internal and assing this Key and Elem to it */
@@ -175,7 +175,7 @@ int bst_insert(BST *tree, const void *key, const void *elem) {
 	else {
 		
 		/* We have got an Internal BNode, it means Key already exist */
-		/* In this situation we cannot insert the given Key into our BST */
+		/* In this situation we cannot insert the given Key into our BisTree */
 		res = -1;
 	}
 	
@@ -184,7 +184,7 @@ int bst_insert(BST *tree, const void *key, const void *elem) {
 
 
 
-int bst_remove(BST *tree, const void *key, void **removedKey, void **removedElem) {
+int bst_remove(BisTree *tree, const void *key, void **removedKey, void **removedElem) {
 	
 	int res;
 	int targetExternal;
@@ -202,7 +202,7 @@ int bst_remove(BST *tree, const void *key, void **removedKey, void **removedElem
 	
 	externalChild = 0;
 	queue_init(&inOrder, 0);
-	targetNode = bst_binarySearch((const BST *) tree, key, bst_root(tree));
+	targetNode = bst_binarySearch((const BisTree *) tree, key, bst_root(tree));
 	targetExternal = bst_isExternal((const BNode *) targetNode);
 	
 	if (targetExternal == 1) {
@@ -232,7 +232,7 @@ int bst_remove(BST *tree, const void *key, void **removedKey, void **removedElem
 		}
 		else if (both_internal == 1) {
 			
-			bst_inOrder((const BST *) tree, rightChild, &inOrder);
+			bst_inOrder((const BisTree *) tree, rightChild, &inOrder);
 			
 			/* Find two External Node from Inorder sequence */
 			/* More information about this operation on the Book */
