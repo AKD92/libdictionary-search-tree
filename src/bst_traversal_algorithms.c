@@ -93,40 +93,40 @@ int bst_postOrder(const BisTree *pTree, BNode *pStartNode, Queue *qPostorder) {
 	
 	BNode *pNode;
 	BNode *pLeftChild, *pRightChild;
-	Stack stNodes1, stNodes2;
+	Stack stNodesA, stNodesB;
 	
 	if (pStartNode == 0 || qPostorder == 0)
 		return -1;
 	
 	pNode = 0;
 	pLeftChild = pRightChild = 0;
-	stack_init(&stNodes1, 0);
-	stack_init(&stNodes2, 0);
-	stack_push(&stNodes1, (const void *) pStartNode);
+	stack_init(&stNodesA, 0);
+	stack_init(&stNodesB, 0);
+	stack_push(&stNodesA, (const void *) pStartNode);
 	
-	while (stack_size(&stNodes1) > 0) {
+	while (stack_size(&stNodesA) > 0) {
 		
-		stack_pop(&stNodes1, (void **) &pNode);
-		stack_push(&stNodes2, (const void *) pNode);
+		stack_pop(&stNodesA, (void **) &pNode);
+		stack_push(&stNodesB, (const void *) pNode);
 		
 		pLeftChild = bst_leftChild((const BNode *) pNode);
 		pRightChild = bst_rightChild((const BNode *) pNode);
 		
 		if (pLeftChild != 0) {
-			stack_push(&stNodes1, (const void *) pLeftChild);
+			stack_push(&stNodesA, (const void *) pLeftChild);
 		}
 		if (pRightChild != 0) {
-			stack_push(&stNodes1, (const void *) pRightChild);
+			stack_push(&stNodesA, (const void *) pRightChild);
 		}
 	}
 	
-	while (stack_size(&stNodes2) > 0) {
-		stack_pop(&stNodes2, (void **) &pNode);
+	while (stack_size(&stNodesB) > 0) {
+		stack_pop(&stNodesB, (void **) &pNode);
 		queue_enqueue(qPostorder, (const void *) pNode);
 	}
 	
-	stack_destroy(&stNodes1);
-	stack_destroy(&stNodes2);
+	stack_destroy(&stNodesA);
+	stack_destroy(&stNodesB);
 	return 0;
 }
 

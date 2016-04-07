@@ -33,12 +33,13 @@ int bst_keys(const BisTree *pTree, List *lstKeys) {
 	if (bst_size(pTree) == 0)
 		return -2;
 	
-	queue_init(&qNodes, 0);
-	pLstElem = list_head(lstKeys);
 	
+	/* Initialize the Queue */
 	/* Use Inorder algorithm to get a Sorted Key sequence (might be convenient) */
+	queue_init(&qNodes, 0);
 	bst_inOrder(pTree, bst_root(pTree), &qNodes);
 	
+	pLstElem = list_tail(lstKeys);
 	while (queue_size(&qNodes) > 0) {
 		queue_dequeue(&qNodes, (void **) &pNode);
 		if (bst_isInternal((const BNode *) pNode) == 1) {
@@ -65,12 +66,13 @@ int bst_elements(const BisTree *pTree, List *lstElements) {
 	if (bst_size(pTree) == 0)
 		return -2;
 	
-	queue_init(&qNodes, 0);
-	pLstElem = list_tail(lstElements);
 	
+	/* Initialize the Queue */
 	/* Use Inorder algorithm to get a Sorted Element sequence (According to Keys) */
+	queue_init(&qNodes, 0);
 	bst_inOrder(pTree, bst_root(pTree), &qNodes);
 	
+	pLstElem = list_tail(lstElements);
 	while (queue_size(&qNodes) > 0) {
 		queue_dequeue(&qNodes, (void **) &pNode);
 		if (bst_isInternal((const BNode *) pNode) == 1) {
