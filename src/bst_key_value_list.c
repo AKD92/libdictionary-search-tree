@@ -24,28 +24,27 @@
 
 int bst_keys(const BisTree *pTree, List *keyList) {
 	
-	ListElem *n;
-	BNode *node;
-	Queue nodeList;
+	BNode *pNode;
+	Queue qNodes;
+	ListElem *pLstElem;
 	
-	queue_init(&nodeList, 0);
-	list_init(keyList, 0);
-	n = list_head(keyList);
+	queue_init(&qNodes, 0);
+	pLstElem = list_head(keyList);
 	
 	/* Use Inorder algorithm to get a Sorted Key sequence (might be convenient) */
-	bst_inOrder(pTree, bst_root(pTree), &nodeList);
+	bst_inOrder(pTree, bst_root(pTree), &qNodes);
 	
-	while (queue_size(&nodeList) > 0) {
+	while (queue_size(&qNodes) > 0) {
 		
-		queue_dequeue(&nodeList, (void **) &node);
+		queue_dequeue(&qNodes, (void **) &pNode);
 		
-		if (bst_isInternal((const BNode *) node)) {
-			list_ins_next(keyList, n, (const void *) node->key);
-			n = list_tail(keyList);
+		if (bst_isInternal((const BNode *) pNode)) {
+			list_ins_next(keyList, pLstElem, (const void *) pNode->key);
+			pLstElem = list_tail(keyList);
 		}
 	}
 	
-	queue_destroy(&nodeList);
+	queue_destroy(&qNodes);
 	return 0;
 }
 
@@ -54,27 +53,26 @@ int bst_keys(const BisTree *pTree, List *keyList) {
 
 int bst_elements(const BisTree *pTree, List *elementList) {
 	
-	ListElem *n;
-	BNode *node;
-	Queue nodeList;
+	BNode *pNode;
+	Queue qNodes;
+	ListElem *pLstElem;
 	
-	queue_init(&nodeList, 0);
-	list_init(elementList, 0);
-	n = list_tail(elementList);
+	queue_init(&qNodes, 0);
+	pLstElem = list_tail(elementList);
 	
 	/* Use Inorder algorithm to get a Sorted Element sequence (According to Keys) */
-	bst_inOrder(pTree, bst_root(pTree), &nodeList);
+	bst_inOrder(pTree, bst_root(pTree), &qNodes);
 	
-	while (queue_size(&nodeList) > 0) {
+	while (queue_size(&qNodes) > 0) {
 		
-		queue_dequeue(&nodeList, (void **) &node);
+		queue_dequeue(&qNodes, (void **) &pNode);
 		
-		if (bst_isInternal((const BNode *) node)) {
-			list_ins_next(elementList, n, (const void *) node->element);
-			n = list_tail(elementList);
+		if (bst_isInternal((const BNode *) pNode)) {
+			list_ins_next(elementList, pLstElem, (const void *) pNode->element);
+			pLstElem = list_tail(elementList);
 		}
 	}
 	
-	queue_destroy(&nodeList);
+	queue_destroy(&qNodes);
 	return 0;
 }
