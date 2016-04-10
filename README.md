@@ -143,9 +143,12 @@ int main(void) {
 		list_ins_next(&lstInt, elem, (const void *) pInt);
 		elem = list_tail(&lstInt);
 	}
+	/* Current List: 3 2 1 0 -1 -2 -3 -4 */
 	
 	/* Sort Linked List */
+	/* For more sort function, check out bst.h */
 	bst_sort(&lstInt, compare_int);
+	/* Sorted List: -4 -3 -2 -1 0 1 2 3 */
 	
 	printf("Sorted in ascending order. Printing...\n");
 	elem = list_head(&lstInt);
