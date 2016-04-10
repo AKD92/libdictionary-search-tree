@@ -20,12 +20,12 @@ This Dictionary ADT is implemented using <b>Binary Search Tree (BST).</b> This d
 
 struct BNode_ {
 	
-	void *pKey;
-	void *pElement;
+	void *pKey;					/* Holds pointer to Key */
+	void *pElement;				/* Holds pointer to associated Element (Optional) */
 	
-	struct BNode_ *parent;
-	struct BNode_ *leftChild;
-	struct BNode_ *rightChild;
+	struct BNode_ *parent;			/* Pointer to parent BNode */
+	struct BNode_ *leftChild;		/* Pointer to Left Child */
+	struct BNode_ *rightChild;		/* Pointer to Right Child */
 	
 };
 typedef struct BNode_ BNode;
@@ -33,12 +33,12 @@ typedef struct BNode_ BNode;
 
 struct BisTree_ {
 	
-	BNode *root;
-	unsigned int size;
+	BNode *root;				/* Pointer to Root BNode Object */
+	unsigned int size;			/* Number of Internal Nodes */
 	
-	int (*fpCompareKey) (const void *pKey1, const void *pKey2);
-	void (*fpDestroyKey) (void *pKey);
-	void (*fpDestroyData) (void *pData);
+	int (*fpCompareKey) (const void *pKey1, const void *pKey2);	/* Comparing function */
+	void (*fpDestroyKey) (void *pKey);			/* Deallocator function for keys (Optional) */
+	void (*fpDestroyData) (void *pData);		/* Deallocator function for elements (Optional) */
 	
 };
 typedef struct BisTree_ BisTree;
