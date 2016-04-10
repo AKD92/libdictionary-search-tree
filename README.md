@@ -14,6 +14,36 @@ The design of good Dictionary data structure means good algorithmic performance 
 ### About This Implementation
 This Dictionary ADT is implemented using <b>Binary Search Tree (BST).</b> This data structure allows very efficient look-up through using <i>Binary Search algorithm</i>. The implementation begins by creating and using structures of Nodes and Links (pointers). Because of using C language, memory allocation and clean-up is necessary. A typical starting point of using this dictionary is to create an instance of BST as a variable and initialize it by calling <b>bst_init()</b> function while passing some function pointers on it as arguments. After we are done with our BST, we should destroy it with <b>bst_destroy()</b> function.
 
+##### Structures
+```C
+/* Data Structures for Binary Search Tree (BisTree) */
+
+struct BNode_ {
+	
+	void *pKey;
+	void *pElement;
+	
+	struct BNode_ *parent;
+	struct BNode_ *leftChild;
+	struct BNode_ *rightChild;
+	
+};
+typedef struct BNode_ BNode;
+
+
+struct BisTree_ {
+	
+	BNode *root;
+	unsigned int size;
+	
+	int (*fpCompareKey) (const void *pKey1, const void *pKey2);
+	void (*fpDestroyKey) (void *pKey);
+	void (*fpDestroyData) (void *pData);
+	
+};
+typedef struct BisTree_ BisTree;
+```
+
 The key and the value objects are stored in BST as <b>generic pointers (void *)</b> of actual objects. User should take care about <i>allocation and destruction</i> of key and value objects, and while a dictionary is being used (not destroyed yet), the actual key and value data must not be changed by other means. More information related to program interfaces can be found in <b>bst.h</b> header file.
 
 ### Signatures of some function pointers:
