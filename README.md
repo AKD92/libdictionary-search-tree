@@ -31,6 +31,90 @@ Assuming n and h as numbers, where n = Total number of keys in BST, h = Height o
  
 Space complexity is O(2n + 1)
 
+### Code Examples
+```C
+#include <bst.h>
+#include <queue.h>
+#include <list.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int util_printList(List *lst);
+int util_cmpInt(const void arg1, const void arg2);
+int main(void);
+
+int main(void) {
+	
+	BisTree bTree;
+	List lstObj;
+	ListElem *elem;
+	int *pInt, *pInt2, *pInt3, index;
+	
+	> Initialization
+	> Insert elements with keys
+	> Remove a key and corresponding element
+	> Search with a Key
+	> Print contents of dictionary
+	> Destruction
+	
+	return 0;
+}
+```
+
+**Initialization**
+```C
+ /* Compare function for Int + key deallocator (no element deallocator */
+ bst_init(&bTree, util_cmpInt, free, 0);
+ list_init(&lstObj, 0);
+```
+**Insert elements with keys**
+```C
+	for (index = 9; index >= 0; index--) {
+		pInt = (int *) malloc(sizeof(int));
+		*pInt = index;
+		
+		/* Insert with Key = pInt, Element = pInt */
+		bst_insert(&bTree, (const void *) pInt, (const void *) pInt);
+	}
+```
+**Remove a key and corresponding element**
+```C
+	pInt = (int *) malloc(sizeof(int));
+	*pInt = 5;
+	
+	/* Removing for Key = pInt, Removed Key = pInt2, Removed Element = pInt3 */
+	bst_remove(&bTree, (const void *) pInt, (void **) &pInt2, (void **) &pInt3);
+	printf("Removed Key: %d, Element: %d\n", *pInt2, *pInt3);
+	
+	free((void *) pInt);     /* Allocated using malloc() */
+	free((void *) pInt2);    /* Allocated using malloc() in the for loop of Insertion */
+```
+**Search with a Key**
+```C
+	pInt = (int *) malloc(sizeof(int));
+	*pInt = 9;
+	
+	/* Searching with Key = pInt, after searching pInt2 = Element Object of key pInt */
+	bst_findElement(&bTree, (const void *) pInt, (void **) &pInt2);
+	printf("Found Key: %d, Element %d\n", *pInt, *pInt2);
+```
+**Print contents of dictionary**
+```C
+	bst_listKeys(&bTree, &lstObj);
+	elem = list_head(&lstObj);
+	while (elem != 0) {              /* Iteration system in Linked List */
+		pInt = (int *) list_data(elem);
+		print("%d ", *pInt);
+		elem = list_next(elem);
+	}
+```
+**Destruction**
+```C
+	bst_destroy(&bTree);
+	list_destroy(&lstObj);
+```
+
+
 ### Some Notes
   * An instance of this dictionary implementation is identified by a BisTree structure, define in bst.h
   * An instance of tree node in this implementation is identified by a BNode structure, also define in bst.h
