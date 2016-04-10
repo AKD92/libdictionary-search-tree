@@ -111,7 +111,7 @@ int main(void) {
 	bst_destroy(&bTree);
 	list_destroy(&lstObj);
 ```
-#### Sorting a Linked List using TreeSort Algorithm
+#### Sorting a Linked List using <a href="https://en.wikipedia.org/wiki/Tree_sort">TreeSor Algorithm</a>
 ```C
 #include <bst.h>
 #include <list.h>
