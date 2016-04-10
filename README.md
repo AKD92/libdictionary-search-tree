@@ -113,7 +113,54 @@ int main(void) {
 	bst_destroy(&bTree);
 	list_destroy(&lstObj);
 ```
+#### Sorting a Linked List using TreeSort Algorithm
+```C
+#include <bst.h>
+#include <list.h>
+#include <stdio.h>
+#include <stdlib.h>
 
+int main(void);
+int compare_int(const void *arg1, const void *arg2);
+
+int compare_int(const void *arg1, const void *arg2) {
+	int *val1, *val2;
+	
+	val1 = (int *) arg1;
+	val2 = (int *) arg2;
+	return (*val1 - *val2);
+}
+
+int main(void) {
+	List lstInt;
+	ListElem *elem;
+	int *pInt, index;
+	
+	list_init(&lstInt, free);
+	
+	elem = list_tail(&lstInt);
+	for (index = 3; index >= -4; index--) {
+		pInt = (int *) malloc(sizeof(int));
+		*pInt = index;
+		list_ins_next(&lstInt, elem, (const void *) pInt);
+		elem = list_tail(&lstInt);
+	}
+	
+	/* Sort Linked List */
+	bst_sort(&lstInt, compare_int);
+	
+	printf("Sorted in ascending order. Printing...\n");
+	elem = list_head(&lstInt);
+	while (elem != 0) {
+		pInt = (int *) list_data(elem);
+		printf("%d ", *pInt);
+		elem = list_next(elem);
+	}
+	
+	list_destroy(&lstInt);
+}
+```
+	
 
 ### Some Notes
   * An instance of this dictionary implementation is identified by a BisTree structure, define in bst.h
