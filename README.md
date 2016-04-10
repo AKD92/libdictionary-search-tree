@@ -21,8 +21,6 @@ The key and the value objects are stored in BST as <b>generic pointers (void *)<
   * void (*destroy_key) (void *key) : For destroying keys on the time of destruction of the BST itself.
   * void (*destroy_data) (void *data) : For destroying user data objects on the time of destruction of the BST itself.
 
-<img align="right" height="400" width="310" src="https://github.com/AKD92/Tree-Based-Dictionary-ADT/raw/master/book_ds_mtrt.jpg">
-
 ### Performance Analysis
 Assuming n and h as numbers, where n = Total number of keys in BST, h = Height of BST
   * Insertion : O(lg n)         [Average Case],         O(h)         [Worst Case]
@@ -158,9 +156,10 @@ int main(void) {
 	}
 	
 	list_destroy(&lstInt);
+	return 0;
 }
 ```
-	
+<img align="right" height="400" width="310" src="https://github.com/AKD92/Tree-Based-Dictionary-ADT/raw/master/book_ds_mtrt.jpg">
 
 ### Some Notes
   * An instance of this dictionary implementation is identified by a BisTree structure, define in bst.h
