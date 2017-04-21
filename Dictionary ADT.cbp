@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Dictionary ADT" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Release">
+				<Option output="lib/dictionary" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Release/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-std=c99" />
+					<Add option="-ansi" />
+					<Add directory="../Linked List ADT/src" />
+					<Add directory="../Stack Queue ADT/src" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="stq" />
+					<Add library="linkedlist" />
+					<Add directory="../Linked List ADT/lib" />
+					<Add directory="../Stack Queue ADT/lib" />
+				</Linker>
+			</Target>
+			<Target title="Test AVL">
+				<Option output="bin/test_avl" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-std=c99" />
+					<Add option="-ansi" />
+					<Add directory="../Linked List ADT/src" />
+					<Add directory="../Stack Queue ADT/src" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="stq" />
+					<Add library="linkedlist" />
+					<Add directory="../Linked List ADT/lib" />
+					<Add directory="../Stack Queue ADT/lib" />
+				</Linker>
+			</Target>
+			<Target title="Test BST">
+				<Option output="bin/test_bst" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-std=c99" />
+					<Add option="-ansi" />
+					<Add directory="../Linked List ADT/src" />
+					<Add directory="../Stack Queue ADT/src" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="stq" />
+					<Add library="linkedlist" />
+					<Add directory="../Linked List ADT/lib" />
+					<Add directory="../Stack Queue ADT/lib" />
+				</Linker>
+			</Target>
+			<Target title="Test BST Sort">
+				<Option output="bin/test_bst_sort" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-std=c99" />
+					<Add option="-ansi" />
+					<Add directory="../Linked List ADT/src" />
+					<Add directory="../Stack Queue ADT/src" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="stq" />
+					<Add library="linkedlist" />
+					<Add directory="../Linked List ADT/lib" />
+					<Add directory="../Stack Queue ADT/lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="src/avl.h" />
+		<Unit filename="src/avl_mutation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/avl_restructure_algorithms.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/bst.h" />
+		<Unit filename="src/bst_init_destroy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/bst_key_value_list.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/bst_mutation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/bst_query.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/bst_search.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/bst_sort_algorithms.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/bst_traversal_algorithms.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/main_avl.c">
+			<Option compilerVar="CC" />
+			<Option target="Test AVL" />
+		</Unit>
+		<Unit filename="src/main_bst.c">
+			<Option compilerVar="CC" />
+			<Option target="Test BST" />
+		</Unit>
+		<Unit filename="src/main_bst_sort_linkedlist.c">
+			<Option compilerVar="CC" />
+			<Option target="Test BST Sort" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

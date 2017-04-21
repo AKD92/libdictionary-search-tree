@@ -1,0 +1,79 @@
+# depslib dependency file v1.0
+1492243926 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst_init_destroy.c
+	"bst.h"
+	<queue.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+
+1492799957 g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst.h
+	<list.h>
+	<dlist.h>
+	<queue.h>
+
+1457705091 g:\ashish files\documents\dev c++ project files\linked list adt\src\list.h
+	<stdlib.h>
+
+1457704861 g:\ashish files\documents\dev c++ project files\linked list adt\src\dlist.h
+	<stdlib.h>
+
+1457706267 g:\ashish files\documents\dev c++ project files\stack queue adt\src\queue.h
+	<list.h>
+
+1492442694 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst_key_value_list.c
+	"bst.h"
+	<list.h>
+	<queue.h>
+
+1492798858 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst_mutation.c
+	"bst.h"
+	<queue.h>
+	<stdlib.h>
+	<string.h>
+
+1461110993 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\avl_mutation.c
+	"avl.h"
+	<stdlib.h>
+	<string.h>
+
+1492799595 g:\ashish files\documents\dev c++ project files\dictionary adt\src\avl.h
+	"bst.h"
+
+1492800401 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\avl_restructure_algorithms.c
+	"avl.h"
+
+1492766025 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst_search.c
+	"bst.h"
+
+1492765048 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst_sort_algorithms.c
+	"bst.h"
+	<list.h>
+	<dlist.h>
+	<stack.h>
+	<queue.h>
+
+1457706278 g:\ashish files\documents\dev c++ project files\stack queue adt\src\stack.h
+	<list.h>
+
+1492442700 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst_traversal_algorithms.c
+	"bst.h"
+	<stack.h>
+	<queue.h>
+
+1492797031 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst_query.c
+	"bst.h"
+	<stack.h>
+	<queue.h>
+
+1492765097 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\main_bst.c
+	<stdio.h>
+	<stdlib.h>
+	"bst.h"
+	<queue.h>
+
+1492765097 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\main_avl.c
+	<stdio.h>
+	<stdlib.h>
+	"avl.h"
+	<queue.h>
+
