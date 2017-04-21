@@ -167,7 +167,7 @@ BNode * avl_findUnbalancedNodeX(AvlTree *tree, BNode *pNode, int operationType) 
         else if (heightL == heightR) {
             switch (operationType) {
                 case AVL_INSERTION:
-                isAncestor = avl_isAncestor(tree, pNode, avl_leftChild(pY));
+                isAncestor = avl_isAncestor(tree, avl_leftChild(pY), pNode);
                 if (isAncestor == 1) {
                     pX = avl_leftChild(pY);
                 }
