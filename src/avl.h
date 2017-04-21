@@ -1,7 +1,7 @@
 
 
 /************************************************************************************
-    Program Interface of AVL Tree Dictionary ADT
+    Program Interface for AVL Tree based Dictionary ADT
     Author:             Ashis Kumar Das
     Email:              akd.bracu@gmail.com
     GitHub:             https://github.com/AKD92
@@ -104,7 +104,7 @@ typedef BisTree AvlTree;
 
 #define avl_binarySearch bst_binarySearch
 
-#define avl_findElement bst_search
+#define avl_search bst_search
 
 
 

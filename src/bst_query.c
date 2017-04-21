@@ -204,7 +204,7 @@ unsigned int bst_height(const BisTree *pTree, const BNode *pNode) {
 
 
 
-int bst_isAncestor(const BisTree *pTree, const BNode *pChild, const BNode *pParent) {
+int bst_isAncestor(const BisTree *pTree, const BNode *pParent, const BNode *pChild){
     
     BNode *pN;
     int opRes;
@@ -213,18 +213,18 @@ int bst_isAncestor(const BisTree *pTree, const BNode *pChild, const BNode *pPare
     pN = (BNode *) pChild;
     
     REPEAT:
-    pN = bst_parent(pN);
-    if (pN == pParent) {
-        opRes = 1;
-        goto END;
-    }
-    else if (pN == 0) {
-        goto END;
-    }
+		if (pN == pParent) {
+			opRes = 1;
+			goto END;
+		}
+		else if (pN == 0) {
+			goto END;
+		}
+		pN = bst_parent(pN);
     goto REPEAT;
     
     END:
-    return opRes;
+		return opRes;
 }
 
 

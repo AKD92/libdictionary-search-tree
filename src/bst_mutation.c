@@ -147,7 +147,9 @@ int bst_changeElement(BisTree *pTree, const void *pKey, const void *pElem, void 
         iRetVal = -1;
     }
     else {
-        if (pOldelem != 0) *pOldelem = pTarget->pElement;
+        if (pOldelem != 0) {
+			*pOldelem = pTarget->pElement;
+		}
         pTarget->pElement = (void *) pElem;
         iRetVal = 0;
     }
