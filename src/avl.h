@@ -104,7 +104,7 @@ typedef BisTree AvlTree;
 
 #define avl_binarySearch bst_binarySearch
 
-#define avl_findElement bst_findElement
+#define avl_findElement bst_search
 
 
 

@@ -48,16 +48,18 @@ BNode * bst_binarySearch(const BisTree *pTree, const void *key, BNode *pStartNod
 
 
 
-int bst_findElement(const BisTree *pTree, const void *key, void **elem) {
+int bst_search(const BisTree *pTree, const void *pKey, void **pRealKey, void **pElem) {
     
     int iRetVal;
     BNode *pTarget;
     
-    pTarget = bst_binarySearch(pTree, key, bst_root((BisTree *) pTree));
+    pTarget = bst_binarySearch(pTree, pKey, bst_root((BisTree *) pTree));
     
     if (bst_isInternal(pTarget) == 1) {
-        if (elem != 0)
-            *elem = pTarget->pElement;
+        if (pElem != 0)
+            *pElem = pTarget->pElement;
+		if (pRealKey != 0)
+			*pRealKey = pTarget->pKey;
         iRetVal = 0;
     }
     else if (bst_isExternal(pTarget) == 1) {

@@ -247,7 +247,7 @@ BNode * bst_binarySearch(const BisTree *pTree, const void *pKey, BNode *pStartNo
     Return 0 if successful, -1 otherwise
 */
 
-int bst_findElement(const BisTree *pTree, const void *pKey, void **pElem);
+int bst_search(const BisTree *pTree, const void *pKey, void **pRealKey, void **pElem);
 
 int bst_insert(BisTree *pTree, const void *pKey, const void *pElem);
 
