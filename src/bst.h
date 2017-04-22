@@ -148,7 +148,7 @@ void bst_destroy(BisTree *pTree);
  *      Pointer to a BNode structure which is the root of the tree
  *      0 if pTree is 0
 */
-BNode * bst_root(const BisTree *pTree);
+#define bst_root(pTree) ((pTree)->pRootNode)
 
 
 
@@ -164,7 +164,7 @@ BNode * bst_root(const BisTree *pTree);
  *      Pointer to a BNode structure which is the parent
  *      0 if pNode is 0
 */
-BNode * bst_parent(const BNode *pNode);
+#define bst_parent(pNode) ((pNode) == 0 ? 0 : (pNode)->pParentNode)
 
 
 
@@ -180,7 +180,7 @@ BNode * bst_parent(const BNode *pNode);
  *      Pointer to a BNode structure which is the left child
  *      0 if pNode is 0
 */
-BNode * bst_leftChild(const BNode *pNode);
+#define bst_leftChild(pNode) ((pNode) == 0 ? 0 : (pNode)->pLeftNode)
 
 
 
@@ -196,7 +196,7 @@ BNode * bst_leftChild(const BNode *pNode);
  *      Pointer to a BNode structure which is the right child
  *      0 if pNode is 0
 */
-BNode * bst_rightChild(const BNode *pNode);
+#define bst_rightChild(pNode) ((pNode) == 0 ? 0 : (pNode)->pRightNode)
 
 
 
@@ -228,7 +228,8 @@ BNode * bst_sibling(const BNode *pNode);
  *      1 if the specified BNode is an external node
  *      0 otherwise
 */
-int bst_isExternal(const BNode *pNode);
+/*int bst_isExternal(const BNode *pNode);*/
+#define bst_isExternal(pNode) ((bst_leftChild(pNode) || bst_rightChild(pNode)) == 0 ? 1 : 0)
 
 
 
@@ -244,7 +245,8 @@ int bst_isExternal(const BNode *pNode);
  *      1 if the specified BNode is an internal node
  *      0 otherwise
 */
-int bst_isInternal(const BNode *pNode);
+/*int bst_isInternal(const BNode *pNode);*/
+#define bst_isInternal(pNode) ((bst_leftChild(pNode) || bst_rightChild(pNode)) != 0 ? 1 : 0)
 
 
 
@@ -262,7 +264,7 @@ int bst_isInternal(const BNode *pNode);
  *      1 if the specified pNode is the root node of pTree
  *      0 otherwise
 */
-int bst_isRoot(const BisTree *pTree, const BNode *pNode);
+#define bst_isRoot(pTree, pNode) (bst_root(pTree) == (pNode) ? 1 : 0)
 
 
 

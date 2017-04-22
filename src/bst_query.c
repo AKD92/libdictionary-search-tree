@@ -27,7 +27,7 @@
 
 
 
-
+/*
 BNode * bst_root(const BisTree *pTree) {
     
     return (pTree == 0 ? 0 : pTree->pRootNode);
@@ -53,7 +53,7 @@ BNode * bst_rightChild(const BNode *pNode) {
     
     return (pNode == 0 ? 0 : pNode->pRightNode);
 }
-
+*/
 
 
 BNode * bst_sibling(const BNode *pNode) {
@@ -78,7 +78,7 @@ BNode * bst_sibling(const BNode *pNode) {
 }
 
 
-
+/*
 int bst_isExternal(const BNode *pNode) {
     
     unsigned int left, right;
@@ -87,16 +87,16 @@ int bst_isExternal(const BNode *pNode) {
     right = (unsigned int) bst_rightChild(pNode);
     
     if ((left | right) == 0) {
-    /* if ((left == 0) & (right == 0)) { */
         return 1;
     }
     else {
         return 0;
     }
 }
+*/
 
 
-
+/*
 int bst_isInternal(const BNode *pNode) {
     
     unsigned int left, right;
@@ -105,7 +105,6 @@ int bst_isInternal(const BNode *pNode) {
     right = (unsigned int) bst_rightChild(pNode);
     
     if ((left | right) != 0) {
-    /* if ((left != 0) | (right != 0)) { */
         return 1;
     }
     else {
@@ -122,6 +121,7 @@ int bst_isRoot(const BisTree *pTree, const BNode *pNode) {
     retVal = bst_root(pTree) == pNode ? 1 : 0;
     return retVal;
 }
+*/
 
 
 
