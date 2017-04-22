@@ -30,7 +30,7 @@
 			</Target>
 			<Target title="Test AVL">
 				<Option output="bin/test_avl" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
+				<Option object_output="obj/test_avl/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -50,7 +50,7 @@
 			</Target>
 			<Target title="Test BST">
 				<Option output="bin/test_bst" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
+				<Option object_output="obj/test_bst/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -70,7 +70,7 @@
 			</Target>
 			<Target title="Test BST Sort">
 				<Option output="bin/test_bst_sort" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
+				<Option object_output="obj/test_bst_sort/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>

@@ -6,7 +6,7 @@
 	<string.h>
 	<stdio.h>
 
-1492799957 g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst.h
+1492885478 g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst.h
 	<list.h>
 	<dlist.h>
 	<queue.h>
@@ -25,24 +25,24 @@
 	<list.h>
 	<queue.h>
 
-1492798858 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst_mutation.c
+1492871702 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst_mutation.c
 	"bst.h"
 	<queue.h>
 	<stdlib.h>
 	<string.h>
 
-1461110993 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\avl_mutation.c
+1492871802 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\avl_mutation.c
 	"avl.h"
 	<stdlib.h>
 	<string.h>
 
-1492799595 g:\ashish files\documents\dev c++ project files\dictionary adt\src\avl.h
+1492875235 g:\ashish files\documents\dev c++ project files\dictionary adt\src\avl.h
 	"bst.h"
 
-1492800401 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\avl_restructure_algorithms.c
+1492873445 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\avl_restructure_algorithms.c
 	"avl.h"
 
-1492766025 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst_search.c
+1492871702 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst_search.c
 	"bst.h"
 
 1492765048 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst_sort_algorithms.c
@@ -60,20 +60,27 @@
 	<stack.h>
 	<queue.h>
 
-1492797031 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst_query.c
+1492885203 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\bst_query.c
 	"bst.h"
 	<stack.h>
 	<queue.h>
 
-1492765097 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\main_bst.c
+1492874270 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\main_bst.c
 	<stdio.h>
 	<stdlib.h>
 	"bst.h"
 	<queue.h>
 
-1492765097 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\main_avl.c
+1492874329 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\main_avl.c
 	<stdio.h>
 	<stdlib.h>
 	"avl.h"
 	<queue.h>
+
+1492765097 source:g:\ashish files\documents\dev c++ project files\dictionary adt\src\main_bst_sort_linkedlist.c
+	<stdio.h>
+	<stdlib.h>
+	<list.h>
+	<dlist.h>
+	"bst.h"
 

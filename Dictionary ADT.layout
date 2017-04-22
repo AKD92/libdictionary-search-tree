@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
-	<ActiveTarget name="Test BST Sort" />
-	<File name="src\main_avl.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5748" topLine="201" />
-		</Cursor>
-	</File>
-	<File name="src\main_bst.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5637" topLine="190" />
-		</Cursor>
-	</File>
-	<File name="src\main_bst_sort_linkedlist.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1209" topLine="42" />
-		</Cursor>
-	</File>
+	<ActiveTarget name="Test AVL" />
 	<File name="src\avl.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="2559" topLine="114" />
@@ -24,12 +9,12 @@
 	</File>
 	<File name="src\avl_mutation.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2174" topLine="92" />
+			<Cursor1 position="1250" topLine="57" />
 		</Cursor>
 	</File>
 	<File name="src\avl_restructure_algorithms.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4046" topLine="164" />
+			<Cursor1 position="3913" topLine="154" />
 		</Cursor>
 	</File>
 	<File name="src\bst.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -55,6 +40,21 @@
 	<File name="src\bst_query.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="2853" topLine="158" />
+		</Cursor>
+	</File>
+	<File name="src\main_avl.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3258" topLine="108" />
+		</Cursor>
+	</File>
+	<File name="src\main_bst.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="405" topLine="13" />
+		</Cursor>
+	</File>
+	<File name="src\main_bst_sort_linkedlist.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1209" topLine="42" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
