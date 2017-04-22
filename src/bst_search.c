@@ -56,10 +56,13 @@ int bst_search(const BisTree *pTree, const void *pKey, void **pRealKey, void **p
     pTarget = bst_searchNode(pTree, pKey, bst_root((BisTree *) pTree));
     
     if (bst_isInternal(pTarget) == 1) {
-        if (pElem != 0)
+        
+        if (pRealKey != 0) {
+            *pRealKey = pTarget->pKey;
+        }
+        if (pElem != 0) {
             *pElem = pTarget->pElement;
-		if (pRealKey != 0)
-			*pRealKey = pTarget->pKey;
+        }
         iRetVal = 0;
     }
     else if (bst_isExternal(pTarget) == 1) {
