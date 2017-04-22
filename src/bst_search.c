@@ -21,7 +21,7 @@
 
 
 
-BNode * bst_binarySearch(const BisTree *pTree, const void *key, BNode *pStartNode) {
+BNode * bst_searchNode(const BisTree *pTree, const void *key, BNode *pStartNode) {
     
     register int opCompareKey;
     register BNode *pNode;
@@ -53,7 +53,7 @@ int bst_search(const BisTree *pTree, const void *pKey, void **pRealKey, void **p
     int iRetVal;
     BNode *pTarget;
     
-    pTarget = bst_binarySearch(pTree, pKey, bst_root((BisTree *) pTree));
+    pTarget = bst_searchNode(pTree, pKey, bst_root((BisTree *) pTree));
     
     if (bst_isInternal(pTarget) == 1) {
         if (pElem != 0)

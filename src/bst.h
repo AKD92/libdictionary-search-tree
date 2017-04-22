@@ -272,14 +272,15 @@ int bst_isRoot(const BisTree *pTree, const BNode *pNode);
  *  Query to know the depth of the specified BNode object
  *
  *  Parameter:
- *      pTree               :   Pointer to a BisTree
  *      pNode               :   Pointer to a BNode object
+ *      pDepth              :   Pointer to an unsigned integer which will receive
+ *                              the depth value of the specified BNode object
  *
  *  Returns
- *      an unsigned integer representing the depth of the specified pNode
- *      0 if pTree or pNode is 0 (NULL)
+ *      0 if successful
+ *      -1 otherwise
 */
-unsigned int bst_depth(const BisTree *pTree, const BNode *pNode);
+int bst_depth(const BNode *pNode, unsigned int *pDepth);
 
 
 
@@ -289,14 +290,15 @@ unsigned int bst_depth(const BisTree *pTree, const BNode *pNode);
  *  Query to know the height value of the specified BNode object
  *
  *  Parameter:
- *      pTree               :   Pointer to a BisTree
  *      pNode               :   Pointer to a BNode object
+ *      pHeight             :   Pointer to an unsigned integer which will receive
+ *                              the height value of the specified BNode object
  *
  *  Returns
- *      an unsigned integer representing the height value of the specified BNode
- *      0 if pTree or pNode is not valid objects
+ *      0 if successful
+ *      -1 otherwise
 */
-unsigned int bst_height(const BisTree *pTree, const BNode *pNode);
+int bst_height(const BNode *pNode, unsigned int *pHeight);
 
 
 
@@ -478,7 +480,7 @@ int bst_eraseExternalLinks(Queue *qNodes);
  *      which is compared equally to the specified key object
  *      Pointer to an External BNode object if the specific key object does not exist
 */
-BNode * bst_binarySearch(const BisTree *pTree, const void *pKey, BNode *pStartNode);
+BNode * bst_searchNode(const BisTree *pTree, const void *pKey, BNode *pStartNode);
 
 
 

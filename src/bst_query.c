@@ -125,28 +125,28 @@ int bst_isRoot(const BisTree *pTree, const BNode *pNode) {
 
 
 
-unsigned int bst_depth(const BisTree *pTree, const BNode *pNode) {
+int bst_depth(const BNode *pNode, unsigned int *pDepth) {
     
     register unsigned int iDepth;
     register const BNode *pCurrent;
     
-    if (pTree == 0 || pNode == 0)
-        return 0;
+    if (pNode == 0 || pDepth == 0)
+        return -1;
     
     iDepth = 0;
     pCurrent = pNode;
     
-    while (pCurrent != bst_root(pTree)) {
+    while (pCurrent != 0) {
         pCurrent = bst_parent(pCurrent);
         iDepth = iDepth + 1;
     }
-    
-    return iDepth;
+    *pDepth = iDepth - 1;
+    return 0;
 }
 
 
 
-unsigned int bst_height(const BisTree *pTree, const BNode *pNode) {
+int bst_height(const BNode *pNode, unsigned int *pHeight) {
     
     int isExternal;
     Queue qPostorder;
@@ -155,23 +155,27 @@ unsigned int bst_height(const BisTree *pTree, const BNode *pNode) {
     unsigned int heightR, heightL, heightN;
     const BNode *pCurrent;
     unsigned int *pTmpHeight;
+    int opRes;
     
-    if (pTree == 0 || pNode == 0)
-        return 0;
+    if (pNode == 0 || pHeight == 0)
+        return -1;
     
     iCount = 0;
     pCurrent = 0;
     pTmpHeight = 0;
-    nExternal = bst_size(pTree) + 1;
-    pTmpHeight = (unsigned int *) malloc(sizeof(unsigned int) * nExternal);
-    
-    if (pTmpHeight == 0)
-        return 0;
-    
     
     /* Initialize the Queue and store PostOrder nodes on it */
     queue_init(&qPostorder, 0);
     bst_postOrder((BNode *) pNode, &qPostorder);
+    
+    /* Total nodes in queue: 2n + 1 (internal + external) */
+    /* Therefore number of external nodes = ((2n + 1) - 1)/2 + 1 */
+    nExternal = ((queue_size(&qPostorder) - 1) / 2) + 1;
+    pTmpHeight = (unsigned int *) malloc(sizeof(unsigned int) * nExternal);
+    if (pTmpHeight == 0) {
+        opRes = -1;
+        goto END;
+    }
     
     while (queue_size(&qPostorder) > 0) {
         
@@ -196,35 +200,38 @@ unsigned int bst_height(const BisTree *pTree, const BNode *pNode) {
     }
     
     heightN = *(pTmpHeight + iCount - 1);
+    *pHeight = heightN;
+    opRes = 0;
+    
+    END:
     queue_destroy(&qPostorder);
     free((void *) pTmpHeight);
-    
-    return heightN;
+    return opRes;
 }
 
 
 
 int bst_isAncestor(const BisTree *pTree, const BNode *pParent, const BNode *pChild){
     
-    BNode *pN;
     int opRes;
+    register const BNode *pN;
     
     opRes = 0;
-    pN = (BNode *) pChild;
+    pN = pChild;
     
     REPEAT:
-		if (pN == pParent) {
-			opRes = 1;
-			goto END;
-		}
-		else if (pN == 0) {
-			goto END;
-		}
-		pN = bst_parent(pN);
+        if (pN == pParent) {
+            opRes = 1;
+            goto END;
+        }
+        else if (pN == 0) {
+            goto END;
+        }
+        pN = bst_parent(pN);
     goto REPEAT;
     
     END:
-		return opRes;
+        return opRes;
 }
 
 

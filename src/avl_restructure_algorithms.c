@@ -137,8 +137,8 @@ BNode * avl_findUnbalancedNodeX(AvlTree *tree, BNode *pNode, int operationType) 
     pZ = pY = pX = 0;
     
     while (pN != 0) {
-        heightL = avl_height((const AvlTree *) tree, (const BNode *) avl_leftChild(pN));
-        heightR = avl_height((const AvlTree *) tree, (const BNode *) avl_rightChild(pN));
+        avl_height((const BNode *) avl_leftChild(pN), &heightL);
+        avl_height((const BNode *) avl_rightChild(pN), &heightR);
         iDiff = (int ) (heightL - heightR);
         if (iDiff < 0)
             iDiff = iDiff * (-1);
@@ -156,8 +156,8 @@ BNode * avl_findUnbalancedNodeX(AvlTree *tree, BNode *pNode, int operationType) 
     }
     
     if (pY != 0) {
-        heightL = avl_height((const AvlTree *) tree, (const BNode *) avl_leftChild(pY));
-        heightR = avl_height((const AvlTree *) tree, (const BNode *) avl_rightChild(pY));
+        avl_height((const BNode *) avl_leftChild(pY), &heightL);
+        avl_height((const BNode *) avl_rightChild(pY), &heightR);
         if (heightL > heightR) {
             pX = avl_leftChild(pY);
         }

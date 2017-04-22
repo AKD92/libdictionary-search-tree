@@ -141,7 +141,7 @@ int bst_changeElement(BisTree *pTree, const void *pKey, const void *pElem, void 
     if (pTree == 0 || pKey == 0)
         return -1;
     
-    pTarget = bst_binarySearch((const BisTree *) pTree, pKey, bst_root(pTree));
+    pTarget = bst_searchNode((const BisTree *) pTree, pKey, bst_root(pTree));
     
     if (bst_isExternal(pTarget) == 1) {
         iRetVal = -1;
@@ -170,7 +170,7 @@ int bst_insert(BisTree *pTree, const void *pKey, const void *pElem) {
     
     
     /* Search for the pKey in our BisTree */
-    pTarget = bst_binarySearch((const BisTree *) pTree, pKey, bst_root(pTree));
+    pTarget = bst_searchNode((const BisTree *) pTree, pKey, bst_root(pTree));
     
     
     /* Key not found, we have got an External BNode */
@@ -214,7 +214,7 @@ int bst_remove(BisTree *pTree, const void *pKey, void **pRemovedKey, void **pRem
         return -1;
     
     pChildExternal = 0;
-    pRemNode = bst_binarySearch((const BisTree *) pTree, pKey, bst_root(pTree));
+    pRemNode = bst_searchNode((const BisTree *) pTree, pKey, bst_root(pTree));
     isRemNodeExternal = bst_isExternal(pRemNode);
     
     if (isRemNodeExternal == 1) {

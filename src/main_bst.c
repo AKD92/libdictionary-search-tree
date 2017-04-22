@@ -17,6 +17,7 @@ int main(void) {
     BisTree btree;
     Queue nodes;
     int *pKey, *pRemovedKey;
+    int opRes;
     List *list;
     ListElem *elem;
     BNode *pNode;
@@ -29,7 +30,8 @@ int main(void) {
     
     printf("\nInserting 12 auto-allocated key\n");
     while (i < 12) {
-        bst_insert(&btree, (const void *) &keys[i], 0);
+        opRes = bst_insert(&btree, (const void *) &keys[i], 0);
+        printf("insert bst: %d opRes: %d\n", keys[i], opRes);
         i++;
     }
     pKey = (int *) malloc(sizeof(int));
@@ -103,14 +105,14 @@ int main(void) {
     
     pKey = (int *) malloc(sizeof(int));
     *pKey = 88;
-    pNode = bst_binarySearch(&btree, (const void *) pKey, bst_root(&btree));
+    pNode = bst_searchNode(&btree, (const void *) pKey, bst_root(&btree));
     
-    depth = bst_depth(&btree, pNode);
-    height = bst_height(&btree, pNode);
+    opRes = bst_depth(pNode, &depth);
+    opRes = bst_height( pNode, &height);
     printf("Depth of %d: %u, Height of %d: %u\n\n", *pKey, depth, *pKey, height);
     free(pKey);
     
-    height = bst_height(&btree, bst_root(&btree));
+    opRes = bst_height(bst_root(&btree), &height);
     printf("Height of Root: %u\n\n", height);
     
     pKey = (int *) malloc(sizeof(int));
@@ -191,9 +193,9 @@ int main(void) {
     }
     printf("\n\n");
     
-    
-    height = bst_height(&btree, bst_root(&btree));
-    printf("Height of Root: %u\n\n", height);
+    opRes = bst_depth(bst_root(&btree), &depth);
+    opRes = bst_height(bst_root(&btree), &height);
+    printf("Depth of Root: %u, Height of Root: %u\n\n", depth, height);
     
     queue_destroy(&nodes);
     printf("Queue destroyed\n");

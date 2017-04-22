@@ -17,6 +17,7 @@ int main(void) {
     AvlTree avlTree;
     Queue nodes;
     int *pKey, *pRemovedKey;
+    int opRes;
     List *list;
     ListElem *elem;
     BNode *pNode;
@@ -29,7 +30,8 @@ int main(void) {
     printf("\nInserting 12 auto-allocated key\n");
     int i = 0;
     while (i < 12) {
-        avl_insert(&avlTree, (const void *) &keys[i], 0);
+        opRes = avl_insert(&avlTree, (const void *) &keys[i], 0);
+        printf("insert avl: %d opRes: %d\n", keys[i], opRes);
         i++;
     }
     
@@ -107,14 +109,14 @@ int main(void) {
     
     pKey = (int *) malloc(sizeof(int));
     *pKey = 88;
-    pNode = avl_binarySearch(&avlTree, (const void *) pKey, avl_root(&avlTree));
+    pNode = avl_searchNode(&avlTree, (const void *) pKey, avl_root(&avlTree));
     
-    depth = avl_depth(&avlTree, pNode);
-    height = avl_height(&avlTree, pNode);
+    opRes = avl_depth(pNode, &depth);
+    opRes = avl_height(pNode, &height);
     printf("Depth of %d: %u, Height of %d: %u\n\n", *pKey, depth, *pKey, height);
     free(pKey);
     
-    height = avl_height(&avlTree, avl_root(&avlTree));
+    opRes = avl_height(avl_root(&avlTree), &height);
     printf("Height of Root: %u\n\n", height);
     
     pKey = (int *) malloc(sizeof(int));
@@ -195,9 +197,9 @@ int main(void) {
     }
     printf("\n\n");
     
-    
-    height = avl_height(&avlTree, avl_root(&avlTree));
-    printf("Height of Root: %u\n\n", height);
+    avl_depth(avl_root(&avlTree), &depth);
+    avl_height(avl_root(&avlTree), &height);
+    printf("Depth of Root: %u, Height of Root: %u\n\n", depth, height);
     
     queue_destroy(&nodes);
     printf("Queue destroyed\n");

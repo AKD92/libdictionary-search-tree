@@ -60,7 +60,7 @@ int avl_insert(AvlTree *pTree, const void *pKey, const void *pElem) {
     
     
     /* Search for the pKey in our AvlTree */
-    pTarget = avl_binarySearch((const AvlTree *) pTree, pKey, avl_root(pTree));
+    pTarget = avl_searchNode((const AvlTree *) pTree, pKey, avl_root(pTree));
     
     
     /* Key not found, we have got an External BNode */
@@ -111,7 +111,7 @@ int avl_remove(AvlTree *pTree, const void *pKey, void **pRemovedKey, void **pRem
         return -1;
     
     pChildExternal = 0;
-    pRemNode = bst_binarySearch((const BisTree *) pTree, pKey, bst_root(pTree));
+    pRemNode = bst_searchNode((const BisTree *) pTree, pKey, bst_root(pTree));
     isRemNodeExternal = bst_isExternal(pRemNode);
     
     if (isRemNodeExternal == 1) {
