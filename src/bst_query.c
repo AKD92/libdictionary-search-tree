@@ -154,7 +154,7 @@ int bst_height(const BNode *pNode, unsigned int *pHeight) {
     unsigned int nExternal;
     unsigned int heightR, heightL, heightN;
     const BNode *pCurrent;
-    unsigned int *pTmpHeight;
+    unsigned int *pHeights;
     int opRes;
     
     if (pNode == 0 || pHeight == 0)
@@ -162,7 +162,7 @@ int bst_height(const BNode *pNode, unsigned int *pHeight) {
     
     iCount = 0;
     pCurrent = 0;
-    pTmpHeight = 0;
+    pHeights = 0;
     
     /* Initialize the Queue and store PostOrder nodes on it */
     queue_init(&qPostorder, 0);
@@ -171,8 +171,8 @@ int bst_height(const BNode *pNode, unsigned int *pHeight) {
     /* Total nodes in queue: 2n + 1 (internal + external) */
     /* Therefore number of external nodes = ((2n + 1) - 1)/2 + 1 */
     nExternal = ((queue_size(&qPostorder) - 1) / 2) + 1;
-    pTmpHeight = (unsigned int *) malloc(sizeof(unsigned int) * nExternal);
-    if (pTmpHeight == 0) {
+    pHeights = (unsigned int *) malloc(sizeof(unsigned int) * nExternal);
+    if (pHeights == 0) {
         opRes = -1;
         goto END;
     }
@@ -183,29 +183,29 @@ int bst_height(const BNode *pNode, unsigned int *pHeight) {
         isExternal = bst_isExternal(pCurrent);
         
         if (isExternal == 1) {
-            *(pTmpHeight + iCount) = 0;
+            *(pHeights + iCount) = 0;
             iCount = iCount + 1;
         }
         else {
             iCount = iCount - 1;
-            heightR = *(pTmpHeight + iCount);
+            heightR = *(pHeights + iCount);
             
             iCount = iCount - 1;
-            heightL = *(pTmpHeight + iCount);
+            heightL = *(pHeights + iCount);
             
             heightN = 1 + maxu(heightL, heightR);
-            *(pTmpHeight + iCount) = heightN;
+            *(pHeights + iCount) = heightN;
             iCount = iCount + 1;
         }
     }
     
-    heightN = *(pTmpHeight + iCount - 1);
+    heightN = *(pHeights + iCount - 1);
     *pHeight = heightN;
     opRes = 0;
     
     END:
     queue_destroy(&qPostorder);
-    free((void *) pTmpHeight);
+    free((void *) pHeights);
     return opRes;
 }
 
