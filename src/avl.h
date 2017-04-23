@@ -80,8 +80,6 @@ typedef BisTree AvlTree;
 
 #define     avl_isAncestor          bst_isAncestor
 
-#define     avl_isDescendant        bst_isDescendant
-
 #define     avl_depth               bst_depth
 
 #define     avl_height              bst_height
