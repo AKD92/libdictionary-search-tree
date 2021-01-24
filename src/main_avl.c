@@ -1,6 +1,7 @@
 
 
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "avl.h"
@@ -21,15 +22,15 @@ int main(void) {
     List *list;
     ListElem *elem;
     BNode *pNode;
-    int keys[12] = {44, 17, 88, 28, 65, 97, 29, 54, 82, 76, 80, 78};
+    int keys[13] = {44, 17, 88, 28, 65, 97, 29, 54, 82, 76, 80, 78 , 28};
     unsigned int depth, height;
     
     avl_init(&avlTree, cmpInt, 0, 0);
     queue_init(&nodes, 0);
     
-    printf("\nInserting 12 auto-allocated key\n");
+    printf("\nInserting 13 auto-allocated key\n");
     int i = 0;
-    while (i < 12) {
+    while (i < 13) {
         opRes = avl_insert(&avlTree, (const void *) &keys[i], 0);
         printf("insert avl: %d opRes: %d\n", keys[i], opRes);
         i++;

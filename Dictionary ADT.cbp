@@ -4,94 +4,68 @@
 	<Project>
 		<Option title="Dictionary ADT" />
 		<Option pch_mode="2" />
-		<Option compiler="gcc" />
+		<Option compiler="tdm-gcc-32-mingw" />
 		<Build>
 			<Target title="Release">
-				<Option output="lib/dictionary" prefix_auto="1" extension_auto="1" />
+				<Option output="lib/x86/dictionary" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="obj/Release/" />
+				<Option object_output="obj/Release/x86/" />
 				<Option type="2" />
-				<Option compiler="gcc" />
+				<Option compiler="tdm-gcc-32-mingw" />
+				<Option createDefFile="1" />
+			</Target>
+			<Target title="Release64">
+				<Option output="lib/x64/dictionary" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Release/x64/" />
+				<Option type="2" />
+				<Option compiler="tdm-gcc-64-mingw-w64" />
 				<Option createDefFile="1" />
 				<Compiler>
-					<Add option="-Wall" />
-					<Add option="-std=c99" />
-					<Add option="-ansi" />
-					<Add directory="../Linked List ADT/src" />
-					<Add directory="../Stack Queue ADT/src" />
+					<Add option="-m64" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
-					<Add library="stq" />
-					<Add library="linkedlist" />
-					<Add directory="../Linked List ADT/lib" />
-					<Add directory="../Stack Queue ADT/lib" />
+					<Add option="-m64" />
 				</Linker>
 			</Target>
 			<Target title="Test AVL">
 				<Option output="bin/test_avl" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/test_avl/" />
 				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-Wall" />
-					<Add option="-std=c99" />
-					<Add option="-ansi" />
-					<Add directory="../Linked List ADT/src" />
-					<Add directory="../Stack Queue ADT/src" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-					<Add library="stq" />
-					<Add library="linkedlist" />
-					<Add directory="../Linked List ADT/lib" />
-					<Add directory="../Stack Queue ADT/lib" />
-				</Linker>
+				<Option compiler="tdm-gcc-32-mingw" />
 			</Target>
 			<Target title="Test BST">
 				<Option output="bin/test_bst" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/test_bst/" />
 				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-Wall" />
-					<Add option="-std=c99" />
-					<Add option="-ansi" />
-					<Add directory="../Linked List ADT/src" />
-					<Add directory="../Stack Queue ADT/src" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-					<Add library="stq" />
-					<Add library="linkedlist" />
-					<Add directory="../Linked List ADT/lib" />
-					<Add directory="../Stack Queue ADT/lib" />
-				</Linker>
+				<Option compiler="tdm-gcc-32-mingw" />
 			</Target>
 			<Target title="Test BST Sort">
 				<Option output="bin/test_bst_sort" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/test_bst_sort/" />
 				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-Wall" />
-					<Add option="-std=c99" />
-					<Add option="-ansi" />
-					<Add directory="../Linked List ADT/src" />
-					<Add directory="../Stack Queue ADT/src" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-					<Add library="stq" />
-					<Add library="linkedlist" />
-					<Add directory="../Linked List ADT/lib" />
-					<Add directory="../Stack Queue ADT/lib" />
-				</Linker>
+				<Option compiler="tdm-gcc-32-mingw" />
+			</Target>
+			<Target title="Test AVL With String">
+				<Option output="bin/test_avl_str" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/test_avl_str/" />
+				<Option type="1" />
+				<Option compiler="tdm-gcc-32-mingw" />
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Wall" />
+			<Add option="-std=c99" />
+			<Add option="-ansi" />
+			<Add directory="../../Linked List ADT/trunk/src" />
+			<Add directory="../../Stack Queue ADT/trunk/src" />
 		</Compiler>
+		<Linker>
+			<Add option="-s" />
+			<Add library="stq" />
+			<Add library="linkedlist" />
+			<Add directory="../../Linked List ADT/trunk/lib" />
+			<Add directory="../../Stack Queue ADT/trunk/lib" />
+		</Linker>
 		<Unit filename="src/avl.h" />
 		<Unit filename="src/avl_mutation.c">
 			<Option compilerVar="CC" />
@@ -125,6 +99,10 @@
 			<Option compilerVar="CC" />
 			<Option target="Test AVL" />
 		</Unit>
+		<Unit filename="src/main_avl_string.c">
+			<Option compilerVar="CC" />
+			<Option target="Test AVL With String" />
+		</Unit>
 		<Unit filename="src/main_bst.c">
 			<Option compilerVar="CC" />
 			<Option target="Test BST" />
@@ -133,10 +111,6 @@
 			<Option compilerVar="CC" />
 			<Option target="Test BST Sort" />
 		</Unit>
-		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
