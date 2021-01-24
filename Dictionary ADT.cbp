@@ -13,6 +13,15 @@
 				<Option type="2" />
 				<Option compiler="tdm-gcc-32-mingw" />
 				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-std=c99" />
+					<Add option="-ansi" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add directory="$(#liblinkedlist.LIB.X86)" />
+					<Add directory="$(#libstq.LIB.X86)" />
+				</Linker>
 			</Target>
 			<Target title="Release64">
 				<Option output="lib/x64/dictionary" prefix_auto="1" extension_auto="1" />
@@ -23,16 +32,25 @@
 				<Option createDefFile="1" />
 				<Compiler>
 					<Add option="-m64" />
+					<Add option="-std=c99" />
+					<Add option="-ansi" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
+					<Add option="-s" />
+					<Add directory="$(#liblinkedlist.LIB.X64)" />
+					<Add directory="$(#libstq.LIB.X64)" />
 				</Linker>
 			</Target>
 			<Target title="Test AVL">
 				<Option output="bin/test_avl" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/test_avl/" />
 				<Option type="1" />
-				<Option compiler="tdm-gcc-32-mingw" />
+				<Option compiler="tdm-gcc-64-mingw-w64" />
+				<Linker>
+					<Add directory="$(#liblinkedlist.LIB.x64)" />
+					<Add directory="$(#libstq.LIB.x64)" />
+				</Linker>
 			</Target>
 			<Target title="Test BST">
 				<Option output="bin/test_bst" prefix_auto="1" extension_auto="1" />
@@ -54,17 +72,12 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-std=c99" />
-			<Add option="-ansi" />
-			<Add directory="../../Linked List ADT/trunk/src" />
-			<Add directory="../../Stack Queue ADT/trunk/src" />
+			<Add directory="$(#liblinkedlist.INCLUDE)" />
+			<Add directory="$(#libstq.INCLUDE)" />
 		</Compiler>
 		<Linker>
-			<Add option="-s" />
 			<Add library="stq" />
 			<Add library="linkedlist" />
-			<Add directory="../../Linked List ADT/trunk/lib" />
-			<Add directory="../../Stack Queue ADT/trunk/lib" />
 		</Linker>
 		<Unit filename="src/avl.h" />
 		<Unit filename="src/avl_mutation.c">
