@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <list.h>
+#include <dlist.h>
 #include "avl.h"
 
 
@@ -13,12 +14,12 @@ static int cmpInt(const void *arg1, const void *arg2);
 
 int main(void) {
     
-    List numList;
-    ListElem *elem;
+    DList numList;
+    DListElem *elem;
     int *pElem;
     unsigned int iTotal, i;
     
-    list_init(&numList, free);
+    dlist_init(&numList, free);
     
     printf("Enter total integers to input:\n");
     scanf("%u", &iTotal);
@@ -27,32 +28,32 @@ int main(void) {
     for (i = 0; i < iTotal; i++) {
         pElem = (int *) malloc(sizeof(int));
         scanf("%d", pElem);
-        list_ins_next(&numList, list_tail(&numList), (const void *) pElem);
+        dlist_ins_next(&numList, dlist_tail(&numList), (const void *) pElem);
     }
     printf("\n\n");
     
     printf("Printing integers from Linked List (Size: %u)\n", list_size(&numList));
-    elem = list_head(&numList);
+    elem = dlist_head(&numList);
     while (elem != 0) {
-        pElem = (int *) list_data(elem);
+        pElem = (int *) dlist_data(elem);
         printf("%d (%p): ", *pElem, pElem);
-        elem = list_next(elem);
+        elem = dlist_next(elem);
     }
     printf("\n\n");
     
     printf("Applying TreeSort Algorithm to Linked List\n");
-    avl_treesort_desc(&numList, cmpInt);
+    avl_treesort_desc_dl(&numList, cmpInt);
     
     printf("Printing After Sorting Integers (Size: %u)\n", list_size(&numList));
-    elem = list_head(&numList);
+    elem = dlist_head(&numList);
     while (elem != 0) {
-        pElem = (int *) list_data(elem);
+        pElem = (int *) dlist_data(elem);
         printf("%d (%p): ", *pElem, pElem);
-        elem = list_next(elem);
+        elem = dlist_next(elem);
     }
     printf("\n\n");
     
-    list_destroy(&numList);
+    dlist_destroy(&numList);
     
     return 0;
 }

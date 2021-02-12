@@ -15,32 +15,10 @@
 
 
 #include "avl.h"
+#include "avl_internal.h"
 #include <stdlib.h>
 #include <string.h>
 
-
-
-
-
-
-BNode * avl_reStructure(AvlTree *tree, BNode *pNodeX);
-
-BNode * avl_findUnbalancedNodeX(AvlTree * tree, BNode *pNode, int operationType);
-
-
-
-/*  bst_expandExternal(BNode *w)
-    Returns 0 if successful, -1 if fails
-*/
-
-int bst_expandExternal(BNode *pExternal);
-
-
-/*  bst_removeAboveExternal(BisTree *pTree, BNode *w)
-    Returns 0 if successful, -1 if fails
-*/
-
-int bst_removeAboveExternal(BisTree *pTree, BNode *pExternal, BNode **pGrandParent);
 
 
 
@@ -60,12 +38,12 @@ int avl_insert(AvlTree *pTree, const void *pKey, const void *pElem) {
     
     
     /* Search for the pKey in our AvlTree */
-    pTarget = avl_searchNode((const AvlTree *) pTree, pKey, avl_root(pTree));
+    pTarget = avl_search_node((const AvlTree *) pTree, pKey, avl_root(pTree));
     
     
     /* Key not found, we have got an External BNode */
     /* So make it Internal and assing this Key and Elem to it */
-    if (avl_isExternal(pTarget) == 1) {
+    if (avl_is_external(pTarget) == 1) {
         
         opExpand = bst_expandExternal(pTarget);
         if (opExpand != 0)
@@ -77,7 +55,7 @@ int avl_insert(AvlTree *pTree, const void *pKey, const void *pElem) {
         
         pX = avl_findUnbalancedNodeX(pTree, pTarget, AVL_INSERTION);
         if (pX != 0) {
-            avl_reStructure(pTree, pX);
+            avl_restructure(pTree, pX);
         }
         
         iRetVal = 0;
@@ -111,8 +89,8 @@ int avl_remove(AvlTree *pTree, const void *pKey, void **pRemovedKey, void **pRem
         return -1;
     
     pChildExternal = 0;
-    pRemNode = bst_searchNode((const BisTree *) pTree, pKey, bst_root(pTree));
-    isRemNodeExternal = bst_isExternal(pRemNode);
+    pRemNode = bst_search_node((const BisTree *) pTree, pKey, bst_root(pTree));
+    isRemNodeExternal = bst_is_external(pRemNode);
     
     if (isRemNodeExternal == 1) {
         iRetVal = -1;
@@ -124,11 +102,11 @@ int avl_remove(AvlTree *pTree, const void *pKey, void **pRemovedKey, void **pRem
         if (pRemovedElem != 0)
             *pRemovedElem = pRemNode->pElement;
         
-        pLeftChild = bst_leftChild(pRemNode);
-        pRightChild = bst_rightChild(pRemNode);
+        pLeftChild = bst_leftchild(pRemNode);
+        pRightChild = bst_rightchild(pRemNode);
         
-        isLeftExternal = bst_isExternal(pLeftChild);
-        isRightExternal = bst_isExternal(pRightChild);
+        isLeftExternal = bst_is_external(pLeftChild);
+        isRightExternal = bst_is_external(pRightChild);
         
         
         /* Both childs are internal if Left And Right childs are NOT External */
@@ -151,8 +129,8 @@ int avl_remove(AvlTree *pTree, const void *pKey, void **pRemovedKey, void **pRem
             /* Find next Internal BNode in the "InOrder" serial */
             /* Next Internal BNode = pInorderInternal */
             pInorderExternal = pRightChild;
-            while (bst_isExternal(pInorderExternal) != 1) {
-                pInorderExternal = bst_leftChild(pInorderExternal);
+            while (bst_is_external(pInorderExternal) != 1) {
+                pInorderExternal = bst_leftchild(pInorderExternal);
             }
             pInorderInternal = bst_parent(pInorderExternal);
             
@@ -175,7 +153,7 @@ int avl_remove(AvlTree *pTree, const void *pKey, void **pRemovedKey, void **pRem
         REPEAT:
         pX = avl_findUnbalancedNodeX(pTree, pB, AVL_REMOVAL);
         if (pX != 0) {
-            pB = avl_reStructure(pTree, pX);
+            pB = avl_restructure(pTree, pX);
             pX = 0;
             goto REPEAT;
         }

@@ -16,11 +16,12 @@
 				<Compiler>
 					<Add option="-std=c99" />
 					<Add option="-ansi" />
+					<Add option="-DNDEBUG" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add directory="$(#liblinkedlist.LIB.X86)" />
-					<Add directory="$(#libstq.LIB.X86)" />
+					<Add directory="$(#liblinkedlist.LIB)/x86" />
+					<Add directory="$(#libstq.LIB)/x86" />
 				</Linker>
 			</Target>
 			<Target title="Release64">
@@ -34,12 +35,13 @@
 					<Add option="-m64" />
 					<Add option="-std=c99" />
 					<Add option="-ansi" />
+					<Add option="-DNDEBUG" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
 					<Add option="-s" />
-					<Add directory="$(#liblinkedlist.LIB.X64)" />
-					<Add directory="$(#libstq.LIB.X64)" />
+					<Add directory="$(#liblinkedlist.LIB)/x64" />
+					<Add directory="$(#libstq.LIB)/x64" />
 				</Linker>
 			</Target>
 			<Target title="Test AVL">
@@ -47,9 +49,12 @@
 				<Option object_output="obj/test_avl/" />
 				<Option type="1" />
 				<Option compiler="tdm-gcc-64-mingw-w64" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
 				<Linker>
-					<Add directory="$(#liblinkedlist.LIB.x64)" />
-					<Add directory="$(#libstq.LIB.x64)" />
+					<Add directory="$(#liblinkedlist.LIB)/x64" />
+					<Add directory="$(#libstq.LIB)/x64" />
 				</Linker>
 			</Target>
 			<Target title="Test BST">
@@ -57,21 +62,59 @@
 				<Option object_output="obj/test_bst/" />
 				<Option type="1" />
 				<Option compiler="tdm-gcc-32-mingw" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add directory="$(#liblinkedlist.LIB)/x86" />
+					<Add directory="$(#libstq.LIB)/x86" />
+				</Linker>
 			</Target>
-			<Target title="Test BST Sort">
+			<Target title="Test BST Sort LinkedList">
 				<Option output="bin/test_bst_sort" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/test_bst_sort/" />
 				<Option type="1" />
 				<Option compiler="tdm-gcc-32-mingw" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add directory="$(#liblinkedlist.LIB)/x86" />
+					<Add directory="$(#libstq.LIB)/x86" />
+				</Linker>
+			</Target>
+			<Target title="Test BST Sort DLinkedList">
+				<Option output="bin/test_bst_sort" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/test_bst_sort/" />
+				<Option type="1" />
+				<Option compiler="tdm-gcc-32-mingw" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add directory="$(#liblinkedlist.LIB)/x86" />
+					<Add directory="$(#libstq.LIB)/x86" />
+				</Linker>
 			</Target>
 			<Target title="Test AVL With String">
 				<Option output="bin/test_avl_str" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/test_avl_str/" />
 				<Option type="1" />
 				<Option compiler="tdm-gcc-32-mingw" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add directory="$(#liblinkedlist.LIB)/x86" />
+					<Add directory="$(#libstq.LIB)/x86" />
+				</Linker>
 			</Target>
 		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="Release;Release64;Test AVL;Test BST;Test BST Sort LinkedList;Test BST Sort DLinkedList;Test AVL With String;" />
+		</VirtualTargets>
 		<Compiler>
+			<Add option="-Wall" />
 			<Add directory="$(#liblinkedlist.INCLUDE)" />
 			<Add directory="$(#libstq.INCLUDE)" />
 		</Compiler>
@@ -80,15 +123,23 @@
 			<Add library="linkedlist" />
 		</Linker>
 		<Unit filename="src/avl.h" />
+		<Unit filename="src/avl_internal.h" />
 		<Unit filename="src/avl_mutation.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/avl_restructure_algorithms.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/avl_sort_algorithms.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/bst.h" />
 		<Unit filename="src/bst_init_destroy.c">
 			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/bst_internal.h">
+			<Option target="Release" />
+			<Option target="Release64" />
 		</Unit>
 		<Unit filename="src/bst_key_value_list.c">
 			<Option compilerVar="CC" />
@@ -100,9 +151,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/bst_search.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/bst_sort_algorithms.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/bst_traversal_algorithms.c">
@@ -120,9 +168,13 @@
 			<Option compilerVar="CC" />
 			<Option target="Test BST" />
 		</Unit>
+		<Unit filename="src/main_bst_sort_doublylinkedlist.c">
+			<Option compilerVar="CC" />
+			<Option target="Test BST Sort DLinkedList" />
+		</Unit>
 		<Unit filename="src/main_bst_sort_linkedlist.c">
 			<Option compilerVar="CC" />
-			<Option target="Test BST Sort" />
+			<Option target="Test BST Sort LinkedList" />
 		</Unit>
 		<Extensions />
 	</Project>

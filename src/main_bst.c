@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "bst.h"
+#include "bst_internal.h"
 #include <queue.h>
 
 
@@ -41,10 +42,10 @@ int main(void) {
                     pKey, *pKey);
     pKey = 0;
     
-    bst_levelOrderLR(bst_root(&btree), &nodes);
-    printf("Printing after insertion (Level LR Order) (Internal+External = %u)\n",
+    bst_levelorder_lr(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after insertion (Level LR Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    bst_eraseExternalLinks(&nodes);
+                            
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {
@@ -57,10 +58,10 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    bst_preOrder(bst_root(&btree), &nodes);
-    printf("Printing after insertion (Pre Order) (Internal+External = %u)\n",
+    bst_preorder(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after insertion (Pre Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    bst_eraseExternalLinks(&nodes);
+                            
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {
@@ -73,10 +74,10 @@ int main(void) {
 
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    bst_postOrder(bst_root(&btree), &nodes);
-    printf("Printing after insertion (Post Order) (Internal+External = %u)\n",
+    bst_postorder(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after insertion (Post Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    bst_eraseExternalLinks(&nodes);
+                            
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {
@@ -89,10 +90,10 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    bst_inOrder(bst_root(&btree), &nodes);
-    printf("Printing after insertion (In Order) (Internal+External = %u)\n",
+    bst_inorder(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after insertion (In Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    bst_eraseExternalLinks(&nodes);
+                            
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {
@@ -105,7 +106,7 @@ int main(void) {
     
     pKey = (int *) malloc(sizeof(int));
     *pKey = 88;
-    pNode = bst_searchNode(&btree, (const void *) pKey, bst_root(&btree));
+    pNode = bst_search_node(&btree, (const void *) pKey, bst_root(&btree));
     
     opRes = bst_depth(pNode, &depth);
     opRes = bst_height( pNode, &height);
@@ -132,10 +133,10 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    bst_levelOrderLR(bst_root(&btree), &nodes);
-    printf("Printing after removal (Level LR Order) (Internal+External = %u)\n",
+    bst_levelorder_lr(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after removal (Level LR Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    bst_eraseExternalLinks(&nodes);
+                            
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {
@@ -148,10 +149,10 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    bst_preOrder(bst_root(&btree), &nodes);
-    printf("Printing after removal (Pre Order) (Internal+External = %u)\n",
+    bst_preorder(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after removal (Pre Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    bst_eraseExternalLinks(&nodes);
+                            
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {
@@ -164,10 +165,10 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    bst_postOrder(bst_root(&btree), &nodes);
-    printf("Printing after insertion (Post Order) (Internal+External = %u)\n",
+    bst_postorder(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after insertion (Post Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    bst_eraseExternalLinks(&nodes);
+                            
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {
@@ -180,10 +181,10 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    bst_inOrder(bst_root(&btree), &nodes);
-    printf("Printing after removal (In Order) (Internal+External = %u)\n",
+    bst_inorder(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after removal (In Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    bst_eraseExternalLinks(&nodes);
+                            
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {

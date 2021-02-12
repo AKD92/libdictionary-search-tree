@@ -13,6 +13,7 @@
 
 
 #include "bst.h"
+#include "bst_internal.h"
 
 
 
@@ -21,23 +22,23 @@
 
 
 
-BNode * bst_searchNode(const BisTree *pTree, const void *key, BNode *pStartNode) {
+BNode * bst_search_node(const BisTree *pTree, const void *key, BNode *pStartNode) {
     
     register int opCompareKey;
     register BNode *pNode;
     
     pNode = pStartNode;
-    while (bst_isExternal(pNode) != 1) {
+    while (bst_is_external(pNode) != 1) {
         
         opCompareKey = pTree->fpCompareKey((const void *) key, (const void *) pNode->pKey);
         if (opCompareKey == 0) {
             break;
         }
         else if (opCompareKey < 0) {
-            pNode = bst_leftChild(pNode);
+            pNode = bst_leftchild(pNode);
         }
         else if (opCompareKey > 0) {
-            pNode = bst_rightChild(pNode);
+            pNode = bst_rightchild(pNode);
         }
     }
     
@@ -48,27 +49,50 @@ BNode * bst_searchNode(const BisTree *pTree, const void *key, BNode *pStartNode)
 
 
 
-int bst_search(const BisTree *pTree, const void *pKey, void **pRealKey, void **pElem) {
+int bst_lookup(const BisTree *pTree, const void *pKey, void **pElem) {
     
     int iRetVal;
     BNode *pTarget;
     
-    pTarget = bst_searchNode(pTree, pKey, bst_root((BisTree *) pTree));
+    if (pTree == 0 || pKey == 0)
+        return -1;
     
-    if (bst_isInternal(pTarget) == 1) {
+    
+    /*  Search for the key in the specified BisTree dictionary */
+    pTarget = bst_search_node(pTree, pKey, bst_root((BisTree *) pTree));
+    
+    
+    /*  The key has been found.
+        So now we update pElem pointer with the value associated
+        with the key
+    */
+    if (bst_is_internal(pTarget) == 1) {
         
-        if (pRealKey != 0) {
-            *pRealKey = pTarget->pKey;
-        }
         if (pElem != 0) {
             *pElem = pTarget->pElement;
         }
-        iRetVal = 0;
-    }
-    else if (bst_isExternal(pTarget) == 1) {
-        iRetVal = -1;
+        iRetVal = 1;
     }
     
+    /*  The key does not exist. */
+    else if (bst_is_external(pTarget) == 1) {
+        iRetVal = 0;
+    }
+    
+    return iRetVal;
+}
+
+
+
+
+
+int bst_exists(const BisTree *pTree, const void *pKey) {
+    
+    int iRetVal, iSearchVal;
+    
+    iSearchVal = bst_lookup(pTree, pKey, 0);
+    
+    iRetVal = (iSearchVal == 1) ? 1 : 0;
     return iRetVal;
 }
 

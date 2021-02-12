@@ -20,13 +20,14 @@
 
 
 
-#define AVL_INSERTION           1
-#define AVL_REMOVAL             2
+#define AVL_INSERTION               1
+#define AVL_REMOVAL                 2
 
 
 
 
 #include "bst.h"
+#include "bst_internal.h"
 
 
 
@@ -56,53 +57,15 @@ typedef BisTree AvlTree;
 
 
 
-#define     avl_size                bst_size
-
 #define     avl_init                bst_init
 
 #define     avl_destroy             bst_destroy
 
-#define     avl_root                bst_root
+#define     avl_size                bst_size
 
-#define     avl_parent              bst_parent
+#define     avl_lookup              bst_lookup
 
-#define     avl_leftChild           bst_leftChild
-
-#define     avl_rightChild          bst_rightChild
-
-#define     avl_sibling             bst_sibling
-
-#define     avl_isExternal          bst_isExternal
-
-#define     avl_isInternal          bst_isInternal
-
-#define     avl_isRoot              bst_isRoot
-
-#define     avl_isAncestor          bst_isAncestor
-
-#define     avl_depth               bst_depth
-
-#define     avl_height              bst_height
-
-
-
-#define     avl_preOrder            bst_preOrder
-
-#define     avl_inOrder             bst_inOrder
-
-#define     avl_postOrder           bst_postOrder
-
-#define     avl_levelOrderLR        bst_levelOrderLR
-
-#define     avl_levelOrderRL        bst_levelOrderRL
-
-#define     avl_eraseExternalLinks  bst_eraseExternalLinks
-
-
-
-#define     avl_searchNode          bst_searchNode
-
-#define     avl_search              bst_search
+#define     avl_exists              bst_exists
 
 
 
@@ -113,15 +76,164 @@ int avl_remove(AvlTree *pTree, const void *pKey, void **pRemovedKey, void **pRem
 
 
 
-#define     avl_changeElement       bst_changeElement
+#define     avl_reassign            bst_reassign
+
+
+#define     avl_keys                bst_keys
+
+#define     avl_elements            bst_elements
+
+#define     avl_keys_elements       bst_keys_elements
 
 
 
-#define     avl_listKeys            bst_listKeys
 
-#define     avl_listElements        bst_listElements
 
-#define     avl_listKeysElements    bst_listKeysElements
+
+
+/**********************************************************************************************/
+/*********************************                           **********************************/
+/*********************************     SORTING ALGORITHMS    **********************************/
+/*********************************                           **********************************/
+/**********************************************************************************************/
+
+
+
+/*
+ *  Sorts the specified singly linked list in ascending order.
+ *  This function is actually an alias of 'avl_treesort_asc'.
+ *  The sorting algorithm is TreeSort.
+ *  This algorithm is stable, means for equal elements this algorithm
+ *  will retain the order in which those elements were found on the List.
+ *  Time complexity is O(nlogn).
+ *  This algorithm is out of place.
+ *
+ *  Parameter:
+ *      list                :   Pointer to a singly linked list
+ *      compare             :   Pointer to a function which will be used to compare
+ *                              between the objects of the linked list
+ *
+ *  Returns
+ *      0 for successful sorting
+ *      -1 if parameters are invalid
+*/
+int avl_treesort(List *list, int (*compare) (const void *arg1, const void *arg2));
+
+
+
+
+
+/*
+ *  Sorts the specified doubly linked list in ascending order.
+ *  This function is actually an alias of 'avl_treesort_asc_dl'.
+ *  The sorting algorithm is TreeSort.
+ *  This algorithm is stable, means for equal elements this algorithm
+ *  will retain the order in which those elements were found on the List.
+ *  Time complexity is O(nlogn).
+ *  This algorithm is out of place.
+ *
+ *  Parameter:
+ *      list                :   Pointer to a doubly linked list
+ *      compare             :   Pointer to a function which will be used to compare
+ *                              between the objects of the linked list
+ *
+ *  Returns
+ *      0 for successful sorting
+ *      -1 if parameters are invalid
+*/
+int avl_treesort_dl(DList *dlist, int (*compare) (const void *arg1, const void *arg2));
+
+
+
+
+
+/*
+ *  Sorts the specified singly linked list in ascending order.
+ *  The sorting algorithm is TreeSort.
+ *  This algorithm is stable, means for equal elements this algorithm
+ *  will retain the order in which those elements were found on the List.
+ *  Time complexity is O(nlogn).
+ *  This algorithm is out of place.
+ *
+ *  Parameter:
+ *      list                :   Pointer to a singly linked list
+ *      compare             :   Pointer to a function which will be used to compare
+ *                              between the objects of the linked list
+ *
+ *  Returns
+ *      0 for successful sorting
+ *      -1 if parameters are invalid
+*/
+int avl_treesort_asc(List *list, int (*compare) (const void *arg1, const void *arg2));
+
+
+
+
+
+/*
+ *  Sorts the specified singly linked list in descending order.
+ *  The sorting algorithm is TreeSort.
+ *  This algorithm is stable, means for equal elements this algorithm
+ *  will retain the order in which those elements were found on the List.
+ *  Time complexity is O(nlogn).
+ *  This algorithm is out of place.
+ *
+ *  Parameter:
+ *      list                :   Pointer to a singly linked list
+ *      compare             :   Pointer to a function which will be used to compare
+ *                              between the objects of the linked list
+ *
+ *  Returns
+ *      0 for successful sorting
+ *      -1 if parameters are invalid
+*/
+int avl_treesort_desc(List *list, int (*compare) (const void *arg1, const void *arg2));
+
+
+
+
+
+/*
+ *  Sorts the specified doubly linked list in ascending order.
+ *  The sorting algorithm is TreeSort.
+ *  This algorithm is stable, means for equal elements this algorithm
+ *  will retain the order in which those elements were found on the List.
+ *  Time complexity is O(nlogn).
+ *  This algorithm is out of place.
+ *
+ *  Parameter:
+ *      list                :   Pointer to a doubly linked list
+ *      compare             :   Pointer to a function which will be used to compare
+ *                              between the objects of the linked list
+ *
+ *  Returns
+ *      0 for successful sorting
+ *      -1 if parameters are invalid
+*/
+int avl_treesort_asc_dl(DList *dlist, int (*compare) (const void *arg1, const void *arg2));
+
+
+
+
+
+/*
+ *  Sorts the specified doubly linked list in descending order.
+ *  The sorting algorithm is TreeSort.
+ *  This algorithm is stable, means for equal elements this algorithm
+ *  will retain the order in which those elements were found on the List.
+ *  Time complexity is O(nlogn).
+ *  This algorithm is out of place.
+ *
+ *  Parameter:
+ *      list                :   Pointer to a doubly linked list
+ *      compare             :   Pointer to a function which will be used to compare
+ *                              between the objects of the linked list
+ *
+ *  Returns
+ *      0 for successful sorting
+ *      -1 if parameters are invalid
+*/
+int avl_treesort_desc_dl(DList *dlist, int (*compare) (const void *arg1, const void *arg2));
 
 
 

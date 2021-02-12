@@ -13,10 +13,10 @@
 
 
 #include "bst.h"
+#include "bst_internal.h"
 #include <queue.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
 
 
@@ -39,6 +39,7 @@ int bst_init (BisTree *pTree, int (*fpCompareKey) (const void *k1, const void *k
     if (pRoot == 0)
         return -1;
     
+    memset((void *) pTree, 0, sizeof(BisTree));
     pTree->size = 0;                                                /* Initially size must be Zero */
     pTree->fpCompareKey = fpCompareKey;                             /* Use User-defined comparing function */
     pTree->fpDestroyKey = fpDestroyKey;                             /* No destructor function for Keys */
@@ -54,31 +55,19 @@ int bst_init (BisTree *pTree, int (*fpCompareKey) (const void *k1, const void *k
 void bst_destroy(BisTree *pTree) {
     
     BNode *pNode;
-    Queue qNodes;                                           /* Queue for holding all BNode objects */
-    unsigned int iNodeCount;                                /* Number of BNode objects supposed to be */
-    char *strErr1, *strErr2;
+    Queue qNodes;                             /* Queue for holding all BNode objects */
     
     if (pTree == 0)
         return;
     
+    
     /* Initialize Queue with no Destructor function */
     pNode = 0;
     queue_init(&qNodes, 0);
-    strErr1 = "\n** bst_destroy() : LevelOrderLR queue_size() != bst_size()\n";
-    strErr2 = "** bst_destroy() : bst_size(): %u, queue_size(): %u\n\n";
     
     
     /* Collect all BNode objects to the Queue */
-    /* This MUST be TRUE: NodeCount = 2 * (Internals) + 1 */
-    bst_levelOrderLR(bst_root(pTree), &qNodes);
-    iNodeCount = 2 * bst_size(pTree) + 1;
-    
-    
-    /* If our Node Count assert is FALSE, signal an error */
-    if (iNodeCount != queue_size(&qNodes)) {
-        printf(strErr1);
-        printf(strErr2, bst_size(pTree), queue_size(&qNodes));
-    }
+    bst_levelorder_lr(bst_root(pTree), BST_ALLOW_INTERNAL | BST_ALLOW_EXTERNAL, &qNodes);
     
     
     /* Dequeue each BNode object one by one */
@@ -96,9 +85,9 @@ void bst_destroy(BisTree *pTree) {
     
     
     /* Destroy temporary Queue */
-    /* Clear the memory of BisTree structure */
+    /* Release the memory of BisTree structure */
     queue_destroy(&qNodes);
-    memset((void *) pTree, 0, sizeof(BisTree));
+    
     return;
 }
 

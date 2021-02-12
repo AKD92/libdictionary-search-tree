@@ -13,6 +13,7 @@
 
 
 #include "bst.h"
+#include "bst_internal.h"
 #include <stack.h>
 #include <queue.h>
 
@@ -42,14 +43,14 @@ BNode * bst_parent(const BNode *pNode) {
 
 
 
-BNode * bst_leftChild(const BNode *pNode) {
+BNode * bst_leftchild(const BNode *pNode) {
     
     return (pNode == 0 ? 0 : pNode->pLeftNode);
 }
 
 
 
-BNode * bst_rightChild(const BNode *pNode) {
+BNode * bst_rightchild(const BNode *pNode) {
     
     return (pNode == 0 ? 0 : pNode->pRightNode);
 }
@@ -66,11 +67,11 @@ BNode * bst_sibling(const BNode *pNode) {
         sibling = 0;
     }
     else {
-        if (pNode == bst_leftChild(parent)) {
-            sibling = bst_rightChild(parent);
+        if (pNode == bst_leftchild(parent)) {
+            sibling = bst_rightchild(parent);
         }
-        else if (pNode == bst_rightChild(parent)) {
-            sibling = bst_leftChild(parent);
+        else if (pNode == bst_rightchild(parent)) {
+            sibling = bst_leftchild(parent);
         }
     }
     
@@ -79,12 +80,12 @@ BNode * bst_sibling(const BNode *pNode) {
 
 
 /*
-int bst_isExternal(const BNode *pNode) {
+int bst_is_external(const BNode *pNode) {
     
     unsigned int left, right;
     
-    left = (unsigned int) bst_leftChild(pNode);
-    right = (unsigned int) bst_rightChild(pNode);
+    left = (unsigned int) bst_leftchild(pNode);
+    right = (unsigned int) bst_rightchild(pNode);
     
     if ((left | right) == 0) {
         return 1;
@@ -97,12 +98,12 @@ int bst_isExternal(const BNode *pNode) {
 
 
 /*
-int bst_isInternal(const BNode *pNode) {
+int bst_is_internal(const BNode *pNode) {
     
     unsigned int left, right;
     
-    left = (unsigned int) bst_leftChild(pNode);
-    right = (unsigned int) bst_rightChild(pNode);
+    left = (unsigned int) bst_leftchild(pNode);
+    right = (unsigned int) bst_rightchild(pNode);
     
     if ((left | right) != 0) {
         return 1;
@@ -114,7 +115,7 @@ int bst_isInternal(const BNode *pNode) {
 
 
 
-int bst_isRoot(const BisTree *pTree, const BNode *pNode) {
+int bst_is_root(const BisTree *pTree, const BNode *pNode) {
     
     int retVal;
     
@@ -166,7 +167,7 @@ int bst_height(const BNode *pNode, unsigned int *pHeight) {
     
     /* Initialize the Queue and store PostOrder nodes on it */
     queue_init(&qPostorder, 0);
-    bst_postOrder((BNode *) pNode, &qPostorder);
+    bst_postorder((BNode *) pNode, BST_ALLOW_INTERNAL | BST_ALLOW_EXTERNAL, &qPostorder);
     
     /* Total nodes in queue: 2n + 1 (internal + external) */
     /* Therefore number of external nodes = ((2n + 1) - 1)/2 + 1 */
@@ -180,7 +181,7 @@ int bst_height(const BNode *pNode, unsigned int *pHeight) {
     while (queue_size(&qPostorder) > 0) {
         
         queue_dequeue(&qPostorder, (void **) &pCurrent);
-        isExternal = bst_isExternal(pCurrent);
+        isExternal = bst_is_external(pCurrent);
         
         if (isExternal == 1) {
             *(pHeights + iCount) = 0;
@@ -211,7 +212,7 @@ int bst_height(const BNode *pNode, unsigned int *pHeight) {
 
 
 
-int bst_isAncestor(const BisTree *pTree, const BNode *pParent, const BNode *pChild){
+int bst_is_ancestor(const BisTree *pTree, const BNode *pParent, const BNode *pChild){
     
     int opRes;
     register const BNode *pN;
@@ -220,18 +221,18 @@ int bst_isAncestor(const BisTree *pTree, const BNode *pParent, const BNode *pChi
     pN = pChild;
     
     REPEAT:
-        if (pN == pParent) {
-            opRes = 1;
-            goto END;
-        }
-        else if (pN == 0) {
-            goto END;
-        }
-        pN = bst_parent(pN);
+    if (pN == pParent) {
+        opRes = 1;
+        goto END;
+    }
+    else if (pN == 0) {
+        goto END;
+    }
+    pN = bst_parent(pN);
     goto REPEAT;
     
     END:
-        return opRes;
+    return opRes;
 }
 
 

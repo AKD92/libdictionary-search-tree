@@ -37,7 +37,7 @@ int main(void) {
         avl_insert(&aTree, (const void *) pChar, 0);
     }
     
-    avl_listKeys(&aTree, &lString);
+    avl_keys(&aTree, &lString);
     
     printf("Printing contents of AVL Tree\n");
     pListElem = list_head(&lString);

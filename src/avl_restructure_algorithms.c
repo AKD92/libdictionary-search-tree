@@ -15,15 +15,7 @@
 
 
 #include "avl.h"
-
-
-
-
-
-
-BNode * avl_reStructure(AvlTree *tree, BNode *pNodeX);
-
-BNode * avl_findUnbalancedNodeX(AvlTree *tree, BNode *pNode, int operationType);
+#include "avl_internal.h"
 
 
 
@@ -31,7 +23,7 @@ BNode * avl_findUnbalancedNodeX(AvlTree *tree, BNode *pNode, int operationType);
 
 
 
-BNode * avl_reStructure(AvlTree *tree, BNode *pNodeX) {
+BNode * avl_restructure(AvlTree *tree, BNode *pNodeX) {
     
     int isLeftOfZ;
     BNode *pParentZ;
@@ -43,52 +35,52 @@ BNode * avl_reStructure(AvlTree *tree, BNode *pNodeX) {
     pNodeZ = avl_parent(pNodeY);
     pParentZ = avl_parent(pNodeZ);
     
-    if (avl_leftChild(pParentZ) == pNodeZ) {
+    if (avl_leftchild(pParentZ) == pNodeZ) {
         isLeftOfZ = 1;
     }
     else {
         isLeftOfZ = 0;
     }
     
-    if (avl_rightChild(pNodeZ) == pNodeY) {
+    if (avl_rightchild(pNodeZ) == pNodeY) {
         pNodeA = pNodeZ;
-        if (avl_rightChild(pNodeY) == pNodeX) {
+        if (avl_rightchild(pNodeY) == pNodeX) {
             pNodeB = pNodeY;
             pNodeC = pNodeX;
-            pNodeT1 = avl_leftChild(pNodeB);
-            pNodeT2 = avl_leftChild(pNodeC);
+            pNodeT1 = avl_leftchild(pNodeB);
+            pNodeT2 = avl_leftchild(pNodeC);
         }
-        else if (avl_leftChild(pNodeY) == pNodeX){
+        else if (avl_leftchild(pNodeY) == pNodeX){
             pNodeB = pNodeX;
             pNodeC = pNodeY;
-            pNodeT1 = avl_leftChild(pNodeB);
-            pNodeT2 = avl_rightChild(pNodeB);
+            pNodeT1 = avl_leftchild(pNodeB);
+            pNodeT2 = avl_rightchild(pNodeB);
         }
         else {
             return 0;
         }
     }
-    else if (avl_leftChild(pNodeZ) == pNodeY) {
+    else if (avl_leftchild(pNodeZ) == pNodeY) {
         pNodeC = pNodeZ;
-        if (avl_leftChild(pNodeY) == pNodeX) {
+        if (avl_leftchild(pNodeY) == pNodeX) {
             pNodeB = pNodeY;
             pNodeA = pNodeX;
-            pNodeT1 = avl_rightChild(pNodeA);
-            pNodeT2 = avl_rightChild(pNodeB);
+            pNodeT1 = avl_rightchild(pNodeA);
+            pNodeT2 = avl_rightchild(pNodeB);
         }
-        else if (avl_rightChild(pNodeY) == pNodeX) {
+        else if (avl_rightchild(pNodeY) == pNodeX) {
             pNodeB = pNodeX;
             pNodeA = pNodeY;
-            pNodeT1 = avl_leftChild(pNodeB);
-            pNodeT2 = avl_rightChild(pNodeB);
+            pNodeT1 = avl_leftchild(pNodeB);
+            pNodeT2 = avl_rightchild(pNodeB);
         }
     }
     else {
         return 0;
     }
     
-    pNodeT0 = avl_leftChild(pNodeA);
-    pNodeT3 = avl_rightChild(pNodeC);
+    pNodeT0 = avl_leftchild(pNodeA);
+    pNodeT3 = avl_rightchild(pNodeC);
     
     
     pNodeA->pLeftNode = pNodeT0;
@@ -137,18 +129,21 @@ BNode * avl_findUnbalancedNodeX(AvlTree *tree, BNode *pNode, int operationType) 
     pZ = pY = pX = 0;
     
     while (pN != 0) {
-        avl_height((const BNode *) avl_leftChild(pN), &heightL);
-        avl_height((const BNode *) avl_rightChild(pN), &heightR);
+            
+        avl_height((const BNode *) avl_leftchild(pN), &heightL);
+        avl_height((const BNode *) avl_rightchild(pN), &heightR);
         iDiff = (int ) (heightL - heightR);
+        
         if (iDiff < 0)
             iDiff = iDiff * (-1);
+            
         if (iDiff >= 2) {
             pZ = pN;
             if (heightL > heightR) {
-                pY = avl_leftChild(pZ);
+                pY = avl_leftchild(pZ);
             }
             else {
-                pY = avl_rightChild(pZ);
+                pY = avl_rightchild(pZ);
             }
             break;
         }
@@ -156,29 +151,31 @@ BNode * avl_findUnbalancedNodeX(AvlTree *tree, BNode *pNode, int operationType) 
     }
     
     if (pY != 0) {
-        avl_height((const BNode *) avl_leftChild(pY), &heightL);
-        avl_height((const BNode *) avl_rightChild(pY), &heightR);
+        
+        avl_height((const BNode *) avl_leftchild(pY), &heightL);
+        avl_height((const BNode *) avl_rightchild(pY), &heightR);
+        
         if (heightL > heightR) {
-            pX = avl_leftChild(pY);
+            pX = avl_leftchild(pY);
         }
         else if (heightR > heightL) {
-            pX = avl_rightChild(pY);
+            pX = avl_rightchild(pY);
         }
         else if (heightL == heightR) {
             switch (operationType) {
                 case AVL_INSERTION:
-                isAncestor = avl_isAncestor(tree, avl_leftChild(pY), pNode);
-                if (isAncestor == 1) {
-                    pX = avl_leftChild(pY);
-                }
-                else {
-                    pX = avl_rightChild(pY);
-                }
-                break;
+                    isAncestor = avl_is_ancestor(tree, avl_leftchild(pY), pNode);
+                    if (isAncestor == 1) {
+                        pX = avl_leftchild(pY);
+                    }
+                    else {
+                        pX = avl_rightchild(pY);
+                    }
+                    break;
                 
                 case AVL_REMOVAL:
-                pX = avl_rightChild(pY);
-                break;
+                    pX = avl_rightchild(pY);
+                    break;
             }
         }
     }

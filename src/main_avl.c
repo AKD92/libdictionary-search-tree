@@ -2,9 +2,10 @@
 
 
 
+#include "avl.h"
+#include "avl_internal.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "avl.h"
 #include <queue.h>
 
 
@@ -46,10 +47,10 @@ int main(void) {
     avl_insert(&avlTree, pKey, 0);
     pKey = 0;
     
-    avl_levelOrderLR(avl_root(&avlTree), &nodes);
-    printf("Printing after insertion (Level LR Order) (Internal+External = %u)\n",
+    avl_levelorder_lr(avl_root(&avlTree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after insertion (Level LR Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    avl_eraseExternalLinks(&nodes);
+    
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {
@@ -62,10 +63,10 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    avl_preOrder(avl_root(&avlTree), &nodes);
-    printf("Printing after insertion (Pre Order) (Internal+External = %u)\n",
+    avl_preorder(avl_root(&avlTree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after insertion (Pre Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    avl_eraseExternalLinks(&nodes);
+    
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {
@@ -78,10 +79,10 @@ int main(void) {
 
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    avl_postOrder(avl_root(&avlTree), &nodes);
-    printf("Printing after insertion (Post Order) (Internal+External = %u)\n",
+    avl_postorder(avl_root(&avlTree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after insertion (Post Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    avl_eraseExternalLinks(&nodes);
+                            
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {
@@ -94,10 +95,10 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    avl_inOrder(avl_root(&avlTree), &nodes);
-    printf("Printing after insertion (In Order) (Internal+External = %u)\n",
+    avl_inorder(avl_root(&avlTree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after insertion (In Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    avl_eraseExternalLinks(&nodes);
+                            
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {
@@ -110,7 +111,7 @@ int main(void) {
     
     pKey = (int *) malloc(sizeof(int));
     *pKey = 88;
-    pNode = avl_searchNode(&avlTree, (const void *) pKey, avl_root(&avlTree));
+    pNode = avl_search_node(&avlTree, (const void *) pKey, avl_root(&avlTree));
     
     opRes = avl_depth(pNode, &depth);
     opRes = avl_height(pNode, &height);
@@ -137,10 +138,10 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    avl_levelOrderLR(avl_root(&avlTree), &nodes);
-    printf("Printing after removal (Level LR Order) (Internal+External = %u)\n",
+    avl_levelorder_lr(avl_root(&avlTree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after removal (Level LR Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    avl_eraseExternalLinks(&nodes);
+                            
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {
@@ -153,10 +154,10 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    avl_preOrder(avl_root(&avlTree), &nodes);
-    printf("Printing after removal (Pre Order) (Internal+External = %u)\n",
+    avl_preorder(avl_root(&avlTree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after removal (Pre Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    avl_eraseExternalLinks(&nodes);
+                            
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {
@@ -169,10 +170,10 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    avl_postOrder(avl_root(&avlTree), &nodes);
-    printf("Printing after insertion (Post Order) (Internal+External = %u)\n",
+    avl_postorder(avl_root(&avlTree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after insertion (Post Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    avl_eraseExternalLinks(&nodes);
+                            
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {
@@ -185,10 +186,10 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    avl_inOrder(avl_root(&avlTree), &nodes);
-    printf("Printing after removal (In Order) (Internal+External = %u)\n",
+    avl_inorder(avl_root(&avlTree), BST_ALLOW_INTERNAL, &nodes);
+    printf("Printing after removal (In Order) (Internal = %u)\n",
                             queue_size(&nodes));
-    avl_eraseExternalLinks(&nodes);
+                            
     list = (List *) &nodes;
     elem = list_head(list);
     while (elem != 0) {

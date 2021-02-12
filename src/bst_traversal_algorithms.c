@@ -13,6 +13,7 @@
 
 
 #include "bst.h"
+#include "bst_internal.h"
 #include <stack.h>
 #include <queue.h>
 
@@ -24,10 +25,11 @@
 
 
 
-int bst_preOrder(BNode *pStartNode, Queue *qPreorder) {
+int bst_preorder(BNode *pStartNode, int nodeType, Queue *qPreorder) {
     
     Stack stNodes;
     int isInternal;
+    int allowInternal, allowExternal;
     BNode *pNode;
     BNode *pLeftChild, *pRightChild;
     
@@ -36,18 +38,23 @@ int bst_preOrder(BNode *pStartNode, Queue *qPreorder) {
     
     pNode = 0;
     pLeftChild = pRightChild = 0;
+    allowInternal = nodeType & BST_ALLOW_INTERNAL;
+    allowExternal = nodeType & BST_ALLOW_EXTERNAL;
     stack_init(&stNodes, 0);
     stack_push(&stNodes, (const void *) pStartNode);
     
     while (stack_size(&stNodes) > 0) {
         
         stack_pop(&stNodes, (void **) &pNode);
-        queue_enqueue(qPreorder, (const void *) pNode);
-        isInternal = bst_isInternal(pNode);
+        isInternal = bst_is_internal(pNode);
+        
+        if ((isInternal == 1 && allowInternal != 0) ||
+            (isInternal == 0 && allowExternal != 0))
+            queue_enqueue(qPreorder, (const void *) pNode);
         
         if (isInternal == 1) {
-            pRightChild = bst_rightChild(pNode);
-            pLeftChild = bst_leftChild(pNode);
+            pRightChild = bst_rightchild(pNode);
+            pLeftChild = bst_leftchild(pNode);
             stack_push(&stNodes, (const void *) pRightChild);
             stack_push(&stNodes, (const void *) pLeftChild);
         }
@@ -59,27 +66,36 @@ int bst_preOrder(BNode *pStartNode, Queue *qPreorder) {
 
 
 
-int bst_inOrder(BNode *pStartNode, Queue *qInorder) {
+int bst_inorder(BNode *pStartNode, int nodeType, Queue *qInorder) {
     
     Stack stNodes;
     BNode *pNode;
+    int allowInternal, allowExternal;
+    int isInternal;
     
     if (pStartNode == 0 || qInorder == 0)
         return -1;
     
+    allowInternal = nodeType & BST_ALLOW_INTERNAL;
+    allowExternal = nodeType & BST_ALLOW_EXTERNAL;
     pNode = pStartNode;
     stack_init(&stNodes, 0);
     
     REPEAT:
     while (pNode != 0) {
         stack_push(&stNodes, (const void *) pNode);
-        pNode = bst_leftChild(pNode);
+        pNode = bst_leftchild(pNode);
     }
     
     if (stack_size(&stNodes) > 0) {
         stack_pop(&stNodes, (void **) &pNode);
-        queue_enqueue(qInorder, (const void *) pNode);
-        pNode = bst_rightChild(pNode);
+        isInternal = bst_is_internal(pNode);
+        
+        if ((isInternal == 1 && allowInternal != 0) ||
+            (isInternal == 0 && allowExternal != 0))
+            queue_enqueue(qInorder, (const void *) pNode);
+        
+        pNode = bst_rightchild(pNode);
         goto REPEAT;
     }
     
@@ -89,15 +105,19 @@ int bst_inOrder(BNode *pStartNode, Queue *qInorder) {
 
 
 
-int bst_postOrder(BNode *pStartNode, Queue *qPostorder) {
+int bst_postorder(BNode *pStartNode, int nodeType, Queue *qPostorder) {
     
     BNode *pNode;
     BNode *pLeftChild, *pRightChild;
+    int allowInternal, allowExternal;
+    int isExternal;
     Stack stNodesA, stNodesB;
     
     if (pStartNode == 0 || qPostorder == 0)
         return -1;
     
+    allowInternal = nodeType & BST_ALLOW_INTERNAL;
+    allowExternal = nodeType & BST_ALLOW_EXTERNAL;
     pNode = 0;
     pLeftChild = pRightChild = 0;
     stack_init(&stNodesA, 0);
@@ -109,8 +129,8 @@ int bst_postOrder(BNode *pStartNode, Queue *qPostorder) {
         stack_pop(&stNodesA, (void **) &pNode);
         stack_push(&stNodesB, (const void *) pNode);
         
-        pLeftChild = bst_leftChild(pNode);
-        pRightChild = bst_rightChild(pNode);
+        pLeftChild = bst_leftchild(pNode);
+        pRightChild = bst_rightchild(pNode);
         
         if (pLeftChild != 0) {
             stack_push(&stNodesA, (const void *) pLeftChild);
@@ -122,7 +142,11 @@ int bst_postOrder(BNode *pStartNode, Queue *qPostorder) {
     
     while (stack_size(&stNodesB) > 0) {
         stack_pop(&stNodesB, (void **) &pNode);
-        queue_enqueue(qPostorder, (const void *) pNode);
+        isExternal = bst_is_external(pNode);
+        
+        if ((isExternal == 0 && allowInternal != 0) ||
+            (isExternal == 1 && allowExternal != 0))
+            queue_enqueue(qPostorder, (const void *) pNode);
     }
     
     stack_destroy(&stNodesA);
@@ -132,16 +156,19 @@ int bst_postOrder(BNode *pStartNode, Queue *qPostorder) {
 
 
 
-int bst_levelOrderLR(BNode *pStartNode, Queue *qLRorder) {
+int bst_levelorder_lr(BNode *pStartNode, int nodeType, Queue *qLRorder) {
     
     Queue qNodes;
     int isInternal;
+    int allowInternal, allowExternal;
     BNode *pNode;
     BNode *pLeftChild, *pRightChild;
     
     if (pStartNode == 0 || qLRorder == 0)
         return -1;
     
+    allowInternal = nodeType & BST_ALLOW_INTERNAL;
+    allowExternal = nodeType & BST_ALLOW_EXTERNAL;
     pNode = 0;
     pLeftChild = pRightChild = 0;
     queue_init(&qNodes, 0);
@@ -150,12 +177,15 @@ int bst_levelOrderLR(BNode *pStartNode, Queue *qLRorder) {
     while (queue_size(&qNodes) > 0) {
         
         queue_dequeue(&qNodes, (void **) &pNode);
-        queue_enqueue(qLRorder, (const void *) pNode);
-        isInternal = bst_isInternal(pNode);
+        isInternal = bst_is_internal(pNode);
+        
+        if ((isInternal == 1 && allowInternal != 0) ||
+            (isInternal == 0 && allowExternal != 0))
+            queue_enqueue(qLRorder, (const void *) pNode);
         
         if (isInternal == 1) {
-            pLeftChild = bst_leftChild(pNode);
-            pRightChild = bst_rightChild(pNode);
+            pLeftChild = bst_leftchild(pNode);
+            pRightChild = bst_rightchild(pNode);
             queue_enqueue(&qNodes, (const void *) pLeftChild);
             queue_enqueue(&qNodes, (const void *) pRightChild);
         }
@@ -168,28 +198,34 @@ int bst_levelOrderLR(BNode *pStartNode, Queue *qLRorder) {
 
 
 
-int bst_levelOrderRL(BNode *pStartNode, Queue *qRLorder) {
+int bst_levelorder_rl(BNode *pStartNode, int nodeType, Queue *qRLorder) {
     
     Queue qNodes;
     int isInternal;
+    int allowInternal, allowExternal;
     BNode *pNode;
     BNode *pLeftChild, *pRightChild;
     
     if (pStartNode == 0 || qRLorder == 0)
         return -1;
     
+    allowInternal = nodeType & BST_ALLOW_INTERNAL;
+    allowExternal = nodeType & BST_ALLOW_EXTERNAL;
     queue_init(&qNodes, 0);
     queue_enqueue(&qNodes, (const void *) pStartNode);
     
     while (queue_size(&qNodes) > 0) {
         
         queue_dequeue(&qNodes, (void **) &pNode);
-        queue_enqueue(qRLorder, (const void *) pNode);
-        isInternal = bst_isInternal(pNode);
+        isInternal = bst_is_internal(pNode);
+        
+        if ((isInternal == 1 && allowInternal != 0) ||
+            (isInternal == 0 && allowExternal != 0))
+            queue_enqueue(qRLorder, (const void *) pNode);
         
         if (isInternal == 1) {
-            pRightChild = bst_rightChild(pNode);
-            pLeftChild = bst_leftChild(pNode);
+            pRightChild = bst_rightchild(pNode);
+            pLeftChild = bst_leftchild(pNode);
             queue_enqueue(&qNodes, (const void *) pRightChild);
             queue_enqueue(&qNodes, (const void *) pLeftChild);
         }
@@ -201,29 +237,4 @@ int bst_levelOrderRL(BNode *pStartNode, Queue *qRLorder) {
 
 
 
-
-int bst_eraseExternalLinks(Queue *qNodes) {
-    
-    int isInternal;
-    BNode *pNode;
-    unsigned int qSize;
-    register unsigned int index;
-    
-    if (qNodes == 0)
-        return -1;
-    
-    index = 0;
-    qSize = queue_size(qNodes);
-    
-    while (index < qSize) {
-        queue_dequeue(qNodes, (void **) &pNode);
-        isInternal = bst_isInternal(pNode);
-        if (isInternal == 1) {
-            queue_enqueue(qNodes, (const void *) pNode);
-        }
-        index = index + 1;
-    }
-    
-    return 0;
-}
 
