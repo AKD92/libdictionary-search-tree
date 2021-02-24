@@ -67,7 +67,7 @@ void bst_destroy(BisTree *pTree) {
     
     
     /* Collect all BNode objects to the Queue */
-    bst_levelorder_lr(bst_root(pTree), BST_ALLOW_INTERNAL | BST_ALLOW_EXTERNAL, &qNodes);
+    bst_levelorder_lr(bst_root(pTree), BNODE_ALLOW_INTERNAL | BNODE_ALLOW_EXTERNAL, &qNodes);
     
     
     /* Dequeue each BNode object one by one */

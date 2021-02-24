@@ -31,6 +31,9 @@ BNode * avl_restructure(AvlTree *tree, BNode *pNodeX) {
     BNode *pNodeA, *pNodeB, *pNodeC;
     BNode *pNodeT0, *pNodeT1, *pNodeT2, *pNodeT3;
     
+    pNodeA = pNodeB = pNodeC = 0;
+    pNodeT0 = pNodeT1 = pNodeT2 = pNodeT3 = 0;
+    
     pNodeY = avl_parent(pNodeX);
     pNodeZ = avl_parent(pNodeY);
     pParentZ = avl_parent(pNodeZ);
@@ -73,6 +76,9 @@ BNode * avl_restructure(AvlTree *tree, BNode *pNodeX) {
             pNodeA = pNodeY;
             pNodeT1 = avl_leftchild(pNodeB);
             pNodeT2 = avl_rightchild(pNodeB);
+        }
+        else {
+            return 0;
         }
     }
     else {

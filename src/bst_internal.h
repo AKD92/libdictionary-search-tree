@@ -25,8 +25,8 @@
 
 
 
-#define BST_ALLOW_EXTERNAL       0x01
-#define BST_ALLOW_INTERNAL       0x02
+#define BNODE_ALLOW_EXTERNAL       0x01
+#define BNODE_ALLOW_INTERNAL       0x02
 
 
 
@@ -280,8 +280,8 @@ BNode * bst_search_node(const BisTree *pTree, const void *pKey, BNode *pStartNod
  *      nodeType            :   Specify what kind of nodes this algorithm will
  *                              store on the output queue. It can be only internal
  *                              nodes, only external nodes or both type of nodes
- *                              For internal nodes only, set it to BST_ALLOW_INTERNAL
- *                              For external nodes only, set it to BST_ALLOW_EXTERNAL
+ *                              For internal nodes only, set it to BNODE_ALLOW_INTERNAL
+ *                              For external nodes only, set it to BNODE_ALLOW_EXTERNAL
  *                              For all nodes, set it to the 'bitwise-or' of the constants above
  *      qPreorder           :   Pointer to a Queue which will receive pointers of
  *                              all the traversed BNode objects
@@ -307,8 +307,8 @@ int bst_preorder(BNode *pStartNode, int nodeType, Queue *qPreorder);
  *      nodeType            :   Specify what kind of nodes this algorithm will
  *                              store on the output queue. It can be only internal
  *                              nodes, only external nodes or both type of nodes
- *                              For internal nodes only, set it to BST_ALLOW_INTERNAL
- *                              For external nodes only, set it to BST_ALLOW_EXTERNAL
+ *                              For internal nodes only, set it to BNODE_ALLOW_INTERNAL
+ *                              For external nodes only, set it to BNODE_ALLOW_EXTERNAL
  *                              For all nodes, set it to the 'bitwise-or' of the constants above
  *      qInorder            :   Pointer to a Queue which will receive pointers of
  *                              all the traversed BNode objects
@@ -318,6 +318,34 @@ int bst_preorder(BNode *pStartNode, int nodeType, Queue *qPreorder);
  *      -1 otherwise
 */
 int bst_inorder(BNode *pStartNode, int nodeType, Queue *qInorder);
+
+
+
+
+
+/*
+ *  Traverses a binary search tree in the reverse of "in-order" fashion.
+ *  Traversal starts from the specified node of the tree.
+ *  Retrives pointers to the traversed node objects into the specified queue.
+ *
+ *  Parameter:
+ *      pStartNode          :   Pointer to a BNode from which the algorithm
+ *                              will start traversing
+ *      nodeType            :   Specify what kind of nodes this algorithm will
+ *                              store on the output queue. It can be only internal
+ *                              nodes, only external nodes or both type of nodes
+ *                              For internal nodes only, set it to BNODE_ALLOW_INTERNAL
+ *                              For external nodes only, set it to BNODE_ALLOW_EXTERNAL
+ *                              For all nodes, set it to the 'bitwise-or' of the constants above
+ *      qInorder            :   Pointer to a Queue which will receive pointers of
+ *                              all the traversed BNode objects
+ *
+ *  Returns
+ *      0 for successful traversal
+ *      -1 otherwise
+*/
+int bst_reverse_inorder(BNode *pStartNode, int nodeType, Queue *qInorder);
+
 
 
 
@@ -333,8 +361,8 @@ int bst_inorder(BNode *pStartNode, int nodeType, Queue *qInorder);
  *      nodeType            :   Specify what kind of nodes this algorithm will
  *                              store on the output queue. It can be only internal
  *                              nodes, only external nodes or both type of nodes
- *                              For internal nodes only, set it to BST_ALLOW_INTERNAL
- *                              For external nodes only, set it to BST_ALLOW_EXTERNAL
+ *                              For internal nodes only, set it to BNODE_ALLOW_INTERNAL
+ *                              For external nodes only, set it to BNODE_ALLOW_EXTERNAL
  *                              For all nodes, set it to the 'bitwise-or' of the constants above
  *      qPostorder          :   Pointer to a Queue which will receive pointers of
  *                              all the traversed BNode objects
@@ -360,8 +388,8 @@ int bst_postorder(BNode *pStartNode, int nodeType, Queue *qPostorder);
  *      nodeType            :   Specify what kind of nodes this algorithm will
  *                              store on the output queue. It can be only internal
  *                              nodes, only external nodes or both type of nodes
- *                              For internal nodes only, set it to BST_ALLOW_INTERNAL
- *                              For external nodes only, set it to BST_ALLOW_EXTERNAL
+ *                              For internal nodes only, set it to BNODE_ALLOW_INTERNAL
+ *                              For external nodes only, set it to BNODE_ALLOW_EXTERNAL
  *                              For all nodes, set it to the 'bitwise-or' of the constants above
  *      qLRorder            :   Pointer to a Queue which will receive pointers of
  *                              all the traversed BNode objects
@@ -387,8 +415,8 @@ int bst_levelorder_lr(BNode *pStartNode, int nodeType, Queue *qLRorder);
  *      nodeType            :   Specify what kind of nodes this algorithm will
  *                              store on the output queue. It can be only internal
  *                              nodes, only external nodes or both type of nodes
- *                              For internal nodes only, set it to BST_ALLOW_INTERNAL
- *                              For external nodes only, set it to BST_ALLOW_EXTERNAL
+ *                              For internal nodes only, set it to BNODE_ALLOW_INTERNAL
+ *                              For external nodes only, set it to BNODE_ALLOW_EXTERNAL
  *                              For all nodes, set it to the 'bitwise-or' of the constants above
  *      qRLorder            :   Pointer to a Queue which will receive pointers of
  *                              all the traversed BNode objects

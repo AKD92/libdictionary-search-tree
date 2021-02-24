@@ -6,42 +6,78 @@
 		<Option pch_mode="2" />
 		<Option compiler="tdm-gcc-32-mingw" />
 		<Build>
-			<Target title="Release">
-				<Option output="lib/x86/dictionary" prefix_auto="1" extension_auto="1" />
+			<Target title="Debug">
+				<Option output="lib/x86/Debug/dictionary" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="obj/Release/x86/" />
+				<Option object_output="obj/x86/Debug/" />
 				<Option type="2" />
 				<Option compiler="tdm-gcc-32-mingw" />
 				<Option createDefFile="1" />
 				<Compiler>
 					<Add option="-std=c99" />
-					<Add option="-ansi" />
-					<Add option="-DNDEBUG" />
+					<Add option="-O0" />
+					<Add option="-g" />
+					<Add option="-m32" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
-					<Add directory="$(#liblinkedlist.LIB)/x86" />
-					<Add directory="$(#libstq.LIB)/x86" />
+					<Add option="-m32" />
+					<Add directory="$(#liblinkedlist.LIB)/x86/Debug" />
 				</Linker>
 			</Target>
-			<Target title="Release64">
-				<Option output="lib/x64/dictionary" prefix_auto="1" extension_auto="1" />
+			<Target title="Debug64">
+				<Option output="lib/x64/Debug/dictionary" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="obj/Release/x64/" />
+				<Option object_output="obj/x64/Debug/" />
 				<Option type="2" />
 				<Option compiler="tdm-gcc-64-mingw-w64" />
 				<Option createDefFile="1" />
 				<Compiler>
 					<Add option="-m64" />
 					<Add option="-std=c99" />
-					<Add option="-ansi" />
+					<Add option="-O0" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-m64" />
+					<Add directory="$(#liblinkedlist.LIB)/x64/Debug" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="lib/x86/Release/dictionary" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/x86/Release/" />
+				<Option type="2" />
+				<Option compiler="tdm-gcc-32-mingw" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-std=c99" />
+					<Add option="-O2" />
+					<Add option="-m32" />
+					<Add option="-DNDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-m32" />
+					<Add directory="$(#liblinkedlist.LIB)/x86/Release" />
+				</Linker>
+			</Target>
+			<Target title="Release64">
+				<Option output="lib/x64/Release/dictionary" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/x64/Release/" />
+				<Option type="2" />
+				<Option compiler="tdm-gcc-64-mingw-w64" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-m64" />
+					<Add option="-std=c99" />
+					<Add option="-O2" />
 					<Add option="-DNDEBUG" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
 					<Add option="-s" />
-					<Add directory="$(#liblinkedlist.LIB)/x64" />
-					<Add directory="$(#libstq.LIB)/x64" />
+					<Add directory="$(#liblinkedlist.LIB)/x64/Release" />
 				</Linker>
 			</Target>
 			<Target title="Test AVL">
@@ -51,10 +87,11 @@
 				<Option compiler="tdm-gcc-64-mingw-w64" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-m32" />
 				</Compiler>
 				<Linker>
-					<Add directory="$(#liblinkedlist.LIB)/x64" />
-					<Add directory="$(#libstq.LIB)/x64" />
+					<Add option="-m32" />
+					<Add directory="$(#liblinkedlist.LIB)/x64/Debug" />
 				</Linker>
 			</Target>
 			<Target title="Test BST">
@@ -64,36 +101,39 @@
 				<Option compiler="tdm-gcc-32-mingw" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-m32" />
 				</Compiler>
 				<Linker>
-					<Add directory="$(#liblinkedlist.LIB)/x86" />
-					<Add directory="$(#libstq.LIB)/x86" />
+					<Add option="-m32" />
+					<Add directory="$(#liblinkedlist.LIB)/x86/Debug" />
 				</Linker>
 			</Target>
-			<Target title="Test BST Sort LinkedList">
-				<Option output="bin/test_bst_sort" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/test_bst_sort/" />
+			<Target title="Test AVL Sort LinkedList">
+				<Option output="bin/test_avl_sort" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/test_avl_sort/" />
 				<Option type="1" />
 				<Option compiler="tdm-gcc-32-mingw" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-m32" />
 				</Compiler>
 				<Linker>
-					<Add directory="$(#liblinkedlist.LIB)/x86" />
-					<Add directory="$(#libstq.LIB)/x86" />
+					<Add option="-m32" />
+					<Add directory="$(#liblinkedlist.LIB)/x86/Debug" />
 				</Linker>
 			</Target>
-			<Target title="Test BST Sort DLinkedList">
-				<Option output="bin/test_bst_sort" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/test_bst_sort/" />
+			<Target title="Test AVL Sort DLinkedList">
+				<Option output="bin/test_avl_sort_dl" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/test_avl_sort_dl/" />
 				<Option type="1" />
-				<Option compiler="tdm-gcc-32-mingw" />
+				<Option compiler="tdm-gcc-64-mingw-w64" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-m64" />
 				</Compiler>
 				<Linker>
-					<Add directory="$(#liblinkedlist.LIB)/x86" />
-					<Add directory="$(#libstq.LIB)/x86" />
+					<Add option="-m64" />
+					<Add directory="$(#liblinkedlist.LIB)/x64/Debug" />
 				</Linker>
 			</Target>
 			<Target title="Test AVL With String">
@@ -103,26 +143,27 @@
 				<Option compiler="tdm-gcc-32-mingw" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-m32" />
 				</Compiler>
 				<Linker>
-					<Add directory="$(#liblinkedlist.LIB)/x86" />
-					<Add directory="$(#libstq.LIB)/x86" />
+					<Add option="-m32" />
+					<Add directory="$(#liblinkedlist.LIB)/x86/Debug" />
 				</Linker>
 			</Target>
 		</Build>
 		<VirtualTargets>
-			<Add alias="All" targets="Release;Release64;Test AVL;Test BST;Test BST Sort LinkedList;Test BST Sort DLinkedList;Test AVL With String;" />
+			<Add alias="All" targets="Debug;Debug64;Release;Release64;Test AVL;Test BST;Test AVL Sort LinkedList;Test AVL Sort DLinkedList;Test AVL With String;" />
 		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add directory="include" />
 			<Add directory="$(#liblinkedlist.INCLUDE)" />
-			<Add directory="$(#libstq.INCLUDE)" />
 		</Compiler>
 		<Linker>
-			<Add library="stq" />
 			<Add library="linkedlist" />
 		</Linker>
-		<Unit filename="src/avl.h" />
+		<Unit filename="include/avl.h" />
+		<Unit filename="include/bst.h" />
 		<Unit filename="src/avl_internal.h" />
 		<Unit filename="src/avl_mutation.c">
 			<Option compilerVar="CC" />
@@ -133,13 +174,14 @@
 		<Unit filename="src/avl_sort_algorithms.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/bst.h" />
 		<Unit filename="src/bst_init_destroy.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/bst_internal.h">
 			<Option target="Release" />
 			<Option target="Release64" />
+			<Option target="Debug" />
+			<Option target="Debug64" />
 		</Unit>
 		<Unit filename="src/bst_key_value_list.c">
 			<Option compilerVar="CC" />
@@ -170,11 +212,11 @@
 		</Unit>
 		<Unit filename="src/main_bst_sort_doublylinkedlist.c">
 			<Option compilerVar="CC" />
-			<Option target="Test BST Sort DLinkedList" />
+			<Option target="Test AVL Sort DLinkedList" />
 		</Unit>
 		<Unit filename="src/main_bst_sort_linkedlist.c">
 			<Option compilerVar="CC" />
-			<Option target="Test BST Sort LinkedList" />
+			<Option target="Test AVL Sort LinkedList" />
 		</Unit>
 		<Extensions />
 	</Project>

@@ -62,6 +62,7 @@ BNode * bst_sibling(const BNode *pNode) {
     BNode *sibling;
     BNode *parent;
     
+    sibling = 0;
     parent = bst_parent(pNode);
     if (parent == 0) {
         sibling = 0;
@@ -167,7 +168,7 @@ int bst_height(const BNode *pNode, unsigned int *pHeight) {
     
     /* Initialize the Queue and store PostOrder nodes on it */
     queue_init(&qPostorder, 0);
-    bst_postorder((BNode *) pNode, BST_ALLOW_INTERNAL | BST_ALLOW_EXTERNAL, &qPostorder);
+    bst_postorder((BNode *) pNode, BNODE_ALLOW_INTERNAL | BNODE_ALLOW_EXTERNAL, &qPostorder);
     
     /* Total nodes in queue: 2n + 1 (internal + external) */
     /* Therefore number of external nodes = ((2n + 1) - 1)/2 + 1 */

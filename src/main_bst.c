@@ -42,7 +42,7 @@ int main(void) {
                     pKey, *pKey);
     pKey = 0;
     
-    bst_levelorder_lr(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    bst_levelorder_lr(bst_root(&btree), BNODE_ALLOW_INTERNAL, &nodes);
     printf("Printing after insertion (Level LR Order) (Internal = %u)\n",
                             queue_size(&nodes));
                             
@@ -58,7 +58,7 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    bst_preorder(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    bst_preorder(bst_root(&btree), BNODE_ALLOW_INTERNAL, &nodes);
     printf("Printing after insertion (Pre Order) (Internal = %u)\n",
                             queue_size(&nodes));
                             
@@ -74,7 +74,7 @@ int main(void) {
 
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    bst_postorder(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    bst_postorder(bst_root(&btree), BNODE_ALLOW_INTERNAL, &nodes);
     printf("Printing after insertion (Post Order) (Internal = %u)\n",
                             queue_size(&nodes));
                             
@@ -90,7 +90,7 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    bst_inorder(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    bst_inorder(bst_root(&btree), BNODE_ALLOW_INTERNAL, &nodes);
     printf("Printing after insertion (In Order) (Internal = %u)\n",
                             queue_size(&nodes));
                             
@@ -133,7 +133,7 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    bst_levelorder_lr(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    bst_levelorder_lr(bst_root(&btree), BNODE_ALLOW_INTERNAL, &nodes);
     printf("Printing after removal (Level LR Order) (Internal = %u)\n",
                             queue_size(&nodes));
                             
@@ -149,7 +149,7 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    bst_preorder(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    bst_preorder(bst_root(&btree), BNODE_ALLOW_INTERNAL, &nodes);
     printf("Printing after removal (Pre Order) (Internal = %u)\n",
                             queue_size(&nodes));
                             
@@ -165,7 +165,7 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    bst_postorder(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    bst_postorder(bst_root(&btree), BNODE_ALLOW_INTERNAL, &nodes);
     printf("Printing after insertion (Post Order) (Internal = %u)\n",
                             queue_size(&nodes));
                             
@@ -181,7 +181,7 @@ int main(void) {
     
     queue_destroy(&nodes);
     queue_init(&nodes, 0);
-    bst_inorder(bst_root(&btree), BST_ALLOW_INTERNAL, &nodes);
+    bst_inorder(bst_root(&btree), BNODE_ALLOW_INTERNAL, &nodes);
     printf("Printing after removal (In Order) (Internal = %u)\n",
                             queue_size(&nodes));
                             

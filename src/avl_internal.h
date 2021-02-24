@@ -18,9 +18,15 @@
 
 
 
-
-
 #include "avl.h"
+#include "bst_internal.h"
+
+
+
+
+
+#define AVL_INSERTION               1
+#define AVL_REMOVAL                 2
 
 
 
@@ -53,6 +59,8 @@
 #define     avl_preorder            bst_preorder
 
 #define     avl_inorder             bst_inorder
+
+#define     avl_reverse_inorder     bst_reverse_inorder
 
 #define     avl_postorder           bst_postorder
 

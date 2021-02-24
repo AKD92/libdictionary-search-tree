@@ -42,7 +42,7 @@ int main(void) {
     printf("\n\n");
     
     printf("Applying TreeSort Algorithm to Linked List\n");
-    avl_treesort_desc_dl(&numList, cmpInt);
+    avl_treesort_dl_desc(&numList, cmpInt);
     
     printf("Printing After Sorting Integers (Size: %u)\n", list_size(&numList));
     elem = dlist_head(&numList);

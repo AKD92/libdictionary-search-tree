@@ -40,7 +40,7 @@ int avl_treesort(List *list, int (*fpCompare) (const void *arg1, const void *arg
 
 int avl_treesort_dl(DList *dlist, int (*fpCompare) (const void *arg1, const void *arg2))
 {
-    return avl_treesort_asc_dl(dlist, fpCompare);
+    return avl_treesort_dl_asc(dlist, fpCompare);
 }
 
 
@@ -90,7 +90,7 @@ int avl_treesort_asc(List *list, int (*fpCompare) (const void *arg1, const void 
     
     
     /* bst_inorder() returns objects in Ascending Order */
-    bst_inorder(bst_root(&bTree), BST_ALLOW_INTERNAL, &qInorder);
+    bst_inorder(bst_root(&bTree), BNODE_ALLOW_INTERNAL, &qInorder);
     
     
     /* Update object links (pointers) from Queue to Singly Linked List */
@@ -129,7 +129,6 @@ int avl_treesort_desc(List *list, int (*fpCompare) (const void *arg1, const void
     int opval;
     BNode *pNode;
     AvlTree bTree;
-    Stack stReverse;
     Queue qInorder;
     Queue *instances;
     
@@ -138,7 +137,6 @@ int avl_treesort_desc(List *list, int (*fpCompare) (const void *arg1, const void
     if (list_size(list) < 2)
         return 0;
     
-    stack_init(&stReverse, 0);
     queue_init(&qInorder, 0);
     bst_init(&bTree, fpCompare, 0, destroy_list);
     
@@ -167,21 +165,14 @@ int avl_treesort_desc(List *list, int (*fpCompare) (const void *arg1, const void
     }
     
     
-    /* bst_inorder() returns objects in Ascending Order */
-    bst_inorder(bst_root(&bTree), BST_ALLOW_INTERNAL, &qInorder);
-    
-    
-    /* Using a Stack for reversing all objects (Descending Order) */
-    while (queue_size(&qInorder) > 0) {
-        queue_dequeue(&qInorder, (void **) &pNode);
-        stack_push(&stReverse, (const void *) pNode);
-    }
+    /* bst_reverse_inorder() returns objects in Descending Order */
+    bst_reverse_inorder(bst_root(&bTree), BNODE_ALLOW_INTERNAL, &qInorder);
     
     
     /* Update object links (pointers) from Stack to Singly Linked List */
     pLstElem = list_head(list);
-    while (stack_size(&stReverse) > 0) {
-        stack_pop(&stReverse, (void **) &pNode);
+    while (queue_size(&qInorder) > 0) {
+        queue_dequeue(&qInorder, (void **) &pNode);
         list_data(pLstElem) = pNode->pKey;
         
         /*  We may have multiple instances of same element as value associated with this key
@@ -198,7 +189,6 @@ int avl_treesort_desc(List *list, int (*fpCompare) (const void *arg1, const void
         pLstElem = list_next(pLstElem);
     }
     
-    stack_destroy(&stReverse);
     queue_destroy(&qInorder);
     avl_destroy(&bTree);
     
@@ -207,7 +197,7 @@ int avl_treesort_desc(List *list, int (*fpCompare) (const void *arg1, const void
 
 
 
-int avl_treesort_asc_dl(DList *dlist, int (*fpCompare) (const void *arg1, const void *arg2))
+int avl_treesort_dl_asc(DList *dlist, int (*fpCompare) (const void *arg1, const void *arg2))
 {
     
     void *pDataElem;
@@ -251,7 +241,7 @@ int avl_treesort_asc_dl(DList *dlist, int (*fpCompare) (const void *arg1, const 
     
     
     /* bst_inorder() returns objects in Ascending Order */
-    bst_inorder(bst_root(&bTree), BST_ALLOW_INTERNAL, &qInorder);
+    bst_inorder(bst_root(&bTree), BNODE_ALLOW_INTERNAL, &qInorder);
     
     
     /* Update object links (pointers) from Queue to Doubly Linked List */
@@ -282,7 +272,7 @@ int avl_treesort_asc_dl(DList *dlist, int (*fpCompare) (const void *arg1, const 
 
 
 
-int avl_treesort_desc_dl(DList *dlist, int (*fpCompare) (const void *arg1, const void *arg2))
+int avl_treesort_dl_desc(DList *dlist, int (*fpCompare) (const void *arg1, const void *arg2))
 {
     
     void *pDataElem;
@@ -328,7 +318,7 @@ int avl_treesort_desc_dl(DList *dlist, int (*fpCompare) (const void *arg1, const
     
     
     /* bst_inorder() returns objects in Ascending Order */
-    bst_inorder(bst_root(&bTree), BST_ALLOW_INTERNAL, &qInorder);
+    bst_inorder(bst_root(&bTree), BNODE_ALLOW_INTERNAL, &qInorder);
     
     
     /* Using a Stack for reversing all objects (Descending Order) */

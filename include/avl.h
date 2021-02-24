@@ -18,16 +18,7 @@
 
 
 
-
-
-#define AVL_INSERTION               1
-#define AVL_REMOVAL                 2
-
-
-
-
 #include "bst.h"
-#include "bst_internal.h"
 
 
 
@@ -105,7 +96,7 @@ int avl_remove(AvlTree *pTree, const void *pKey, void **pRemovedKey, void **pRem
  *  The sorting algorithm is TreeSort.
  *  This algorithm is stable, means for equal elements this algorithm
  *  will retain the order in which those elements were found on the List.
- *  Time complexity is O(nlogn).
+ *  Time complexity is O(nlogn), where n = number of elements in *list
  *  This algorithm is out of place.
  *
  *  Parameter:
@@ -125,11 +116,11 @@ int avl_treesort(List *list, int (*compare) (const void *arg1, const void *arg2)
 
 /*
  *  Sorts the specified doubly linked list in ascending order.
- *  This function is actually an alias of 'avl_treesort_asc_dl'.
+ *  This function is actually an alias of 'avl_treesort_dl_asc'.
  *  The sorting algorithm is TreeSort.
  *  This algorithm is stable, means for equal elements this algorithm
  *  will retain the order in which those elements were found on the List.
- *  Time complexity is O(nlogn).
+ *  Time complexity is O(nlogn), where n = number of elements in *list
  *  This algorithm is out of place.
  *
  *  Parameter:
@@ -152,7 +143,7 @@ int avl_treesort_dl(DList *dlist, int (*compare) (const void *arg1, const void *
  *  The sorting algorithm is TreeSort.
  *  This algorithm is stable, means for equal elements this algorithm
  *  will retain the order in which those elements were found on the List.
- *  Time complexity is O(nlogn).
+ *  Time complexity is O(nlogn), where n = number of elements in *list
  *  This algorithm is out of place.
  *
  *  Parameter:
@@ -175,7 +166,7 @@ int avl_treesort_asc(List *list, int (*compare) (const void *arg1, const void *a
  *  The sorting algorithm is TreeSort.
  *  This algorithm is stable, means for equal elements this algorithm
  *  will retain the order in which those elements were found on the List.
- *  Time complexity is O(nlogn).
+ *  Time complexity is O(nlogn), where n = number of elements in *list
  *  This algorithm is out of place.
  *
  *  Parameter:
@@ -198,7 +189,7 @@ int avl_treesort_desc(List *list, int (*compare) (const void *arg1, const void *
  *  The sorting algorithm is TreeSort.
  *  This algorithm is stable, means for equal elements this algorithm
  *  will retain the order in which those elements were found on the List.
- *  Time complexity is O(nlogn).
+ *  Time complexity is O(nlogn), where n = number of elements in *list
  *  This algorithm is out of place.
  *
  *  Parameter:
@@ -210,7 +201,7 @@ int avl_treesort_desc(List *list, int (*compare) (const void *arg1, const void *
  *      0 for successful sorting
  *      -1 if parameters are invalid
 */
-int avl_treesort_asc_dl(DList *dlist, int (*compare) (const void *arg1, const void *arg2));
+int avl_treesort_dl_asc(DList *dlist, int (*compare) (const void *arg1, const void *arg2));
 
 
 
@@ -221,7 +212,7 @@ int avl_treesort_asc_dl(DList *dlist, int (*compare) (const void *arg1, const vo
  *  The sorting algorithm is TreeSort.
  *  This algorithm is stable, means for equal elements this algorithm
  *  will retain the order in which those elements were found on the List.
- *  Time complexity is O(nlogn).
+ *  Time complexity is O(nlogn), where n = number of elements in *list
  *  This algorithm is out of place.
  *
  *  Parameter:
@@ -233,7 +224,7 @@ int avl_treesort_asc_dl(DList *dlist, int (*compare) (const void *arg1, const vo
  *      0 for successful sorting
  *      -1 if parameters are invalid
 */
-int avl_treesort_desc_dl(DList *dlist, int (*compare) (const void *arg1, const void *arg2));
+int avl_treesort_dl_desc(DList *dlist, int (*compare) (const void *arg1, const void *arg2));
 
 
 
