@@ -164,14 +164,14 @@ Please kindly open up `include\bst.h` or `include\avl.h` and read carefully befo
 Assuming **n** and **h**, where n = _Total number of keys in dictionary_, h = _Height of internal tree_.
 Here lg is the base 2 logarithm.
 
-Plain Binary Search Tree based Dictionary (BisTree, defined in `bst.h`)
+Plain Binary Search Tree based Dictionary (`BisTree` defined in `bst.h`)
 | Algorithm      | Time complexity (average case)    | Time complexity (worst case)|
 |----------------|:---------------------------------:|:---------------------------:|
 | Insertion	     | O (lg n)                          | O (h)                       |
 | Removal	     | O (lg n)                          | O (h)                       |
 | Look-up	     | O (lg n)                          | O (h)                       |
 
-AVL Tree based Dictionary (AvlTree, defined in `avl.h`)
+AVL Tree based Dictionary (`AvlTree` defined in `avl.h`)
 | Algorithm      | Time complexity (average case)    | Time complexity (worst case)|
 |----------------|:---------------------------------:|:---------------------------:|
 | Insertion	     | O (lg n)                          | O (lg n)                    |
