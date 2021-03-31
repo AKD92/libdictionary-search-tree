@@ -53,15 +53,15 @@ int avl_treesort_asc(List *list, int (*fpCompare) (const void *arg1, const void 
     int opval;
     BNode *pNode;
     AvlTree bTree;
-    Queue qInorder;
-    Queue *instances;
+    Queue inorder;
+    Queue *eqv_elems;
     
     if (list == 0 || fpCompare == 0)
         return -1;
     if (list_size(list) < 2)
         return 0;
     
-    queue_init(&qInorder, 0);
+    queue_init(&inorder, 0);
     avl_init(&bTree, fpCompare, 0, destroy_list);
     
     
@@ -75,45 +75,45 @@ int avl_treesort_asc(List *list, int (*fpCompare) (const void *arg1, const void 
             Then we insert this into a list as the data/value of the key
         */
         if (opval != 0) {
-            instances = 0;
-            avl_lookup(&bTree, (const void *) pDataElem, (void **) &instances);
+            eqv_elems = 0;
+            avl_lookup(&bTree, (const void *) pDataElem, (void **) &eqv_elems);
             
-            if (instances == 0) {
-                instances = (Queue *) malloc(sizeof(Queue));
-                queue_init(instances, 0);
-                avl_reassign(&bTree, (const void *) pDataElem, (const void *) instances);
+            if (eqv_elems == 0) {
+                eqv_elems = (Queue *) malloc(sizeof(Queue));
+                queue_init(eqv_elems, 0);
+                avl_reassign(&bTree, (const void *) pDataElem, (const void *) eqv_elems);
             }
-            queue_enqueue(instances, (const void *) pDataElem);
+            queue_enqueue(eqv_elems, (const void *) pDataElem);
         }
         pLstElem = list_next(pLstElem);
     }
     
     
     /* bst_inorder() returns objects in Ascending Order */
-    bst_inorder(bst_root(&bTree), BNODE_ALLOW_INTERNAL, &qInorder);
+    bst_inorder(bst_root(&bTree), BNODE_ALLOW_INTERNAL, &inorder);
     
     
     /* Update object links (pointers) from Queue to Singly Linked List */
     pLstElem = list_head(list);
-    while (queue_size(&qInorder) > 0) {
-        queue_dequeue(&qInorder, (void **) &pNode);
+    while (queue_size(&inorder) > 0) {
+        queue_dequeue(&inorder, (void **) &pNode);
         list_data(pLstElem) = pNode->pKey;
         
-        /*  We may have multiple instances of same element as value associated with this key
+        /*  We may have multiple eqv_elems of same element as value associated with this key
             If so, then obtain the queue and transfer the elements from queue to output list
         */
         if (pNode->pElement != 0) {
-            instances = (Queue *) pNode->pElement;
-            while (queue_size(instances) > 0) {
+            eqv_elems = (Queue *) pNode->pElement;
+            while (queue_size(eqv_elems) > 0) {
                 pLstElem = list_next(pLstElem);
-                queue_dequeue(instances, (void **) &pDataElem);
+                queue_dequeue(eqv_elems, (void **) &pDataElem);
                 list_data(pLstElem) = pDataElem;
             }
         }
         pLstElem = list_next(pLstElem);
     }
     
-    queue_destroy(&qInorder);
+    queue_destroy(&inorder);
     avl_destroy(&bTree);
     
     return 0;
@@ -129,15 +129,15 @@ int avl_treesort_desc(List *list, int (*fpCompare) (const void *arg1, const void
     int opval;
     BNode *pNode;
     AvlTree bTree;
-    Queue qInorder;
-    Queue *instances;
+    Queue inorder;
+    Queue *eqv_elems;
     
     if (list == 0 || fpCompare == 0)
         return -1;
     if (list_size(list) < 2)
         return 0;
     
-    queue_init(&qInorder, 0);
+    queue_init(&inorder, 0);
     bst_init(&bTree, fpCompare, 0, destroy_list);
     
     
@@ -151,45 +151,45 @@ int avl_treesort_desc(List *list, int (*fpCompare) (const void *arg1, const void
             Then we insert this into a list as the data/value of the key
         */
         if (opval != 0) {
-            instances = 0;
-            avl_lookup(&bTree, (const void *) pDataElem, (void **) &instances);
+            eqv_elems = 0;
+            avl_lookup(&bTree, (const void *) pDataElem, (void **) &eqv_elems);
             
-            if (instances == 0) {
-                instances = (Queue *) malloc(sizeof(Queue));
-                queue_init(instances, 0);
-                avl_reassign(&bTree, (const void *) pDataElem, (const void *) instances);
+            if (eqv_elems == 0) {
+                eqv_elems = (Queue *) malloc(sizeof(Queue));
+                queue_init(eqv_elems, 0);
+                avl_reassign(&bTree, (const void *) pDataElem, (const void *) eqv_elems);
             }
-            queue_enqueue(instances, (const void *) pDataElem);
+            queue_enqueue(eqv_elems, (const void *) pDataElem);
         }
         pLstElem = list_next(pLstElem);
     }
     
     
     /* bst_reverse_inorder() returns objects in Descending Order */
-    bst_reverse_inorder(bst_root(&bTree), BNODE_ALLOW_INTERNAL, &qInorder);
+    bst_reverse_inorder(bst_root(&bTree), BNODE_ALLOW_INTERNAL, &inorder);
     
     
     /* Update object links (pointers) from Stack to Singly Linked List */
     pLstElem = list_head(list);
-    while (queue_size(&qInorder) > 0) {
-        queue_dequeue(&qInorder, (void **) &pNode);
+    while (queue_size(&inorder) > 0) {
+        queue_dequeue(&inorder, (void **) &pNode);
         list_data(pLstElem) = pNode->pKey;
         
-        /*  We may have multiple instances of same element as value associated with this key
+        /*  We may have multiple eqv_elems of same element as value associated with this key
             If so, then obtain the queue and transfer the elements from queue to output list
         */
         if (pNode->pElement != 0) {
-            instances = (Queue *) pNode->pElement;
-            while (queue_size(instances) > 0) {
+            eqv_elems = (Queue *) pNode->pElement;
+            while (queue_size(eqv_elems) > 0) {
                 pLstElem = list_next(pLstElem);
-                queue_dequeue(instances, (void **) &pDataElem);
+                queue_dequeue(eqv_elems, (void **) &pDataElem);
                 list_data(pLstElem) = pDataElem;
             }
         }
         pLstElem = list_next(pLstElem);
     }
     
-    queue_destroy(&qInorder);
+    queue_destroy(&inorder);
     avl_destroy(&bTree);
     
     return 0;
@@ -205,14 +205,14 @@ int avl_treesort_dl_asc(DList *dlist, int (*fpCompare) (const void *arg1, const 
     int opval;
     BNode *pNode;
     AvlTree bTree;
-    Queue qInorder, *instances;
+    Queue inorder, *eqv_elems;
     
     if (dlist == 0 || fpCompare == 0)
         return -1;
     if (dlist_size(dlist) < 2)
         return 0;
     
-    queue_init(&qInorder, 0);
+    queue_init(&inorder, 0);
     bst_init(&bTree, fpCompare, 0, destroy_list);
     
     
@@ -226,45 +226,45 @@ int avl_treesort_dl_asc(DList *dlist, int (*fpCompare) (const void *arg1, const 
             Then we insert this into a list as the data/value of the key
         */
         if (opval != 0) {
-            instances = 0;
-            avl_lookup(&bTree, (const void *) pDataElem, (void **) &instances);
+            eqv_elems = 0;
+            avl_lookup(&bTree, (const void *) pDataElem, (void **) &eqv_elems);
             
-            if (instances == 0) {
-                instances = (Queue *) malloc(sizeof(Queue));
-                queue_init(instances, 0);
-                avl_reassign(&bTree, (const void *) pDataElem, (const void *) instances);
+            if (eqv_elems == 0) {
+                eqv_elems = (Queue *) malloc(sizeof(Queue));
+                queue_init(eqv_elems, 0);
+                avl_reassign(&bTree, (const void *) pDataElem, (const void *) eqv_elems);
             }
-            queue_enqueue(instances, (const void *) pDataElem);
+            queue_enqueue(eqv_elems, (const void *) pDataElem);
         }
         pLstElem = dlist_next(pLstElem);
     }
     
     
     /* bst_inorder() returns objects in Ascending Order */
-    bst_inorder(bst_root(&bTree), BNODE_ALLOW_INTERNAL, &qInorder);
+    bst_inorder(bst_root(&bTree), BNODE_ALLOW_INTERNAL, &inorder);
     
     
     /* Update object links (pointers) from Queue to Doubly Linked List */
     pLstElem = dlist_head(dlist);
-    while (queue_size(&qInorder) > 0) {
-        queue_dequeue(&qInorder, (void **) &pNode);
+    while (queue_size(&inorder) > 0) {
+        queue_dequeue(&inorder, (void **) &pNode);
         dlist_data(pLstElem) = pNode->pKey;
         
-        /*  We may have multiple instances of same element as value associated with this key
+        /*  We may have multiple eqv_elems of same element as value associated with this key
             If so, then obtain the queue and transfer the elements from queue to output list
         */
         if (pNode->pElement != 0) {
-            instances = (Queue *) pNode->pElement;
-            while (queue_size(instances) > 0) {
+            eqv_elems = (Queue *) pNode->pElement;
+            while (queue_size(eqv_elems) > 0) {
                 pLstElem = dlist_next(pLstElem);
-                queue_dequeue(instances, (void **) &pDataElem);
+                queue_dequeue(eqv_elems, (void **) &pDataElem);
                 dlist_data(pLstElem) = pDataElem;
             }
         }
         pLstElem = dlist_next(pLstElem);
     }
     
-    queue_destroy(&qInorder);
+    queue_destroy(&inorder);
     avl_destroy(&bTree);
     
     return 0;
@@ -281,7 +281,7 @@ int avl_treesort_dl_desc(DList *dlist, int (*fpCompare) (const void *arg1, const
     BNode *pNode;
     AvlTree bTree;
     Stack stReverse;
-    Queue qInorder, *instances;
+    Queue inorder, *eqv_elems;
     
     if (dlist == 0 || fpCompare == 0)
         return -1;
@@ -289,7 +289,7 @@ int avl_treesort_dl_desc(DList *dlist, int (*fpCompare) (const void *arg1, const
         return 0;
     
     stack_init(&stReverse, 0);
-    queue_init(&qInorder, 0);
+    queue_init(&inorder, 0);
     bst_init(&bTree, fpCompare, 0, destroy_list);
     
     
@@ -303,27 +303,27 @@ int avl_treesort_dl_desc(DList *dlist, int (*fpCompare) (const void *arg1, const
             Then we insert this into a list as the data/value of the key
         */
         if (opval != 0) {
-            instances = 0;
-            avl_lookup(&bTree, (const void *) pDataElem, (void **) &instances);
+            eqv_elems = 0;
+            avl_lookup(&bTree, (const void *) pDataElem, (void **) &eqv_elems);
             
-            if (instances == 0) {
-                instances = (Queue *) malloc(sizeof(Queue));
-                queue_init(instances, 0);
-                avl_reassign(&bTree, (const void *) pDataElem, (const void *) instances);
+            if (eqv_elems == 0) {
+                eqv_elems = (Queue *) malloc(sizeof(Queue));
+                queue_init(eqv_elems, 0);
+                avl_reassign(&bTree, (const void *) pDataElem, (const void *) eqv_elems);
             }
-            queue_enqueue(instances, (const void *) pDataElem);
+            queue_enqueue(eqv_elems, (const void *) pDataElem);
         }
         pLstElem = dlist_next(pLstElem);
     }
     
     
     /* bst_inorder() returns objects in Ascending Order */
-    bst_inorder(bst_root(&bTree), BNODE_ALLOW_INTERNAL, &qInorder);
+    bst_inorder(bst_root(&bTree), BNODE_ALLOW_INTERNAL, &inorder);
     
     
     /* Using a Stack for reversing all objects (Descending Order) */
-    while (queue_size(&qInorder) > 0) {
-        queue_dequeue(&qInorder, (void **) &pNode);
+    while (queue_size(&inorder) > 0) {
+        queue_dequeue(&inorder, (void **) &pNode);
         stack_push(&stReverse, (const void *) pNode);
     }
     
@@ -334,14 +334,14 @@ int avl_treesort_dl_desc(DList *dlist, int (*fpCompare) (const void *arg1, const
         stack_pop(&stReverse, (void **) &pNode);
         dlist_data(pLstElem) = pNode->pKey;
         
-        /*  We may have multiple instances of same element as value associated with this key
+        /*  We may have multiple eqv_elems of same element as value associated with this key
             If so, then obtain the queue and transfer the elements from queue to output list
         */
         if (pNode->pElement != 0) {
-            instances = (Queue *) pNode->pElement;
-            while (queue_size(instances) > 0) {
+            eqv_elems = (Queue *) pNode->pElement;
+            while (queue_size(eqv_elems) > 0) {
                 pLstElem = dlist_next(pLstElem);
-                queue_dequeue(instances, (void **) &pDataElem);
+                queue_dequeue(eqv_elems, (void **) &pDataElem);
                 dlist_data(pLstElem) = pDataElem;
             }
         }
@@ -349,7 +349,7 @@ int avl_treesort_dl_desc(DList *dlist, int (*fpCompare) (const void *arg1, const
     }
     
     stack_destroy(&stReverse);
-    queue_destroy(&qInorder);
+    queue_destroy(&inorder);
     avl_destroy(&bTree);
     
     return 0;
