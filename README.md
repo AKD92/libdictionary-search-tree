@@ -36,7 +36,6 @@ Please kindly open up `include\bst.h` or `include\avl.h` and read carefully befo
 	
 	BisTree bis_dict;				// This is our Binary Search Tree dictionary
 	AvlTree avl_dict;				// This is out AVL tree dictionary
-	
 ```
 
 #### Initializing a dictionary
