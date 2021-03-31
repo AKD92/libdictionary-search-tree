@@ -92,12 +92,10 @@ Please kindly open up `include\bst.h` or `include\avl.h` and read carefully befo
 	
 	// Check if we have found the key
 	if (opval == 1) {
-		
 		// We have found the key. 'value' variable is pointing to the associated value.
 		printf("%d\n", *((int *) value));
 	}
 	else {
-		
 		// We did not find the key because it does not exist.
 		printf("Key not found\n");
 	}
@@ -128,7 +126,6 @@ Please kindly open up `include\bst.h` or `include\avl.h` and read carefully befo
 	int opval = avl_remove(&avl_dict, (const void *) key, (void **) &removed_key, (void **) &removed_value);
 	
 	if (opval == 0) {
-		
 		// Successfully removed. We can clean up the removed items.
 		// Remember, we inserted dynamically allocated elements into the dictionary.
 		// So de-allocation is necessary.
