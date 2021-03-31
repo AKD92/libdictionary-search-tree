@@ -240,7 +240,7 @@ int main(void) {
 <img align="right" height="400" width="310" src="https://github.com/AKD92/Tree-Based-Dictionary-ADT/raw/master/book_ds_mtrt.jpg">
 
 ### Linking with this library
-You can download pre-built packages which are available here as **Releases**. Those package contains _include_ files and gcc compiled static library files (extension .a) for both x86 and x64 architecture for Windows platform. Please check the assets page for pre-build static library packages [here.](/releases)
+You can download pre-built packages which are available here as **Releases**. Those package contains _include_ files and gcc compiled static library files (extension .a) for both x86 and x64 architecture for Windows platform. Please check the assets page for pre-build static library packages [here.](../../releases)
 You also need **liblinkedlist** library which is a dependency for this library. You can find it [here.](https://github.com/AKD92/Linked-List-ADT)
 While linking, provide this link order: `-ldictionary -llinkedlist`
 
