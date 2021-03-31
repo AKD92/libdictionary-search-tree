@@ -12,7 +12,9 @@ The design of good Dictionary data structure means good algorithmic performance 
   * **Look-up**   : Efficiently search for a given key in Dictionary, and if found, return its corresponding value object to the caller.
 
 ### About This Implementation
-This library contains two implementations of Dictionay ADT, a **Binary Search Tree** based Dictionary ADT and an **AVL Tree** based Dictionary ADT.
+This library contains two implementations of Dictionay ADT, 
+	* **Binary Search Tree** based Dictionary ADT (`BisTree` from `bst.h`)
+	* **AVL Tree** based Dictionary ADT (`AvlTree` from `avl.h`)
 The **Binary Search Tree** based implementation is defined in `bst.h` file. It is a plain binary search tree implementation and has linear worst-case time complexity for certain algorithms. The **AVL Tree** based implementation is defined in `avl.h` file. It is a self-banalcing binary search tree implementation and has logarithmic worst-case time complexity for all dictionary operations. Both of the implementation is fully functiional and bug free, but you might consider using the _AVL Tree_ based implementation for performance reasons.
 Because of using C language, memory allocation and clean-up is necessary. A typical starting point of using this dictionary is to create an instance and initialize it by calling initialization function while passing some function pointers on it as arguments. After we are done with it, we should destroy it with destruction or clean-up function.
 
@@ -178,14 +180,14 @@ Assuming **n** and **h**, where n = _Total number of keys in dictionary_, h = _H
 
 Plain Binary Search Tree based Dictionary (BisTree, defined in `bst.h`)
 | Algorithm      | Time complexity (average case)    | Time complexity (worst case)|
-|----------------|:---------------------------------:|----------------------------:|
+|----------------|:---------------------------------:|:---------------------------:|
 | Insertion	     | O (lg n)                          | O (h)                       |
 | Removal	     | O (lg n)                          | O (h)                       |
 | Look-up	     | O (lg n)                          | O (h)                       |
 
 AVL Tree based Dictionary (AvlTree, defined in `avl.h`)
 | Algorithm      | Time complexity (average case)    | Time complexity (worst case)|
-|----------------|:---------------------------------:|----------------------------:|
+|----------------|:---------------------------------:|:---------------------------:|
 | Insertion	     | O (lg n)                          | O (lg n)                    |
 | Removal	     | O (lg n)                          | O (lg n)                    |
 | Look-up	     | O (lg n)                          | O (lg n)                    |
@@ -253,10 +255,10 @@ You also need **liblinkedlist** library which is a dependency for this library. 
 While linking, provide this link order: `-ldictionary -llinkedlist`
 
 ### Compiling from source
-This project is developed using the _Code::Blocks_ IDE. Do a SVN check-out or download the source and open the _Dictionary ADT.cbp_ project file with Code::Blocks IDE. Then inside the IDE you will see the build configurations and might start building from sources. Plese note that Code::Blocks may warn you about the compiler not found for this project. In this case you must choose and set the compiler from the _Project Properties_ dialog box.
+This project is developed using the [Code::Blocks](https://www.codeblocks.org/) IDE. Do a SVN check-out or download the source and open the _Dictionary ADT.cbp_ project file with Code::Blocks IDE. Then inside the IDE you will see the build configurations and might start building from sources. Plese note that Code::Blocks may warn you about the compiler not found for this project. In this case you must choose and set the compiler from the _Project Properties_ dialog box.
 
 ### Reference Book:
 Implementation follows the algorithms from the book <a href="http://ww3.algorithmdesign.net/">Algorithm Design</a> by Michael T. Goodrich and Roberto Tamassia.
 
 ### License
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This software is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+<a rel="license" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="LGPLv3 License" style="border-width:0" src="http://www.gnu.org/graphics/lgplv3-147x51.png" /></a><br />This software is licensed under <a rel="license" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html">GNU Lesser General Public License, Version 3</a>.
