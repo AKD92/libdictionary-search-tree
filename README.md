@@ -12,7 +12,7 @@ The design of good Dictionary data structure means good algorithmic performance 
   * **Look-up**   : Efficiently search for a given key in Dictionary, and if found, return its corresponding value object to the caller.
 
 ### About This Implementation
-This library contains two implementations of Dictionay ADT
+This library contains two implementations of Dictionay ADT, such as:
 
 + **AVL Tree** based Dictionary ADT (`AvlTree` from `avl.h`) [Wikipedia](https://en.wikipedia.org/wiki/AVL_tree)
 + **Binary Search Tree** based Dictionary ADT (`BisTree` from `bst.h`) [Wikipedia](https://en.wikipedia.org/wiki/Binary_search_tree)
@@ -41,7 +41,6 @@ Please kindly open up `include\bst.h` or `include\avl.h` and read carefully befo
 
 #### Initializing a dictionary
 ```C
-	
 	// We will use strings (char *) as keys and integers (int *) as associated value.
 	// Here strcmp is the string comparison function for comparing keys.
 	// Our string keys will be dynamically allocated, so we use 'free' from stdlib.h
@@ -63,7 +62,6 @@ Please kindly open up `include\bst.h` or `include\avl.h` and read carefully befo
 
 #### Inserting a key associated with a value
 ```C
-
 	// Remember, keys or values are always inserted by their pointers.
 	// We insert a pointer to the key element and a pointer to the value element.
 	
@@ -81,7 +79,6 @@ Please kindly open up `include\bst.h` or `include\avl.h` and read carefully befo
 
 #### Looking up or finding a value for some key
 ```C
-	
 	// We look up for a key and retrive the associated value.
 	// Here, 'value' variable is declared as 'int *value'.
 	// We pass the 'address of value variable' as the 3rd argument,
@@ -108,16 +105,8 @@ Please kindly open up `include\bst.h` or `include\avl.h` and read carefully befo
 
 #### Changing the value for some existing key
 ```C
-	
-	int *old_value = NULL;
 	int *new_value = (int *) malloc(...);
 	*new_value = 35;
-	
-	// First you might want to retrive the old value element.
-	// This step is completely optional.
-	
-	avl_lookup(&avl_dict, (const void *) key, (void **) &old_value);
-	free((void *) old_value);
 	
 	// 'avl_reassign' changes the associated value to a new one for an existing key.
 	// Use 'bst_reassign' if you use plain binary search tree.
@@ -127,7 +116,6 @@ Please kindly open up `include\bst.h` or `include\avl.h` and read carefully befo
 
 #### Removing a key/value pair from the dictionary
 ```C
-	
 	char *key = "any key here";
 	char *removed_key;
 	int *removed_value;
@@ -155,7 +143,6 @@ Please kindly open up `include\bst.h` or `include\avl.h` and read carefully befo
 
 #### Get number of key-value pairs in the dictionary
 ```C
-	
 	// Use 'bst_size' instead if you use plain binary search tree
 	
 	int count = avl_size(&avl_dict);
@@ -163,7 +150,6 @@ Please kindly open up `include\bst.h` or `include\avl.h` and read carefully befo
 
 #### Destroy the dictionary
 ```C
-	
 	// When you no longer need the dictionay, remove it from the memory.
 	// Call 'bst_destroy' instead if you use plain binary search tree.
 	// This destruction function calls the clean-up functions passed into it
@@ -174,11 +160,13 @@ Please kindly open up `include\bst.h` or `include\avl.h` and read carefully befo
 	
 	// 'avl_dect' destroyed. Memory allocated by this dictionary is released.
 	// All the keys and values which were dynamically allocated by user,
-	// those are also released (cleaned up by 'free' because we provided 'free' as clean-up function).
+	// those are also released (cleaned up by 'free'
+	// because we provided 'free' as clean-up function).
 ```
 
 ### Performance Analysis
 Assuming **n** and **h**, where n = _Total number of keys in dictionary_, h = _Height of internal tree_.
+Here lg is the base 2 logarithm.
 
 Plain Binary Search Tree based Dictionary (BisTree, defined in `bst.h`)
 | Algorithm      | Time complexity (average case)    | Time complexity (worst case)|
