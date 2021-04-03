@@ -250,4 +250,4 @@ This project is developed using the [Code::Blocks](https://www.codeblocks.org/) 
 Implementation follows the algorithms from the book [Algorithm Design by Michael T. Goodrich and Roberto Tamassia.](https://books.google.com.bd/books/about/ALGORITHM_DESIGN_FOUNDATION_ANALYSIS_AND.html?id=PPvWDFi3KxUC&source=kp_book_description&redir_esc=y)
 
 ### License
-<a rel="license" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="LGPLv3 License" style="border-width:0" src="http://www.gnu.org/graphics/lgplv3-147x51.png" /></a><br />This software is licensed under <a rel="license" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html">GNU Lesser General Public License, Version 3</a>.
+<a rel="license" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="LGPLv3 License" style="border-width:0" src="https://www.gnu.org/graphics/lgplv3-with-text-154x68.png" /></a><br />This software is licensed under <a rel="license" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html">GNU Lesser General Public License, Version 3</a>.
