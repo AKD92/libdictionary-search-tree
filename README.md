@@ -138,14 +138,14 @@ Please kindly open up `include\bst.h` or `include\avl.h` and read carefully befo
 	}
 ```
 
-#### Get number of key-value pairs in the dictionary
+#### Count number of key-value pairs in the dictionary
 ```C
 	// Use 'bst_size' instead if you use plain binary search tree
 	
 	int count = avl_size(&avl_dict);
 ```
 
-#### Destroy the dictionary
+#### Destroying the dictionary
 ```C
 	// When you no longer need the dictionay, remove it from the memory.
 	// Call 'bst_destroy' instead if you use plain binary search tree.
