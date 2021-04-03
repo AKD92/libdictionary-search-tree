@@ -183,7 +183,7 @@ Space complexity is O(2n + 1) for both dictionaries.
 
 ### Code Examples
 
-#### Sorting a [Linked List](https://github.com/AKD92/Linked-List-ADT) using [TreeSort Algorithm](https://en.wikipedia.org/wiki/Tree_sort)
+#### Sorting a [Linked List](https://github.com/AKD92/liblinkedlist-listadt) using [TreeSort Algorithm](https://en.wikipedia.org/wiki/Tree_sort)
 ```C
 #include <avl.h>
 #include <list.h>
@@ -239,15 +239,15 @@ int main(void) {
 ### Linking with this library
 You can download pre-built packages which are available here as **Releases**. Those package contains _include_ files and gcc compiled static library files (extension .a) for both x86 and x64 architecture for Windows platform. Please check the assets page for pre-build static library packages [here.](../../releases)
 
-You also need **liblinkedlist** library which is a dependency for this library. You can find it [here.](https://github.com/AKD92/Linked-List-ADT)
+You also need **liblinkedlist** library which is a dependency for this library. You can find it [here.](https://github.com/AKD92/liblinkedlist-listadt)
 
 While linking, provide this link order: `-ldictionary -llinkedlist`
 
 ### Compiling from source
 This project is developed using the [Code::Blocks](https://www.codeblocks.org/) IDE. Do a SVN check-out or download the source and open the _Dictionary ADT.cbp_ project file with Code::Blocks IDE. Then inside the IDE you will see the build configurations and might start building from sources. Plese note that Code::Blocks may warn you about the compiler not found for this project. In this case you must choose and set the compiler from the _Project Properties_ dialog box.
 
-### Reference Book:
-Implementation follows the algorithms from the book <a href="http://ww3.algorithmdesign.net/">Algorithm Design</a> by Michael T. Goodrich and Roberto Tamassia.
+### Reference Book
+Implementation follows the algorithms from the book [Algorithm Design by Michael T. Goodrich and Roberto Tamassia.](http://ww3.algorithmdesign.net/)
 
 ### License
 <a rel="license" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="LGPLv3 License" style="border-width:0" src="http://www.gnu.org/graphics/lgplv3-147x51.png" /></a><br />This software is licensed under <a rel="license" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html">GNU Lesser General Public License, Version 3</a>.
