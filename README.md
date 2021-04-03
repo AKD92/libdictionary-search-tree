@@ -17,7 +17,8 @@ This library contains two implementations of Dictionay ADT, such as:
 + **AVL Tree** based Dictionary ADT (`AvlTree` from `avl.h`) [Wikipedia](https://en.wikipedia.org/wiki/AVL_tree)
 + **Binary Search Tree** based Dictionary ADT (`BisTree` from `bst.h`) [Wikipedia](https://en.wikipedia.org/wiki/Binary_search_tree)
 	
-The **Binary Search Tree** based implementation is defined in `bst.h` file. It is a plain binary search tree implementation and has linear worst-case time complexity for certain algorithms. The **AVL Tree** based implementation is defined in `avl.h` file. It is a self-banalcing binary search tree implementation and has logarithmic worst-case time complexity for all dictionary operations. Both of the implementation is fully functiional and bug free, but you might consider using the _AVL Tree_ based implementation for performance reasons.
+The **Binary Search Tree** based implementation is defined in `bst.h` file. It is a plain binary search tree implementation and has linear worst-case time complexity for certain algorithms. The **AVL Tree** based implementation is defined in `avl.h` file. It is a _self-banalcing binary search tree_ implementation and has logarithmic worst-case time complexity for all dictionary operations. Both of the implementation is fully functiional and bug free, but you might consider using the **AVL Tree** based implementation for performance reasons.
+
 Because of using C language, memory allocation and clean-up is necessary. A typical starting point of using this dictionary is to create an instance and initialize it by calling initialization function while passing some function pointers on it as arguments. After we are done with it, we should destroy it with destruction or clean-up function.
 
 ### Documentation
