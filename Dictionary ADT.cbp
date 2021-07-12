@@ -86,11 +86,11 @@
 				<Option type="1" />
 				<Option compiler="tdm-gcc-64-mingw-w64" />
 				<Compiler>
+					<Add option="-m64" />
 					<Add option="-g" />
-					<Add option="-m32" />
 				</Compiler>
 				<Linker>
-					<Add option="-m32" />
+					<Add option="-m64" />
 					<Add directory="$(#liblinkedlist.LIB)/x64/Debug" />
 				</Linker>
 			</Target>
