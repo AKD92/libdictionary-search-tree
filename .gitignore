@@ -1,4 +1,4 @@
-lib
-obj
-bin
+/lib/
+/obj/
+/bin/
 /Dictionary ADT.layout
