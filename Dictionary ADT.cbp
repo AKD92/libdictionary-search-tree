@@ -164,6 +164,12 @@
 		</Linker>
 		<Unit filename="include/avl.h" />
 		<Unit filename="include/bst.h" />
+		<Unit filename="include/htable.h">
+			<Option target="Debug" />
+			<Option target="Debug64" />
+			<Option target="Release" />
+			<Option target="Release64" />
+		</Unit>
 		<Unit filename="src/avl_internal.h" />
 		<Unit filename="src/avl_mutation.c">
 			<Option compilerVar="CC" />
@@ -197,6 +203,19 @@
 		</Unit>
 		<Unit filename="src/bst_traversal_algorithms.c">
 			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/general_hash_functions.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Debug64" />
+			<Option target="Release" />
+			<Option target="Release64" />
+		</Unit>
+		<Unit filename="src/general_hash_functions.h">
+			<Option target="Debug" />
+			<Option target="Debug64" />
+			<Option target="Release" />
+			<Option target="Release64" />
 		</Unit>
 		<Unit filename="src/main_avl.c">
 			<Option compilerVar="CC" />
