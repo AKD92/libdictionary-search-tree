@@ -2,6 +2,8 @@
 #ifndef HTABLE_H_INCLUDED
 #define HTABLE_H_INCLUDED
 
+#define HTABLE_INITIAL_CAPACITY                101
+
 #include <list.h>
 #include <dlist.h>
 
@@ -10,23 +12,25 @@ struct KeyDataPair_ {
     const void *key;
     const void *data;
 };
-typedef struct KeyDataPair_ KeyDataPair
+typedef struct KeyDataPair_ KeyDataPair;
 
 struct HTable_ {
     
     unsigned int size;
-    DList *bucket;
+    unsigned int capacity;
+    DList *buckets;
     int (*hashcode)(const void *key);
     int (*equals)(const void *key1, const void *key2);
-    void (*destroy_key)(const void *key);
-    void (*destroy_data)(const void *data);
+    void (*destroy_key)(void *key);
+    void (*destroy_data)(void *data);
 };
 typedef struct HTable_ HTable;
 
 
 /*
  *  Compute a hash code as an integer for any arbitrary object.
- *  
+ *  The uses should provide the hash code for their key objects
+ *  through using this function.
  *
  *  Parameters:
  *      object              : Pointer to the object whose hash code is being computed
@@ -61,8 +65,8 @@ int hashcalc(const void *object, unsigned int length);
  *                            (can be null).
  *
  *  Returns (int):
- *      1 if the hash table is initialized successfully
- *      0 otherwise
+ *      0 if the hash table is initialized successfully
+ *      -1 for error (parameters are null or could not allocate memory)
  */
 int htable_init
 (
