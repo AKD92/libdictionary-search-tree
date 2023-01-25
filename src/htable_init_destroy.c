@@ -2,11 +2,6 @@
 #include "htable.h"
 #include <stdlib.h>
 #include <string.h>
-#include <stdint.h>
-
-//  Implementation of Bob Jenkin's One At A Time hash algorithm
-//  https://en.wikipedia.org/wiki/Jenkins_hash_function
-uint32_t BJHash32(const unsigned char *key, unsigned int length);
 
 int htable_init
 (
@@ -62,25 +57,4 @@ void htable_destroy(HTable *dictionary) {
     }
     (void) free((void *)dictionary->buckets);
     return;
-}
-
-
-uint32_t BJHash32(const unsigned char *key, unsigned int length) {
-    unsigned int index = 0;
-    uint32_t hash = 0;
-    while (index != length) {
-        hash += key[index++];
-        hash += hash << 10;
-        hash ^= hash >> 6;
-    }
-    hash += hash << 3;
-    hash ^= hash >> 11;
-    hash += hash << 15;
-    return hash;
-}
-
-
-int htable_hash(const void *object, unsigned int length) {
-    const unsigned char *key = (const unsigned char *)object;
-    return BJHash32(key, length);
 }

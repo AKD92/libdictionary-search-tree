@@ -30,14 +30,21 @@ typedef struct HTable_ HTable;
 
 
 /*
- *  Compute a hash code as an integer for any arbitrary object.
- *  The uses should provide the hash code for their key objects
- *  through using this function.
- *  If the object is NULL, the outcome of this function is undefined.
+ *  Computes a hash code as an unsigned integer for any arbitrary object.
+ *  The user should provide the hash code for their key objects through using this function.
+ *  If the object is NULL, the behavior of this function is undefined.
+ *
+ *  Example:
+ *      unsigned int hash_for_my_key(const void *key) {
+ *          // "key" is actually "mykey" type of struct
+ *          return htable_hash(key, sizeof(mykey));
+ *      }
  *
  *  Parameters:
  *      object              : Pointer to the object whose hash code is being computed
- *      length              : The size of the object in bytes (use sizeof operator)
+ *      length              : The size of the object in bytes (use sizeof operator),
+ *                            for strings (character array) use "strlen" function
+ *                            for any kind of array, use "sizeof() * length of array"
  *
  *  Returns (int):
  *      the computed hash code as an integer
@@ -46,7 +53,75 @@ int htable_hash(const void *object, unsigned int length);
 
 
 /*
+ *  Initializes the given unsigned integer which will receive the combined hash code
+ *  value we compute using the "htable_hash_combine_add" function.
+ *  Unlike a hash code generated from the whole "key" object, there could be
+ *  situations where only a few fields from the "key" object will represent the
+ *  identity for the key, such as "Id" (int) and/or "Name" (string) and/or other
+ *  fields. The rest of the fields of the key will not be part of the identity,
+ *  like "Number of apples" (int) and/or function pointers.
+ *  In this case, rather than calculating the hash for the whole "key", we only
+ *  need to calculate hash for those "identity" fields from the key and "combine"
+ *  those hashes into one single hash code.
+ *  To accomplish this, the "htable_hash_combine_" functions are provided.
+ *  
+ *  To calculate partial hashes and then combine, follow these steps:
+ *      1.  Inside your "hashcode" function that you provide to the hash table,
+ *          create a local variable of type unsigned integer and initialize it
+ *          using this function (initialization).
+ *      2.  For each of you "identity" fields in the key object, calculate the
+ *          hash code for the field using "htable_hash" function, and "add"
+ *          that calculated hash to the combined hash value to actually "combine",
+ *          using the "htable_hash_combine_add" function.
+ *          Repeat this process for each and every "identity" field for you key.
+ *      3.  The value in "combined_hash" variable is your combined hash.
+ *      4.  Use this as your return value.
+ *  
+ *  Example:
+ *      unsigned int hash_for_my_key(const void *key) {
+ *          mykey *mkey = (mykey *)key;
+ *          unsigned int hashcode;
+ *          unsigned int combined_hash;
+ *          (void) htable_hash_combine_start(&combined_hash);
+ *          hashcode = htable_hash((const void *)mkey->id, sizeof(int));
+ *          htable_hash_combine_add(&combined_hash, hashcode);
+ *          hashcode = htable_hash((const void *)mkey->name, strlen(mkey->name));
+ *          htable_hash_combine_add(&combined_hash, hashcode);
+ *          return combined_hash;
+ *      }
+ *
+ *  Parameters:
+ *      combined_hash       : Pointer to a unsigned integer which is being initialized
+ *                            and will receive the combined hash code as you keep adding
+ *                            your individual hash code using "htable_hash_combine_add".
+ * 
+ *  Returns (int):
+ *      0 for successful initialization (start)
+ *      -1 for error (parameters are null)
+ */
+int htable_hash_combine_start(unsigned int *combined_hash);
+
+
+/*
+ *  Combines the provided hash code with the already combined hash code.
+ *  The integer value in "combined_hash" keeps changing as you call this function
+ *  and keep combining individual hash code value.
+ *
+ *  Parameters:
+ *      combined_hash       : Pointer to an unsigned integer which will receive the combined
+ *                            hash code value
+ *      hashcode            : Hash code which being taken part to the combination
+ *
+ *  Returns (int):
+ *      0 for successful combination
+ *      -1 for error (parameters are null)
+ */
+int htable_hash_combine_add(unsigned int *combined_hash, unsigned int hashcode);
+
+
+/*
  *  Initialized the given hash table.
+ *  Previously destroyed hash tables can be used again by initializing with this function.
  *
  *  Parameters:
  *      dictionary          : Pointer to the hash table which is being initialized
