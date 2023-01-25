@@ -30,10 +30,9 @@ typedef struct HTable_ HTable;
 
 
 /*
- *  Compute a hash code as an integer for any arbitrary object.
- *  The uses should provide the hash code for their key objects
- *  through using this function.
- *  If the object is NULL, the outcome of this function is undefined.
+ *  Computes a hash code as an unsigned integer for any arbitrary object.
+ *  The user should provide the hash code for their key objects through using this function.
+ *  If the object is NULL, the behavior of this function is undefined.
  *
  *  Example:
  *      unsigned int hash_for_my_key(const void *key) {
@@ -43,7 +42,9 @@ typedef struct HTable_ HTable;
  *
  *  Parameters:
  *      object              : Pointer to the object whose hash code is being computed
- *      length              : The size of the object in bytes (use sizeof operator)
+ *      length              : The size of the object in bytes (use sizeof operator),
+ *                            for strings (character array) use "strlen" function
+ *                            for any kind of array, use "sizeof() * length of array"
  *
  *  Returns (int):
  *      the computed hash code as an integer
@@ -78,9 +79,9 @@ int htable_hash(const void *object, unsigned int length);
  *  
  *  Example:
  *      unsigned int hash_for_my_key(const void *key) {
+ *          mykey *mkey = (mykey *)key;
  *          unsigned int hashcode;
  *          unsigned int combined_hash;
- *          mykey *mkey = (mykey *)key;
  *          (void) htable_hash_combine_start(&combined_hash);
  *          hashcode = htable_hash((const void *)mkey->id, sizeof(int));
  *          htable_hash_combine_add(&combined_hash, hashcode);
@@ -109,7 +110,7 @@ int htable_hash_combine_start(unsigned int *combined_hash);
  *  Parameters:
  *      combined_hash       : Pointer to an unsigned integer which will receive the combined
  *                            hash code value
- *      hashcode            : Hash code which being taken part to the combination.
+ *      hashcode            : Hash code which being taken part to the combination
  *
  *  Returns (int):
  *      0 for successful combination
@@ -120,6 +121,7 @@ int htable_hash_combine_add(unsigned int *combined_hash, unsigned int hashcode);
 
 /*
  *  Initialized the given hash table.
+ *  Previously destroyed hash tables can be used again by initializing with this function.
  *
  *  Parameters:
  *      dictionary          : Pointer to the hash table which is being initialized

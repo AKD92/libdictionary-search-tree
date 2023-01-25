@@ -231,6 +231,13 @@
 			<Option target="Release" />
 			<Option target="Release64" />
 		</Unit>
+		<Unit filename="src/htable_query.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Debug64" />
+			<Option target="Release" />
+			<Option target="Release64" />
+		</Unit>
 		<Unit filename="src/main_avl.c">
 			<Option compilerVar="CC" />
 			<Option target="Test AVL" />
