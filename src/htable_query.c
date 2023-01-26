@@ -3,6 +3,21 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*
+ *  Structure to hold information regarding search reasult on the hash tables.
+ *  
+ *  Fields:
+ *      found               : This boolean value signifies if the key is found in the
+ *                            hash table or not. True means found, false means the key
+ *                            does not exist.
+ *      bucket_index        : If the key is found, this field will have the index address
+ *                            of the linked list where the key is actually stored.
+ *                            We can locate the linked list by adding this index to the base
+ *                            address of the linked list, stored in the HTable structure.
+ *      bucket              : Pointer to the linked list where the key actually resides.
+ *      entry_container     : Pointer to the DListElem node of the linked list. This node
+ *                            holds the HKeyValuePair structure where the key is stored.
+ */
 struct HSearchResult {
     
     bool found;

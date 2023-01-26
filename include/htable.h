@@ -9,6 +9,15 @@
 #include <dlist.h>
 #include <stdbool.h>
 
+/*
+ *  HKeyValuePair objects are used to maintain a single key and a value associated
+ *  with it in the time of inserting into the hash table.
+ *  The key cannot be null, but the value can be null.
+ *
+ *  Fields:
+ *      key                 : Pointer to the key object
+ *      value               : Pointer to the value object (can be null)
+ */
 struct HKeyValuePair_ {
     
     const void *key;
@@ -16,11 +25,47 @@ struct HKeyValuePair_ {
 };
 typedef struct HKeyValuePair_ HKeyValuePair;
 
+
+/*
+ *  The hash table struct HTable.
+ *  Every single instance of this struct is a hash table.
+ *  This hash table uses separate chaining technique to resolute collisions.
+ *
+ *  Fields:
+ *      size                : Number of keys the hash table is currently holding
+ *      bucket_size         : Number of buckets (linked lists) currently in use by the
+ *                            hash table. This value is alwasy either less or equal to
+ *                            the "size", because one single bucket may hold multilple keys
+ *                            (HKeyValuePair).
+ *      capacity            : Total number of buckets (size of internal array of linked list).
+ *      buckets             : The internal array of linked list.
+ *      hashcode            : Callback function provided by the user which will provide the hash code
+ *                            for a given key. The hash table will use this hash code to place and locate
+ *                            the key in future.
+ *      equals              : Callback function provided by the user which will tell if two
+ *                            keys are "equal" or not by performing some comparisons.
+ *                            It is absolutely imperative that the keys which are equal must
+ *                            have their hash codes absolutely same. However, it is not necessary
+ *                            that inequal or distinct keys have different hash code, although it
+ *                            will be better if they have distinct hash codes.
+ *                            This callback function is used for collision resolution. When multiple
+ *                            keys are in collision and have same hash codes and mapped to same bucket,
+ *                            this function will come into play and identify the exact key-value
+ *                            entry.
+ *      destroy_key         : Callback function provided by the user which is used for de-allocating
+ *                            the keys once the hash table is de-allocated (destroyed).
+ *                            This can be null if the keys are not dynamically allocated or the
+ *                            de-allocation of keys is no desired.
+ *      destroy_value       : Callback function provided by the user which is used for de-allocating
+ *                            the value objects once the hash table is de-allocated (destroyed).
+ *                            This can be null if the values are not dynamically allocated or the
+ *                            de-allocation of values is not desired.
+ */
 struct HTable_ {
     
-    unsigned int size;                      // number of keys in the hash table
-    unsigned int bucket_size;               // number of buckets in use by the hash table
-    unsigned int capacity;                  // total number of buckets
+    unsigned int size;
+    unsigned int bucket_size;
+    unsigned int capacity;
     DList *buckets;
     int (*hashcode)(const void *key);
     bool (*equals)(const void *key1, const void *key2);
