@@ -7,7 +7,7 @@ int htable_init
 (
     HTable *dictionary,
     int (*hashcode)(const void *key),
-    int (*equals)(const void *key1, const void *key2),
+    bool (*equals)(const void *key1, const void *key2),
     void (*destroy_key)(void *key),
     void (*destroy_value)(void *value)
 )
@@ -20,12 +20,13 @@ int htable_init
     buckets = (DList *) malloc(bucket_length);
     if (buckets == NULL)
         return -1;
-    for (int index = 0; index < HTABLE_INITIAL_CAPACITY; index++) {
+    for (unsigned int index = 0; index < HTABLE_INITIAL_CAPACITY; index++) {
         bucket = buckets + index;
-        (void) dlist_init(bucket, free);   // "free" is sufficient to de-allocate "KeyValuePair" objects
+        (void) dlist_init(bucket, free);   // "free" is sufficient to de-allocate "HKeyValuePair" objects
     }
     (void) memset((void *) dictionary, 0, sizeof(HTable));
     dictionary->buckets = buckets;
+    dictionary->capacity = HTABLE_INITIAL_CAPACITY;
     dictionary->hashcode = hashcode;
     dictionary->equals = equals;
     dictionary->destroy_key = destroy_key;
@@ -37,10 +38,10 @@ int htable_init
 void htable_destroy(HTable *dictionary) {
     DList *bucket;
     DListElem *pair_container;
-    KeyValuePair *entry;
+    HKeyValuePair *entry;
     if (dictionary == NULL)
         return;
-    for (int index = 0; index < dictionary->capacity; index++) {
+    for (unsigned int index = 0; index < dictionary->capacity; index++) {
         bucket = dictionary->buckets + index;
         pair_container = dlist_head(bucket);
         while (pair_container != NULL) {
