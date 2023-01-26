@@ -7,13 +7,14 @@
 
 #include <list.h>
 #include <dlist.h>
+#include <stdbool.h>
 
-struct KeyValuePair_ {
+struct HKeyValuePair_ {
     
     const void *key;
     const void *value;
 };
-typedef struct KeyValuePair_ KeyValuePair;
+typedef struct HKeyValuePair_ HKeyValuePair;
 
 struct HTable_ {
     
@@ -22,7 +23,7 @@ struct HTable_ {
     unsigned int capacity;                  // total number of buckets
     DList *buckets;
     int (*hashcode)(const void *key);
-    int (*equals)(const void *key1, const void *key2);
+    bool (*equals)(const void *key1, const void *key2);
     void (*destroy_key)(void *key);
     void (*destroy_value)(void *value);
 };
@@ -150,7 +151,7 @@ int htable_init
 (
     HTable *dictionary,
     int (*hashcode)(const void *key),
-    int (*equals)(const void *key1, const void *key2),
+    bool (*equals)(const void *key1, const void *key2),
     void (*destroy_key)(void *key),
     void (*destroy_value)(void *value)
 );
@@ -208,17 +209,17 @@ int htable_lookup(const HTable *dictionary, const void *key, void **value);
 
 /*
  *  Check to see if the specified key exists into the given hash table.
+ *  Passing null pointers to the function makes it returning false.
  *
  *  Parameters:
  *      dictionary          : Pointer to the hash table where to look into
  *      key                 : Pointer to the key which we are looking for
  *
- *  Returns (int):
- *      1 if the key exists into the hash table
- *      0 if the key does not exist into the hash table
- *      -1 for error (parameters are null)
+ *  Returns (bool):
+ *      true if the key exists into the hash table
+ *      false if the key does not exist into the hash table
  */
-int htable_exists(const HTable *dictionary, const void *key);
+bool htable_exists(const HTable *dictionary, const void *key);
 
 
 /*
