@@ -27,6 +27,7 @@ int htable_init
     (void) memset((void *) dictionary, 0, sizeof(HTable));
     dictionary->buckets = buckets;
     dictionary->capacity = HTABLE_INITIAL_CAPACITY;
+    dictionary->max_bucket_size = (unsigned int)(dictionary->capacity * HTABLE_LOAD_FACTOR);
     dictionary->hashcode = hashcode;
     dictionary->equals = equals;
     dictionary->destroy_key = destroy_key;

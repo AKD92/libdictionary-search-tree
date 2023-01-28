@@ -10,11 +10,12 @@
  *      found               : This boolean value signifies if the key is found in the
  *                            hash table or not. True means found, false means the key
  *                            does not exist.
- *      bucket_index        : If the key is found, this field will have the index address
- *                            of the linked list where the key is actually stored.
+ *      bucket_index        : This field will have the index address of the linked list where
+ *                            the key is actually stored (or is supposed to be there).
  *                            We can locate the linked list by adding this index to the base
  *                            address of the linked list, stored in the HTable structure.
- *      bucket              : Pointer to the linked list where the key actually resides.
+ *      bucket              : Pointer to the linked list where the key actually resides,
+ *                            or where the key is supposed to be found.
  *      entry_container     : Pointer to the DListElem node of the linked list. This node
  *                            holds the HKeyValuePair structure where the key is stored.
  */
@@ -26,6 +27,33 @@ struct HSearchResult {
     DListElem *entry_container;
 };
 
+
+/*
+ *  Searches for the given key into the given hash table.
+ *  The function returns an instance of the struct "HSearchResult".
+ *
+ *  If the key is found in the hash table,
+ *      ->  HSearchResult.found will be "true"
+ *      ->  HSearchResult.entry_container will point to the DListElem linked list container
+ *          which actually holds the "HKeyValuePair" key-value entry
+ *  If the key is not found (does not exist)
+ *      ->  HSearchResult.found will be "false"
+ *      ->  HSearchResult.entry_container will be null
+ *  In either case
+ *      ->  HSearchResult.bucket will point to the DList linked list in the hash table buckets
+ *          where the search key is found (or is supposed to be there if not found)
+ *      ->  HSearchResult.bucket_index will have the index number of the linked list in the
+ *          hash table buckets where the search key is found (or is supposed to be there if not found)
+ *
+ *  Parameters:
+ *      dictionary          : Pointer to the hash table dictionary where the search is
+ *                            being performed
+ *      key                 : Pointer to the key object for which the search is
+ *                            being performed
+ *
+ *  Returns (struct HSearchResult):
+ *      the result to the search operation.
+ */
 struct HSearchResult htable_search(const HTable *dictionary, const void *key);
 
 
@@ -35,7 +63,7 @@ struct HSearchResult htable_search(const HTable *dictionary, const void *key) {
     DListElem *pair_container;
     HKeyValuePair *entry;
     struct HSearchResult search_result;
-    (void) memset((void *) &search_result, 0, sizeof(struct HSearchResult));
+    (void) memset((void *)&search_result, 0, sizeof(struct HSearchResult));
     index = dictionary->hashcode(key) % dictionary->capacity;
     bucket = dictionary->buckets + index;
     pair_container = dlist_head(bucket);
@@ -43,13 +71,13 @@ struct HSearchResult htable_search(const HTable *dictionary, const void *key) {
         entry = (HKeyValuePair *)dlist_data(pair_container);
         search_result.found = dictionary->equals(key, entry->key);
         if (search_result.found == true) {
-            search_result.bucket = bucket;
             search_result.entry_container = pair_container;
-            search_result.bucket_index = index;
             break;
         }
         pair_container = dlist_next(pair_container);
     }
+    search_result.bucket = bucket;
+    search_result.bucket_index = index;
     return search_result;
 }
 

@@ -13,6 +13,7 @@
  *  HKeyValuePair objects are used to maintain a single key and a value associated
  *  with it in the time of inserting into the hash table.
  *  The key cannot be null, but the value can be null.
+ *  No duplicate keys are allowed.
  *
  *  Fields:
  *      key                 : Pointer to the key object
@@ -37,6 +38,14 @@ typedef struct HKeyValuePair_ HKeyValuePair;
  *                            hash table. This value is alwasy either less or equal to
  *                            the "size", because one single bucket may hold multilple keys
  *                            (HKeyValuePair).
+ *      max_bucket_size     : Maximum number of buckets that is allowed to be in use before the
+ *                            capacity of the hash table is enlarged and the entries are rehashed.
+ *                            This is the threshold value, which is computed by the following formula:
+ *                            max_bucket_size = capacity * HTABLE_LOAD_FACTOR.
+ *                            While inserting, when the bucket_size value crosses this max_bucket_size
+ *                            value, the system automatically increases the capacity of the hash table
+ *                            and performs rehash process to re-distribute the entries over the enlarged
+ *                            internal bucket array.
  *      capacity            : Total number of buckets (size of internal array of linked list).
  *      buckets             : The internal array of linked list.
  *      hashcode            : Callback function provided by the user which will provide the hash code
@@ -66,6 +75,7 @@ struct HTable_ {
     unsigned int size;
     unsigned int bucket_size;
     unsigned int capacity;
+    unsigned int max_bucket_size;
     DList *buckets;
     int (*hashcode)(const void *key);
     bool (*equals)(const void *key1, const void *key2);
@@ -83,7 +93,11 @@ typedef struct HTable_ HTable;
  *  Example:
  *      unsigned int hash_for_my_key(const void *key) {
  *          // "key" is actually "mykey" type of struct
- *          return htable_hash(key, sizeof(mykey));
+ *          return htable_hash(key, sizeof(struct mykey));
+ *      }
+ *      unsigned int hashcode_for_employee(const void *emp) {
+ *          struct Employee *employee = (struct Employee *)emp;
+ *          return htable_hash(employee->name, strlen(employee->name));
  *      }
  *
  *  Parameters:
@@ -125,7 +139,7 @@ int htable_hash(const void *object, unsigned int length);
  *  
  *  Example:
  *      unsigned int hash_for_my_key(const void *key) {
- *          mykey *mkey = (mykey *)key;
+ *          struct mykey *mkey = (struct mykey *)key;
  *          unsigned int hashcode;
  *          unsigned int combined_hash;
  *          (void) htable_hash_combine_start(&combined_hash);
@@ -283,7 +297,7 @@ bool htable_exists(const HTable *dictionary, const void *key);
  *
  *  Returns (int):
  *      0 if the key and the value is added successfully
- *      -1 for error (parameters are null or the key already exists)
+ *      -1 for error (parameters are null or the key already exists or could not allocate memory)
  */
 int htable_insert(HTable *dictionary, const void *key, const void *value);
 
@@ -294,9 +308,9 @@ int htable_insert(HTable *dictionary, const void *key, const void *value);
  *  If the key does not exist, it will return immediately.
  *
  *  Parameters:
- *      dictionary          : Pointer to the hash table where some value is being replaced
+ *      dictionary          : Pointer to the hash table where the value is being replaced
  *      key                 : Pointer to the key whose value is being replaced
- *      value               : Pointer to the new value object whill will replace existing
+ *      value               : Pointer to the new value object which will replace existing
  *                            value object associated with the given key
  *                            (can be null)
  *
@@ -311,7 +325,7 @@ int htable_reassign(HTable *dictionary, const void *key, const void *value);
  *  Removes the given key and associated value object from the hash table dictionary.
  *  Please note that no clean-up will be done for the removed key and associated value object.
  *  If the clean-up or de-allocation is needed for the key and value,
- *  it must be done separatetly after the removal.
+ *  it must be done separatetly after the removal by the caller.
  *
  *  Parameters:
  *      dictionary          : Pointer to the hash table dictionary from where
@@ -336,7 +350,7 @@ int htable_remove(HTable *dictionary, const void *key, void **removed_key, void 
  *  specified hash table dictionary.
  *  The given list must be initialized before calling this function.
  *  If the linked list is not initialized, the behavior of this function
- *  is undetermined or unknown.
+ *  is undefined or unknown.
  *
  *  Parameters:
  *      dictionary          : Pointer to the hash table where the keys are stored.
@@ -356,11 +370,11 @@ int htable_keys(const HTable *dictionary, List *keys);
  *  specified hash table dictionay.
  *  The given list must be initialized before calling this function.
  *  If the linked list is not initialized, the behavior of this function
- *  is undetermined or unknown.
+ *  is undefined or unknown.
  *
  *  Parameters:
  *      dictionary          : Pointer to the hash table where the value objects are stored.
- *      value               : Pointer to the singly linked list which will receive
+ *      values              : Pointer to the singly linked list which will receive
  *                            all the pointers to the value objects exist in the hash table.
  *
  *  Returns (int):
