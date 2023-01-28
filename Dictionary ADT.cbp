@@ -217,6 +217,13 @@
 			<Option target="Release" />
 			<Option target="Release64" />
 		</Unit>
+		<Unit filename="src/htable_data_transfer.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+			<Option target="Debug64" />
+			<Option target="Release" />
+			<Option target="Release64" />
+		</Unit>
 		<Unit filename="src/htable_hash_algorithms.c">
 			<Option compilerVar="CC" />
 			<Option target="Debug" />
