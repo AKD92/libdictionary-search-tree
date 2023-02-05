@@ -17,7 +17,7 @@ int htable_init
     if (dictionary == NULL || hashcode == NULL || equals == NULL)
         return -1;
     bucket_length = sizeof(DList) * HTABLE_INITIAL_CAPACITY;
-    buckets = (DList *) malloc(bucket_length);
+    buckets = (DList *)malloc(bucket_length);
     if (buckets == NULL)
         return -1;
     for (unsigned int index = 0; index < HTABLE_INITIAL_CAPACITY; index++) {
