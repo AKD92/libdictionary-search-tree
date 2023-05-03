@@ -2,7 +2,7 @@
 #ifndef HTABLE_H_INCLUDED
 #define HTABLE_H_INCLUDED
 
-#define HTABLE_INITIAL_CAPACITY                 7 //101
+#define HTABLE_INITIAL_CAPACITY                 101
 #define HTABLE_LOAD_FACTOR                      0.70
 
 #include <list.h>
