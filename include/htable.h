@@ -89,11 +89,22 @@ typedef struct HTable_ HTable;
  *  Computes a hash code as an unsigned integer for any arbitrary object.
  *  The user should provide the hash code for their key objects through using this function.
  *  If the object is NULL, the behavior of this function is undefined.
+ *  It is advised that this function should be used to compute hash values for all kinds of
+ *  keys, be it fixed-sized keys (int, double etc) or variable-length keys (strings, arrays etc).
+ *  However, treating a whole struct as a key is not advised, as structs are often padded with
+ *  extra bits which might affect the hash values, and in that case, struct which are considered
+ *  "equal" by user-defined "equals" function may not have same hash values.
+ *  Remember that it is absolutely necessary for two key objects which are "equal" by the
+ *  "equals" function must have same hash values.
+ *  However, two distinct keys might or might not have distinct hash values.
+ *  Although it is preferred that distinct keys have distinct hash values, it is not mandatory.
  *
  *  Example:
  *      unsigned int hash_for_my_key(const void *key) {
  *          // "key" is actually "mykey" type of struct
- *          return htable_hash(key, sizeof(struct mykey));
+ *          const struct mykey *mkey = (const struct mykey *)key;
+ *          int[] fingerprint = mkey->fingerprint;
+ *          return htable_hash(fingerprint, sizeof(int) * mkey->number_of_fingerprints);
  *      }
  *      unsigned int hashcode_for_employee(const void *emp) {
  *          struct Employee *employee = (struct Employee *)emp;
@@ -143,10 +154,10 @@ int htable_hash(const void *object, unsigned int length);
  *          unsigned int hashcode;
  *          unsigned int combined_hash;
  *          (void) htable_hash_combine_start(&combined_hash);
- *          hashcode = htable_hash((const void *)mkey->id, sizeof(int));
+ *          hashcode = htable_hash((const void *)mkey->id, sizeof(int));    // first hash value
  *          htable_hash_combine_add(&combined_hash, hashcode);
- *          hashcode = htable_hash((const void *)mkey->name, strlen(mkey->name));
- *          htable_hash_combine_add(&combined_hash, hashcode);
+ *          hashcode = htable_hash((const void *)mkey->name, strlen(mkey->name)); // second hash value
+ *          htable_hash_combine_add(&combined_hash, hashcode);                  // combined hash value
  *          return combined_hash;
  *      }
  *
@@ -170,7 +181,7 @@ int htable_hash_combine_start(unsigned int *combined_hash);
  *  Parameters:
  *      combined_hash       : Pointer to an unsigned integer which will receive the combined
  *                            hash code value
- *      hashcode            : Hash code which being taken part to the combination
+ *      hashcode            : Hash code which is taking part to the combination
  *
  *  Returns (int):
  *      0 for successful combination

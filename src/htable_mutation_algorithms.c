@@ -185,9 +185,9 @@ int htable_remove(HTable *dictionary, const void *key, void **removed_key, void 
         if (removed_value != NULL)
             *removed_value = (void *)entry->value;
         (void) free((void *)entry);
-        dictionary->size--;
         if (dlist_size(search_result.bucket) == 0)
             dictionary->bucket_size--;
+        dictionary->size--;
         result = 0;
     }
     else
